@@ -1,5 +1,5 @@
 
-preTreat <- function(dat,info,parameters,verbose){
+preTreat <- function(dat,info,parameters,verbose = T){
     
     preTreated <- dat %>%
         map(metabolyse,info = info,parameters = parameters,verbose = verbose)
@@ -35,7 +35,7 @@ setMethod('preTreatModes',signature = 'Binalysis',
               dat <- binnedData(processedData)
               sampleInfo <- info(processedData)
 
-              preTreated <- preTreat(dat,sampleInfo,parameters)
+              preTreated <- preTreat(dat,sampleInfo,parameters,verbose = verbose)
               
               return(preTreated)
 })
@@ -47,7 +47,7 @@ setMethod('preTreatModes',signature = 'MetaboProfile',
               dat <- processedData@Data
               sampleInfo <- processedData@Info
               
-              preTreated <- preTreat(dat,sampleInfo,parameters)
+              preTreated <- preTreat(dat,sampleInfo,parameters,verbose = verbose)
               
               return(preTreated)
           })
