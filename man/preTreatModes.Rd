@@ -7,11 +7,13 @@
 \alias{preTreatModes,MetaboProfile-method}
 \title{preTreatModes}
 \usage{
-preTreatModes(processedData, parameters)
+preTreatModes(processedData, parameters, verbose = T)
 
-\S4method{preTreatModes}{Binalysis}(processedData, parameters)
+\S4method{preTreatModes}{Binalysis}(processedData, parameters,
+  verbose = T)
 
-\S4method{preTreatModes}{MetaboProfile}(processedData, parameters)
+\S4method{preTreatModes}{MetaboProfile}(processedData, parameters,
+  verbose = T)
 }
 \description{
 preTreatModes
