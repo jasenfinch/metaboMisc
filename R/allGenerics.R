@@ -1,6 +1,6 @@
 #' @rdname preTreatModes
 #' @export
 
-setGeneric("preTreatModes", function(binalysis,parameters) {
+setGeneric("preTreatModes", function(processedData,parameters) {
     standardGeneric("preTreatModes")
 })

@@ -2,6 +2,7 @@
 
 export(preTreatModes)
 importClassesFrom(binneR,Binalysis)
+importClassesFrom(profilePro,MetaboProfile)
 importFrom(binneR,binnedData)
 importFrom(binneR,info)
 importFrom(dplyr,bind_cols)

@@ -4,11 +4,14 @@
 \name{preTreatModes}
 \alias{preTreatModes}
 \alias{preTreatModes,Binalysis-method}
+\alias{preTreatModes,MetaboProfile-method}
 \title{preTreatModes}
 \usage{
-preTreatModes(binalysis, parameters)
+preTreatModes(processedData, parameters)
 
-\S4method{preTreatModes}{Binalysis}(binalysis, parameters)
+\S4method{preTreatModes}{Binalysis}(processedData, parameters)
+
+\S4method{preTreatModes}{MetaboProfile}(processedData, parameters)
 }
 \description{
 preTreatModes
