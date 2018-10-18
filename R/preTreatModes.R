@@ -1,3 +1,7 @@
+#' @importFrom utils packageVersion
+#' @importFrom magrittr %>%
+#' @importFrom purrr map
+#' @importFrom methods new
 
 preTreat <- function(dat,info,parameters,verbose = T){
     
