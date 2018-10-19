@@ -18,7 +18,7 @@ preTreat <- function(dat,info,parameters,verbose = T){
     all <- new('Analysis')
     all@log <- list(packageVersion = packageVersion('metabolyseR'),analysis = date(),verbose = F)
     all@parameters <- parameters
-    all@rawData <- list(Data = bind_cols(dat), Info = sampleInfo)
+    all@rawData <- list(Data = bind_cols(dat), Info = info)
     all@preTreated <- list(Data = preTreatedDat,Info = preTreatedInf)
     
     return(all)
