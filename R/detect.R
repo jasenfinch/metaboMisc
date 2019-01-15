@@ -1,3 +1,15 @@
+missInject <- function(TICdat,idx){
+    thresh <- quantile(TICdat$value)[2] - IQR(TICdat$value) * 1.5
+    
+    missinjections <- TICdat %>%
+        filter(value < thresh) %>%
+        select(idx) %>%
+        unlist() %>%
+        unname() %>%
+        list(idx = idx,missInjections = .)
+    return(missinjections)
+}
+
 #' detectMissInjections
 #' @rdname detectMissInjections
 #' @description detect miss injected samples
