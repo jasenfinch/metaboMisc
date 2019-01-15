@@ -1,5 +1,6 @@
 #' filterCorrelations
 #' @export
+
 filterCorrelations <- function(correlations, rthresh = 0.7, n = 100000, rIncrement = 0.01, nIncrement = 20000){
     filCors <- function(cors,rthresh,n){
         while (nrow(cors) > n) {
