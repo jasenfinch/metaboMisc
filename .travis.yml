@@ -11,8 +11,8 @@ r:
  - devel
  
  r_github_packages:
-    - jasenfinch/metabolyseR
-    - jasenfinch/profilePro
+  - jasenfinch/metabolyseR
+  - jasenfinch/profilePro
  
 notifications:
     email:
