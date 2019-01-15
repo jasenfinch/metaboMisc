@@ -10,7 +10,7 @@ r:
  - release
  - devel
  
- r_github_packages:
+r_github_packages:
   - jasenfinch/metabolyseR
   - jasenfinch/profilePro
  
