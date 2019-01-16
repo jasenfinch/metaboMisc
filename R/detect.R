@@ -13,6 +13,8 @@ missInject <- function(TICdat,idx){
 #' detectMissInjections
 #' @rdname detectMissInjections
 #' @description detect miss injected samples
+#' @param x object of class Binalysis or MetaboProfile
+#' @param idx info column to use for sample indexes
 #' @importFrom stats IQR quantile
 
 setMethod('detectMissInjections',signature = 'Binalysis',
