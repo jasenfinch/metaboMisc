@@ -50,6 +50,8 @@ setMethod('detectMissInjections',signature = 'MetaboProfile',
                   missInject(idx = idx)
           })
 
+#' @importFrom dplyr bind_rows mutate n
+
 batchDiff <- function(TICdat,pthresh){
     ANOVAres <- TICdat %>%
         split(.$Mode) %>%
@@ -115,6 +117,10 @@ setMethod('detectBatchDiff',signature =  "MetaboProfile",
 #' detectPairwises
 #' @importClassesFrom metabolyseR Analysis
 #' @importFrom metabolyseR preTreatedInfo
+#' @importFrom utils combn
+#' @importFrom dplyr filter
+#' @importFrom tibble as_tibble
+#' @importFrom purrr map_chr
 #' @rdname detectPairwises
 
 setMethod('detectPairwises',signature = 'Analysis',
