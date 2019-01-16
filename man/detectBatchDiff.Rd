@@ -14,6 +14,13 @@ detectBatchDiff(x, by = "block", pthresh = 0.05)
 \S4method{detectBatchDiff}{MetaboProfile}(x, by = "block",
   pthresh = 0.05)
 }
+\arguments{
+\item{x}{object of class Binalysis or MetaboProfile}
+
+\item{by}{info class column to use for batch information}
+
+\item{pthresh}{p-value threshold for significance}
+}
 \description{
-detectBatchDiff
+Detect batch differences
 }

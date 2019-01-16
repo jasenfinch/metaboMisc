@@ -15,6 +15,13 @@ preTreatModes(processedData, parameters, verbose = T)
 \S4method{preTreatModes}{MetaboProfile}(processedData, parameters,
   verbose = T)
 }
+\arguments{
+\item{processedData}{of class Binalysis or MetaboProfile}
+
+\item{parameters}{object of class AnalysisParameters containing pre-treatment parameters}
+
+\item{verbose}{console output}
+}
 \description{
-preTreatModes
+Pre-treat both positive and negative ionisation modes
 }

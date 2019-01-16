@@ -10,6 +10,13 @@ detectPairwises(x, cls, type)
 
 \S4method{detectPairwises}{Analysis}(x, cls, type)
 }
+\arguments{
+\item{x}{object of class Analysis}
+
+\item{cls}{info column to use for class information}
+
+\item{type}{type of analysis (classification or featureSelection)}
+}
 \description{
-detectPairwises
+Detect availble pairwise comparisons
 }
