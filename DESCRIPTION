@@ -11,7 +11,8 @@ Imports: binneR,
     magrittr,
     purrr,
     methods,
-    tidyr
+    tidyr,
+    tibble
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
