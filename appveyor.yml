@@ -18,6 +18,8 @@ environment:
    
 build_script:
   - travis-tool.sh install_bioc_deps
+  - travis-tool.sh install_github jasenfinch/metabolyseR
+  - travis-tool.sh install_github jasenfinch/profilePro
 
 test_script:
   - travis-tool.sh run_tests
