@@ -72,7 +72,11 @@ batchDiff <- function(TICdat,pthresh){
 }
 
 #' detectBatchDiff
+#' @description Detect batch differences
 #' @rdname detectBatchDiff
+#' @param x object of class Binalysis or MetaboProfile
+#' @param by info class column to use for batch information
+#' @param pthresh p-value threshold for significance
 #' @importClassesFrom binneR Binalysis
 #' @importFrom binneR binnedData info
 #' @importFrom tidyr gather
@@ -116,6 +120,10 @@ setMethod('detectBatchDiff',signature =  "MetaboProfile",
           })
 
 #' detectPairwises
+#' @description Detect availble pairwise comparisons
+#' @param x object of class Analysis
+#' @param cls info column to use for class information
+#' @param type type of analysis (classification or featureSelection)
 #' @importClassesFrom metabolyseR Analysis
 #' @importFrom metabolyseR preTreatedInfo
 #' @importFrom utils combn
