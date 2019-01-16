@@ -76,6 +76,7 @@ batchDiff <- function(TICdat,pthresh){
 #' @importClassesFrom binneR Binalysis
 #' @importFrom binneR binnedData info
 #' @importFrom tidyr gather
+#' @importFrom tibble rowid_to_column
 
 setMethod('detectBatchDiff',signature = 'Binalysis',
           function(x, by = 'block', pthresh = 0.05){
@@ -118,9 +119,10 @@ setMethod('detectBatchDiff',signature =  "MetaboProfile",
 #' @importClassesFrom metabolyseR Analysis
 #' @importFrom metabolyseR preTreatedInfo
 #' @importFrom utils combn
-#' @importFrom dplyr filter
+#' @importFrom dplyr filter select
 #' @importFrom tibble as_tibble
 #' @importFrom purrr map_chr
+#' @importFrom stringr str_c
 #' @rdname detectPairwises
 
 setMethod('detectPairwises',signature = 'Analysis',
