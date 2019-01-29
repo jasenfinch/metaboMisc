@@ -1,9 +1,9 @@
 Package: metaboMisc
 Title: Miscellaneous Functions for Metabolomics Analyses
-Version: 0.0.3
+Version: 0.1.0
 Authors@R: person("Jasen", "Finch", email = "jsf9@aber.ac.uk", role = c("aut", "cre"))
 Description: Miscellaneous functions for metabolomics analyses that do not yet have a permanent home.
-Depends: R (>= 3.4.4)
+Depends: R (>= 3.4)
 Imports: binneR,
     metabolyseR,
     dplyr,
@@ -11,7 +11,9 @@ Imports: binneR,
     magrittr,
     purrr,
     methods,
-    tidyr
+    tidyr,
+    tibble,
+    stringr
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true

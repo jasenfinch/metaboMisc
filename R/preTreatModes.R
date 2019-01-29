@@ -28,6 +28,10 @@ preTreat <- function(dat,info,parameters,verbose = T){
 
 #' preTreatModes
 #' @rdname preTreatModes
+#' @description Pre-treat both positive and negative ionisation modes
+#' @param processedData of class Binalysis or MetaboProfile
+#' @param parameters object of class AnalysisParameters containing pre-treatment parameters
+#' @param verbose console output
 #' @importFrom binneR binnedData info
 #' @importFrom metabolyseR metabolyse preTreatedData preTreatedInfo
 #' @importFrom dplyr bind_cols

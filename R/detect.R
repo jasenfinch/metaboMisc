@@ -1,6 +1,20 @@
+missInject <- function(TICdat,idx){
+    thresh <- quantile(TICdat$value)[2] - IQR(TICdat$value) * 1.5
+    
+    missinjections <- TICdat %>%
+        filter(value < thresh) %>%
+        select(idx) %>%
+        unlist() %>%
+        unname() %>%
+        list(idx = idx,missInjections = .)
+    return(missinjections)
+}
+
 #' detectMissInjections
 #' @rdname detectMissInjections
 #' @description detect miss injected samples
+#' @param x object of class Binalysis or MetaboProfile
+#' @param idx info column to use for sample indexes
 #' @importFrom stats IQR quantile
 
 setMethod('detectMissInjections',signature = 'Binalysis',
@@ -38,6 +52,8 @@ setMethod('detectMissInjections',signature = 'MetaboProfile',
                   missInject(idx = idx)
           })
 
+#' @importFrom dplyr bind_rows mutate n
+
 batchDiff <- function(TICdat,pthresh){
     ANOVAres <- TICdat %>%
         split(.$Mode) %>%
@@ -58,10 +74,15 @@ batchDiff <- function(TICdat,pthresh){
 }
 
 #' detectBatchDiff
+#' @description Detect batch differences
 #' @rdname detectBatchDiff
+#' @param x object of class Binalysis or MetaboProfile
+#' @param by info class column to use for batch information
+#' @param pthresh p-value threshold for significance
 #' @importClassesFrom binneR Binalysis
 #' @importFrom binneR binnedData info
 #' @importFrom tidyr gather
+#' @importFrom tibble rowid_to_column
 
 setMethod('detectBatchDiff',signature = 'Binalysis',
           function(x, by = 'block', pthresh = 0.05){
@@ -101,8 +122,17 @@ setMethod('detectBatchDiff',signature =  "MetaboProfile",
           })
 
 #' detectPairwises
+#' @description Detect availble pairwise comparisons
+#' @param x object of class Analysis
+#' @param cls info column to use for class information
+#' @param type type of analysis (classification or featureSelection)
 #' @importClassesFrom metabolyseR Analysis
 #' @importFrom metabolyseR preTreatedInfo
+#' @importFrom utils combn
+#' @importFrom dplyr filter select
+#' @importFrom tibble as_tibble
+#' @importFrom purrr map_chr
+#' @importFrom stringr str_c
 #' @rdname detectPairwises
 
 setMethod('detectPairwises',signature = 'Analysis',

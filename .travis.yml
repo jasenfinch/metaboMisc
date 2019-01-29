@@ -3,16 +3,24 @@
 language: r
 sudo: false
 cache: packages
+bioc_required: true
 
 warnings_are_errors: true
+
+apt_packages:
+ - libnetcdf-dev
+ - netcdf-bin
 
 r:
  - release
  - devel
- 
- r_github_packages:
-    - jasenfinch/metabolyseR
-    - jasenfinch/profilePro
+
+bioc_packages:
+ - impute
+
+r_github_packages:
+  - jasenfinch/metabolyseR
+  - jasenfinch/profilePro
  
 notifications:
     email:

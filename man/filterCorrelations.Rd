@@ -7,6 +7,17 @@
 filterCorrelations(correlations, rthresh = 0.7, n = 1e+05,
   rIncrement = 0.01, nIncrement = 20000)
 }
+\arguments{
+\item{correlations}{correlation table as returned by the correlations method in metabolyseR}
+
+\item{rthresh}{correlation coefficient threshold}
+
+\item{n}{correlation number threshold}
+
+\item{rIncrement}{correlation coefficient increase increment}
+
+\item{nIncrement}{correlation number increase increment if all correlations above rthresh}
+}
 \description{
-filterCorrelations
+filter correlation tables to give best comprimise between coefficient and number
 }
