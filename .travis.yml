@@ -15,9 +15,6 @@ r:
  - release
  - devel
 
-bioc_packages:
- - impute
-
 r_github_packages:
   - jasenfinch/metabolyseR
   - jasenfinch/profilePro
