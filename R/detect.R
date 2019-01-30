@@ -53,6 +53,7 @@ setMethod('detectMissInjections',signature = 'MetaboProfile',
           })
 
 #' @importFrom dplyr bind_rows mutate n
+#' @importFrom tibble tibble
 
 batchDiff <- function(TICdat,pthresh){
     ANOVAres <- TICdat %>%
