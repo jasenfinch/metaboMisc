@@ -60,7 +60,7 @@ batchDiff <- function(TICdat,pthresh){
         split(.$Mode) %>%
         map(~{
             res <- oneway.test(TIC~batch,.)
-            res <- tibble(F = res$statistic,`num df` = res$parameter[1],`denom df` = res$parameter[2],`p-value` = res$p.value)
+            res <- tibble(`F` = res$statistic,`num df` = res$parameter[1],`denom df` = res$parameter[2],`p-value` = res$p.value)
             if (res$`p-value` < pthresh) {
                 res <- res %>%
                     mutate(`Correction needed` = TRUE)
