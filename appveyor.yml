@@ -18,6 +18,7 @@ environment:
    
 build_script:
   - travis-tool.sh install_bioc impute
+  - travis-tool.sh install_github thomasp85/patchwork
   - travis-tool.sh install_github jasenfinch/metabolyseR
   - travis-tool.sh install_github jasenfinch/profilePro
   - travis-tool.sh install_bioc_deps
