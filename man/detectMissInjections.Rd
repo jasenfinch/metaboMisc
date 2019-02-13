@@ -13,6 +13,11 @@ detectMissInjections(x, idx = "fileOrder")
 
 \S4method{detectMissInjections}{MetaboProfile}(x, idx = "fileOrder")
 }
+\arguments{
+\item{x}{object of class Binalysis or MetaboProfile}
+
+\item{idx}{info column to use for sample indexes}
+}
 \description{
 detect miss injected samples
 }
