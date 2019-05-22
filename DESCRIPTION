@@ -16,6 +16,14 @@ Imports: binneR,
     tibble,
     stringr,
     ggplot2
+Collate:
+    'allGenerics.R'
+    'addAssignments.R'
+    'detect.R'
+    'filterCorrelations.R'
+    'metaboMisc.R'
+    'preTreatModes.R'
+    'theme_neat.R'
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
