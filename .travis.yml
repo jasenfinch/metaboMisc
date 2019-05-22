@@ -20,8 +20,8 @@ r_github_packages:
   - thomasp85/patchwork
   - jasenfinch/metabolyseR
   - jasenfinch/profilePro
-  - jasenfinch/MFassign
   - jasenfinch/mzAnnotation
+  - jasenfinch/MFassign
  
 notifications:
     email:
