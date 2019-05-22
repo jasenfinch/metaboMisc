@@ -25,3 +25,10 @@ setGeneric('detectMissInjections',function(x,idx = 'fileOrder'){
 setGeneric('detectPairwises',function(x,cls,type){
     standardGeneric('detectPairwises')
 })
+
+#' @rdname addAssignments
+#' @export 
+
+setGeneric('addAssignments',function(analysis,assignment){
+    standardGeneric('addAssignments')
+})

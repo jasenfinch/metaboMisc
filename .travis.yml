@@ -10,6 +10,7 @@ warnings_are_errors: true
 apt_packages:
  - libnetcdf-dev
  - netcdf-bin
+ - libopenbabel-dev
 
 r:
  - release
@@ -19,6 +20,8 @@ r_github_packages:
   - thomasp85/patchwork
   - jasenfinch/metabolyseR
   - jasenfinch/profilePro
+  - jasenfinch/mzAnnotation
+  - jasenfinch/MFassign
  
 notifications:
     email:
