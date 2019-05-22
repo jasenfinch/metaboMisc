@@ -15,7 +15,8 @@ Imports: binneR,
     tidyr,
     tibble,
     stringr,
-    ggplot2
+    ggplot2,
+    MFassign
 Collate:
     'allGenerics.R'
     'addAssignments.R'

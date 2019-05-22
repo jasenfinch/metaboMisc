@@ -4,6 +4,7 @@
 #' @param analysis S4 object of class Analysis
 #' @param assignment S4 object of class Assignment
 #' @importFrom dplyr left_join
+#' @importFrom MFassign assignments
 #' @importClassesFrom MFassign Assignment
 
 setMethod('addAssignments',signature = signature(analysis = 'Analysis',assignment = 'Assignment'),
