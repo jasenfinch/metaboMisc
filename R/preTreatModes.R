@@ -2,11 +2,15 @@
 #' @importFrom magrittr %>%
 #' @importFrom purrr map
 #' @importFrom methods new
+#' @importFrom metabolyseR analysisParameters
 
 preTreat <- function(dat,info,parameters,verbose = T){
     
+    p <- analysisParameters('preTreat')
+    p@preTreat <- parameters@preTreat
+    
     preTreated <- dat %>%
-        map(metabolyse,info = info,parameters = parameters,verbose = verbose)
+        map(metabolyse,info = info,parameters = p,verbose = verbose)
     preTreatedDat <- preTreated %>%
         map(~{
             .@preTreated$Data
