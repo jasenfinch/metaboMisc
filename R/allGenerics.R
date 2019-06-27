@@ -32,3 +32,10 @@ setGeneric('detectPairwises',function(x,cls,type){
 setGeneric('addAssignments',function(analysis,assignment){
     standardGeneric('addAssignments')
 })
+
+#' @rdname reduce
+#' @export 
+
+setGeneric('reduce',function(x, isotopes = T, adducts = T, unknowns = F){
+    standardGeneric('reduce')
+})
