@@ -6,6 +6,8 @@
 #' @param adducts TRUE/FALSE remove multiple adduct features.
 #' @param unknowns TRUE/FALSE remove unassigned features.
 #' @details Isotope and adduct features are filtered based on the maximum intensity peak for each molecular formulas.
+#' @importFrom dplyr group_by summarise
+#' @importFrom stringr str_split_fixed
 
 setMethod('reduce',signature = 'Analysis',
           function(x,isotopes = T, adducts = T, unknowns = F){
