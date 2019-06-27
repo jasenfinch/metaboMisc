@@ -1,2 +1,2 @@
 
-globalVariables(c('.','batch','r','value','Sample','Feature','Name','Intensity'))
+globalVariables(c('.','batch','r','value','Sample','Feature','Name','Intensity','MF'))
