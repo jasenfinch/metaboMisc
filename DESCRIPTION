@@ -1,6 +1,6 @@
 Package: metaboMisc
 Title: Miscellaneous Functions for Metabolomics Analyses
-Version: 0.1.4
+Version: 0.1.5
 Authors@R: person("Jasen", "Finch", email = "jsf9@aber.ac.uk", role = c("aut", "cre"))
 Description: Miscellaneous functions for metabolomics analyses that do not yet have a permanent home.
 biocViews: Metabolomics
@@ -25,6 +25,7 @@ Collate:
     'metaboMisc.R'
     'preTreatModes.R'
     'theme_neat.R'
+    'reduce.R'
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
