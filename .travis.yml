@@ -18,6 +18,7 @@ r:
 
 r_github_packages:
   - thomasp85/patchwork
+  - aberHRML/binneR
   - jasenfinch/metabolyseR
   - jasenfinch/profilePro
   - jasenfinch/mzAnnotation
