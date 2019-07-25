@@ -2,7 +2,7 @@
 #' @importFrom magrittr %>%
 #' @importFrom purrr map
 #' @importFrom methods new
-#' @importFrom metabolyseR analysisParameters
+#' @importFrom metabolyseR analysisParameters dat info analysisData
 
 preTreat <- function(dat,info,parameters,verbose = T){
     
@@ -13,17 +13,19 @@ preTreat <- function(dat,info,parameters,verbose = T){
         map(metabolyse,info = info,parameters = p,verbose = verbose)
     preTreatedDat <- preTreated %>%
         map(~{
-            .@preTreated$Data
+            .@preTreated %>%
+                dat()
         }) %>%
         bind_cols()
     
-    preTreatedInf <- preTreated[[1]]@preTreated$Info
+    preTreatedInf <- preTreated[[1]]@preTreated %>% 
+        metabolyseR::info()
     
     all <- new('Analysis')
     all@log <- list(packageVersion = packageVersion('metabolyseR'),analysis = date(),verbose = F)
     all@parameters <- parameters
-    all@rawData <- list(Data = bind_cols(dat), Info = info)
-    all@preTreated <- list(Data = preTreatedDat,Info = preTreatedInf)
+    all@rawData <- analysisData(bind_cols(dat), info)
+    all@preTreated <- analysisData(preTreatedDat,preTreatedInf)
     
     return(all)
 }
@@ -45,7 +47,7 @@ preTreat <- function(dat,info,parameters,verbose = T){
 setMethod('preTreatModes',signature = 'Binalysis',
           function(processedData,parameters,verbose = T){
               dat <- binnedData(processedData)
-              sampleInfo <- info(processedData)
+              sampleInfo <- binneR::info(processedData)
 
               preTreated <- preTreat(dat,sampleInfo,parameters,verbose = verbose)
               
@@ -57,7 +59,8 @@ setMethod('preTreatModes',signature = 'Binalysis',
 setMethod('preTreatModes',signature = 'MetaboProfile',
           function(processedData,parameters,verbose = T){
               dat <- processedData@Data
-              sampleInfo <- processedData@Info
+              sampleInfo <- processedData %>%
+                  metabolyseR::info()
               
               preTreated <- preTreat(dat,sampleInfo,parameters,verbose = verbose)
               
