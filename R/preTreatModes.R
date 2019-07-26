@@ -2,7 +2,8 @@
 #' @importFrom magrittr %>%
 #' @importFrom purrr map
 #' @importFrom methods new
-#' @importFrom metabolyseR analysisParameters
+#' @importFrom metabolyseR dat sinfo
+#' @importFrom metabolyseR analysisData analysisParameters
 
 preTreat <- function(dat,info,parameters,verbose = T){
     
@@ -13,17 +14,19 @@ preTreat <- function(dat,info,parameters,verbose = T){
         map(metabolyse,info = info,parameters = p,verbose = verbose)
     preTreatedDat <- preTreated %>%
         map(~{
-            .@preTreated$Data
+            .@preTreated %>%
+                dat()
         }) %>%
         bind_cols()
     
-    preTreatedInf <- preTreated[[1]]@preTreated$Info
+    preTreatedInf <- preTreated[[1]]@preTreated %>% 
+        sinfo()
     
     all <- new('Analysis')
     all@log <- list(packageVersion = packageVersion('metabolyseR'),analysis = date(),verbose = F)
     all@parameters <- parameters
-    all@rawData <- list(Data = bind_cols(dat), Info = info)
-    all@preTreated <- list(Data = preTreatedDat,Info = preTreatedInf)
+    all@rawData <- analysisData(bind_cols(dat), info)
+    all@preTreated <- analysisData(preTreatedDat,preTreatedInf)
     
     return(all)
 }
@@ -36,11 +39,12 @@ preTreat <- function(dat,info,parameters,verbose = T){
 #' @param processedData of class Binalysis or MetaboProfile
 #' @param parameters object of class AnalysisParameters containing pre-treatment parameters
 #' @param verbose console output
-#' @importFrom binneR binnedData info
+#' @importMethodsFrom  binneR binnedData info
 #' @importFrom metabolyseR metabolyse preTreatedData preTreatedInfo
 #' @importFrom dplyr bind_cols
 #' @importClassesFrom binneR Binalysis
 #' @importClassesFrom profilePro MetaboProfile
+#' @export
 
 setMethod('preTreatModes',signature = 'Binalysis',
           function(processedData,parameters,verbose = T){
@@ -53,13 +57,14 @@ setMethod('preTreatModes',signature = 'Binalysis',
 })
 
 #' @rdname preTreatModes
+#' @export
 
 setMethod('preTreatModes',signature = 'MetaboProfile',
           function(processedData,parameters,verbose = T){
               dat <- processedData@Data
-              sampleInfo <- processedData@Info
+              sInfo <- processedData@Info
               
-              preTreated <- preTreat(dat,sampleInfo,parameters,verbose = verbose)
+              preTreated <- preTreat(dat,sInfo,parameters,verbose = verbose)
               
               return(preTreated)
           })
