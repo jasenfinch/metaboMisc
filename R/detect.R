@@ -81,7 +81,7 @@ batchDiff <- function(TICdat,pthresh){
 #' @param by info class column to use for batch information
 #' @param pthresh p-value threshold for significance
 #' @importClassesFrom binneR Binalysis
-#' @importFrom binneR binnedData info
+#' @importFrom binneR binnedData
 #' @importFrom tidyr gather
 #' @importFrom tibble rowid_to_column
 
