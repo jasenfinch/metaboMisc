@@ -21,7 +21,7 @@ setMethod('addAssignments',signature = signature(analysis = 'Analysis',assignmen
               
               assignedFeats$Name[is.na(assignedFeats$Name)] <- assignedFeats$Feature[is.na(assignedFeats$Name)] 
               
-              colnames(analysis@preTreated$Data) <- assignedFeats$Name 
+              colnames(analysis@preTreated@data) <- assignedFeats$Name 
               
               return(analysis)
           })
