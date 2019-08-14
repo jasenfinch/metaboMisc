@@ -11,6 +11,8 @@ apt_packages:
  - libnetcdf-dev
  - netcdf-bin
  - libopenbabel-dev
+ - mesa-common-dev
+ - libglu1-mesa-dev
 
 r:
  - release
