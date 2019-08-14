@@ -60,7 +60,7 @@ setMethod('reduce',signature = 'Analysis',
               dat <- dat %>%
                   select(feat$Feature)
               
-              x@preTreated$Data <- dat
+              x@preTreated@data <- dat
               
               return(x)
           }
