@@ -22,6 +22,8 @@ build_script:
   - travis-tool.sh install_github jasenfinch/metabolyseR
   - travis-tool.sh install_github xdomingoal/erah-devel@devel
   - travis-tool.sh install_github jasenfinch/profilePro
+  - travis-tool.sh install_github jasenfinch/mzAnnotation
+  - travis-tool.sh install_github jasenfinch/MFassign
   - travis-tool.sh install_bioc_deps
 
 test_script:
