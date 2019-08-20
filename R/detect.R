@@ -55,9 +55,16 @@ setMethod('detectMissInjections',signature = 'MetaboProfile',
 #' @importFrom dplyr bind_rows mutate n
 #' @importFrom tibble tibble
 
-batchDiff <- function(TICdat,pthresh){
-    ANOVAres <- TICdat %>%
-        split(.$Mode) %>%
+batchDiff <- function(TICdat,pthresh = 0.05){
+    
+    if ('Mode' %in% colnames(TICdat)) {
+        ANOVAres <- TICdat %>%
+            split(.$Mode)    
+    } else {
+        ANOVAres <- list(TICdat)
+    }
+    
+    ANOVAres <- ANOVAres %>%
         map(~{
             res <- oneway.test(TIC~batch,.)
             res <- tibble(`F` = res$statistic,`num df` = res$parameter[1],`denom df` = res$parameter[2],`p-value` = res$p.value)
@@ -104,19 +111,30 @@ setMethod('detectBatchDiff',signature = 'Binalysis',
 )
 
 #' @rdname detectBatchDiff
+#' @importFrom stringr str_detect
+#' @importFrom tibble deframe
 
 setMethod('detectBatchDiff',signature =  "MetaboProfile",
           function(x, by = 'block', pthresh = 0.05){
-              rawInfo <- x %>%
+              ri <- x %>%
                   .@Info
               
-              TICdat <- x %>%
-                  .@Data %>%
-                  map(rowSums) %>%
-                  bind_cols() %>%
-                  rowid_to_column(var = 'Sample') %>%
-                  mutate(batch = rawInfo[,by] %>% unlist() %>% factor()) %>%
-                  gather('Mode','TIC',-batch,-Sample)
+              if (str_detect(x@processingParameters@technique,'GCMS')) {
+                  TICdat <- x %>%
+                      .@Data %>%
+                      rowSums() %>%
+                      {tibble(Sample = 1:length(.),
+                              TIC = .,
+                              batch = ri[,by] %>% deframe() %>% factor())}
+              } else {
+                  TICdat <- x %>%
+                      .@Data %>%
+                      map(rowSums) %>%
+                      bind_cols() %>%
+                      rowid_to_column(var = 'Sample') %>%
+                      mutate(batch = ri[,by] %>% unlist() %>% factor()) %>%
+                      gather('Mode','TIC',-batch,-Sample)   
+              }
               
               diff <- batchDiff(TICdat,pthresh)
               return(diff) 
