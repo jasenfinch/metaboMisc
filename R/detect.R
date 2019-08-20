@@ -42,14 +42,23 @@ setMethod('detectMissInjections',signature = 'MetaboProfile',
                   .@Info %>%
                   select(idx)
               
-              x %>%
-                  .@Data %>%
-                  map(rowSums) %>%
-                  bind_cols() %>%
-                  rowSums() %>%
-                  as_tibble() %>%
-                  bind_cols(i) %>%
-                  missInject(idx = idx)
+              if (str_detect(x@processingParameters@technique,'GCMS')) {
+                  mi <- x %>%
+                      .@Data %>%
+                      rowSums() %>%
+                      tibble(value = .) %>%
+                      bind_cols(i)
+              } else {
+                  mi <- x %>%
+                      .@Data %>%
+                      map(rowSums) %>%
+                      bind_cols() %>%
+                      rowSums() %>%
+                      as_tibble() %>%
+                      bind_cols(i)    
+              }
+              mi %>%
+                  missInject(idx = idx) 
           })
 
 #' @importFrom dplyr bind_rows mutate n
