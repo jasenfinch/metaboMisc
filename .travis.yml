@@ -1,32 +1,31 @@
-# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
-
 language: r
 sudo: false
 cache: packages
 bioc_required: true
-
 warnings_are_errors: true
 
 apt_packages:
- - libnetcdf-dev
- - netcdf-bin
- - libopenbabel-dev
- - mesa-common-dev
- - libglu1-mesa-dev
-
+- libnetcdf-dev
+- netcdf-bin
+- libopenbabel-dev
+- mesa-common-dev
+- libglu1-mesa-dev
 r:
- - release
- - devel
+- release
+- devel
 
 r_github_packages:
-  - thomasp85/patchwork
-  - aberHRML/binneR
-  - jasenfinch/metabolyseR
-  - jasenfinch/profilePro
-  - jasenfinch/mzAnnotation
-  - jasenfinch/MFassign
- 
+- thomasp85/patchwork
+- aberHRML/binneR
+- jasenfinch/metabolyseR
+- xdomingoal/erah-devel@devel
+- jasenfinch/profilePro
+- jasenfinch/mzAnnotation
+- jasenfinch/MFassign
+
 notifications:
-    email:
-    on_success: change
-    on_failure: change
+  email: false
+  slack:
+    secure: kZdalLqBnYm57vKDsvJC7yr3niAipH0K6WWE3+uukhpw/Tz9XgZA/8/nvflwLrJycg1WftUNbrcFEotCVFPpqeT0kORNlHj8dwBqmWRt7ih6lp8kOXMp3Ovj1YYMriwixuA9ykCUbc2tR+EbvIQ1/G66xzX8oDae/KctXaPqegACI2KpYDWzLrX4uZ8jamt0Suk+nasy9aaFfCmS4b2LG2HBXyGmcgGDwxfWeAt5YRfeqm7q1ePPB0cJN6JMLb09cWy4kwWKEWt7SRDVH3oq7K4lyRKNb8Y+D3slqLVYeFYQ50J0j3+LlrDoK9mpsK3QRcPFKlH/v/RdjmuAEx0RYbpeFLyG0CNLFWsdGLSKKzODiTg4d8Op/8xfud2gsW8KBlhRBaq/NLURXiPHoUEVDSTq5NuJJNtL+OyRg3f2MGGLPG4622ApZtdzNik6tBJrfY0UbS82I1H5lfrQzz7aHo8snKHyaBt+3P/uBLiZr2upSC0p85ORqZuQAPPS13i9jVL5/QEheplyskDZeHQikL87vUqT8HtJ7Cgn7RB3bnj+gw3oc300dFMFAQG0l/SHdnPqDLYCgzU9HyNmOk45YcSua7X3+IKL60ZU+fYYEVwfBvH3c8SVWXXbO0OW56HbgMkkV5nbQENLTF5UIruVEZaOguPGo5zZyTSRp0PBca8=
+  on_success: change
+  on_failure: change
