@@ -4,14 +4,17 @@
 \name{addAssignments}
 \alias{addAssignments}
 \alias{addAssignments,Analysis,Assignment-method}
+\alias{addAssignments,AnalysisData,Assignment-method}
 \title{addAssignments}
 \usage{
 addAssignments(analysis, assignment)
 
 \S4method{addAssignments}{Analysis,Assignment}(analysis, assignment)
+
+\S4method{addAssignments}{AnalysisData,Assignment}(analysis, assignment)
 }
 \arguments{
-\item{analysis}{S4 object of class Analysis}
+\item{analysis}{S4 object of class Analysis or AnalysisData}
 
 \item{assignment}{S4 object of class Assignment}
 }
