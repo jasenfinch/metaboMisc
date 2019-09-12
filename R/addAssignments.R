@@ -21,6 +21,9 @@ setMethod('addAssignments',signature = signature(analysis = 'Analysis',assignmen
               
               assignedFeats$Name[is.na(assignedFeats$Name)] <- assignedFeats$Feature[is.na(assignedFeats$Name)] 
               
+              assignedFeats <- assignedFeats %>%
+                  filter(!duplicated(Feature))
+              
               colnames(analysis@preTreated@data) <- assignedFeats$Name 
               
               return(analysis)
@@ -41,6 +44,9 @@ setMethod('addAssignments',signature = signature(analysis = 'AnalysisData',assig
                   by = "Feature")
               
               assignedFeats$Name[is.na(assignedFeats$Name)] <- assignedFeats$Feature[is.na(assignedFeats$Name)] 
+              
+              assignedFeats <- assignedFeats %>%
+                  filter(!duplicated(Feature))
               
               colnames(analysis@data) <- assignedFeats$Name 
               
