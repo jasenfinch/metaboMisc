@@ -4,11 +4,15 @@
 \name{reduce}
 \alias{reduce}
 \alias{reduce,Analysis-method}
+\alias{reduce,AnalysisData-method}
 \title{reduce}
 \usage{
 reduce(x, isotopes = T, adducts = T, unknowns = F)
 
 \S4method{reduce}{Analysis}(x, isotopes = T, adducts = T,
+  unknowns = F)
+
+\S4method{reduce}{AnalysisData}(x, isotopes = T, adducts = T,
   unknowns = F)
 }
 \arguments{
