@@ -8,12 +8,27 @@
 #' @details Isotope and adduct features are filtered based on the maximum intensity peak for each molecular formulas.
 #' @importFrom dplyr group_by summarise
 #' @importFrom stringr str_split_fixed
+#' @importFrom metabolyseR preTreated preTreated<-
 
 setMethod('reduce',signature = 'Analysis',
           function(x,isotopes = T, adducts = T, unknowns = F){
-              dat <- x %>%
-                  preTreatedData()
-              feat <-  dat %>%
+              preTreated(x) <- x %>%
+                  preTreated() %>%
+                  reduce(isotopes = isotopes,adducts = adducts,unknowns = unknowns)
+              
+              return(x)
+          }
+)
+
+#' @rdname reduce
+#' @importFrom metabolyseR dat<-
+
+setMethod('reduce',signature = 'AnalysisData',
+          function(x,isotopes = T, adducts = T, unknowns = F){
+              d <- x %>%
+                  dat()
+              
+              feat <-  d %>%
                   rowid_to_column(var = 'Sample') %>%
                   gather('Feature','Intensity',-Sample) %>%
                   group_by(Feature) %>%
@@ -57,11 +72,11 @@ setMethod('reduce',signature = 'Analysis',
                       bind_rows(uks)
               }
               
-              dat <- dat %>%
+              d <- d %>%
                   select(feat$Feature)
               
-              x@preTreated@data <- dat
-              
-              return(x)
+             dat(x) <- d
+             
+             return(x)
           }
 )
