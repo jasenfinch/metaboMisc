@@ -4,8 +4,13 @@
 \alias{filterCorrelations}
 \title{filterCorrelations}
 \usage{
-filterCorrelations(correlations, rthresh = 0.7, n = 1e+05,
-  rIncrement = 0.01, nIncrement = 20000)
+filterCorrelations(
+  correlations,
+  rthresh = 0.7,
+  n = 1e+05,
+  rIncrement = 0.01,
+  nIncrement = 20000
+)
 }
 \arguments{
 \item{correlations}{correlation table as returned by the correlations method in metabolyseR}
