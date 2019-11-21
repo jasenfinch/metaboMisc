@@ -1,8 +1,8 @@
 Package: metaboMisc
 Title: Miscellaneous Functions for Metabolomics Analyses
-Version: 0.2.1
+Version: 0.2.2
 Authors@R: person("Jasen", "Finch", email = "jsf9@aber.ac.uk", role = c("aut", "cre"))
-Description: Miscellaneous functions for metabolomics analyses that do not yet have a permanent home.
+Description: Miscellaneous helper functions for metabolomics analyses that do not yet have a permanent home.
 biocViews: Metabolomics
 Depends: R (>= 3.4)
 Imports: binneR,
@@ -16,7 +16,10 @@ Imports: binneR,
     tibble,
     stringr,
     ggplot2,
-    MFassign
+    MFassign,
+    crayon,
+    cli,
+    lubridate
 Collate:
     'allGenerics.R'
     'addAssignments.R'
@@ -29,4 +32,4 @@ Collate:
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.0
