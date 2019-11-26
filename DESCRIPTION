@@ -21,15 +21,16 @@ Imports: binneR,
     cli,
     lubridate
 Collate:
-    'allGenerics.R'
-    'addAssignments.R'
-    'detect.R'
-    'filterCorrelations.R'
-    'metaboMisc.R'
-    'preTreatModes.R'
-    'theme_neat.R'
-    'reduce.R'
+    allGenerics.R
+    addAssignments.R
+    detect.R
+    filterCorrelations.R
+    metaboMisc.R
+    preTreatModes.R
+    theme_neat.R
+    reduce.R
+    plotRSD.R
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.0.0
+RoxygenNote: 7.0.1
