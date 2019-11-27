@@ -1,6 +1,6 @@
 Package: metaboMisc
 Title: Miscellaneous Functions for Metabolomics Analyses
-Version: 0.2.2
+Version: 0.3.0
 Authors@R: person("Jasen", "Finch", email = "jsf9@aber.ac.uk", role = c("aut", "cre"))
 Description: Miscellaneous helper functions for metabolomics analyses that do not yet have a permanent home.
 biocViews: Metabolomics
@@ -21,15 +21,16 @@ Imports: binneR,
     cli,
     lubridate
 Collate:
-    'allGenerics.R'
-    'addAssignments.R'
-    'detect.R'
-    'filterCorrelations.R'
-    'metaboMisc.R'
-    'preTreatModes.R'
-    'theme_neat.R'
-    'reduce.R'
+    allGenerics.R
+    addAssignments.R
+    detect.R
+    filterCorrelations.R
+    metaboMisc.R
+    preTreatModes.R
+    theme_neat.R
+    reduce.R
+    plotRSD.R
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.0.0
+RoxygenNote: 7.0.1
