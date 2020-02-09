@@ -9,7 +9,7 @@
   analysis,
   cls = "class",
   QCidx = "QC",
-  QCparameters = NULL,
+  QCparameters = analysisParameters("preTreat"),
   histBins = 30
 )
 
