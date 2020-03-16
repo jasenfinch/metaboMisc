@@ -101,6 +101,7 @@ batchDiff <- function(TICdat,pthresh = 0.05){
 #' @importFrom tidyr gather
 #' @importFrom tibble rowid_to_column
 #' @importFrom dplyr group_by_all
+#' @importFrom tidyselect all_of
 
 setMethod('detectBatchDiff',signature = 'Binalysis',
           function(x, by = 'block', pthresh = 0.05){

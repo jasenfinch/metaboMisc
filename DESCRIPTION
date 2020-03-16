@@ -19,7 +19,8 @@ Imports: binneR,
     MFassign,
     crayon,
     cli,
-    lubridate
+    lubridate,
+    tidyselect
 Collate:
     allGenerics.R
     addAssignments.R
