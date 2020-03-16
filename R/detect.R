@@ -100,6 +100,7 @@ batchDiff <- function(TICdat,pthresh = 0.05){
 #' @importFrom binneR binnedData
 #' @importFrom tidyr gather
 #' @importFrom tibble rowid_to_column
+#' @importFrom dplyr group_by_all
 
 setMethod('detectBatchDiff',signature = 'Binalysis',
           function(x, by = 'block', pthresh = 0.05){
@@ -113,6 +114,24 @@ setMethod('detectBatchDiff',signature = 'Binalysis',
                   rowid_to_column(var = 'Sample') %>%
                   mutate(batch = rawInfo[,by] %>% unlist() %>% factor()) %>%
                   gather('Mode','TIC',-batch,-Sample)
+              
+              i <- rawInfo %>%
+                  select(batch = all_of(by))
+              
+              clsFreq <- i %>%
+                  group_by_all() %>%
+                  summarise(n = n())
+              
+              if (T %in% (clsFreq$n < 3)) {
+                  clsRem <- clsFreq %>%
+                      filter(n < 3)
+                  
+                  TICdat <- TICdat %>%
+                      filter(!(batch %in% clsRem$batch))
+                  
+                  warning(str_c('Batches with < 3 replicates removed: ',str_c(str_c('"',clsRem$batch,'"'),collapse = ', ')),call. = F)
+                  
+              }
               
               diff <- batchDiff(TICdat,pthresh)
               return(diff)
