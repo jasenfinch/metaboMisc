@@ -21,6 +21,10 @@ Imports: binneR,
     cli,
     lubridate,
     tidyselect
+Remotes: aberHRML/binneR,
+    jasenfinch/metabolyseR,
+    jasenfinch/profilePro,
+    jasenfinch/MFassign
 Collate:
     allGenerics.R
     addAssignments.R
