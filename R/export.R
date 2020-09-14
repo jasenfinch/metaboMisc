@@ -5,6 +5,9 @@
 #' @param outPath directory path to export to.
 #' @param ... arguments to pass to specific method
 #' @importFrom binneR info binnedData
+#' @importFrom readr write_csv
+#' @importFrom purrr walk
+#' @importFrom stringr str_remove_all
 #' @export
 
 setMethod('export',signature = 'Binalysis',function(analysis,outPath = '.'){
