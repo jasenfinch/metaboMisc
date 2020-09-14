@@ -4,7 +4,7 @@
 \alias{theme_neat}
 \title{theme_neat}
 \usage{
-theme_neat(base_size = 12, base_family = "Ubunbu")
+theme_neat(base_size = 12, base_family = "Ubuntu")
 }
 \arguments{
 \item{base_size}{base font size}

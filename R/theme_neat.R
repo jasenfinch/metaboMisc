@@ -5,7 +5,7 @@
 #' @importFrom ggplot2 theme_bw theme element_text
 #' @export
 
-theme_neat <- function(base_size = 12, base_family = 'Ubunbu'){
+theme_neat <- function(base_size = 12, base_family = 'Ubuntu'){
     theme_bw(base_size = base_size,base_family = base_family) +
         theme(
             legend.position = 'bottom',
