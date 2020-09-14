@@ -8,6 +8,8 @@ on:
   pull_request:
     branches:
       - master
+  schedule:
+    - cron: '@daily'
 
 name: R-CMD-check
 
