@@ -19,8 +19,6 @@ export(analysis, outPath = ".")
 \item{analysis}{S4 object of class Binalysis, Analysis, Assignment,}
 
 \item{outPath}{directory path to export to.}
-
-\item{...}{arguments to pass to specific method}
 }
 \description{
 Export data tables from analysis results.
