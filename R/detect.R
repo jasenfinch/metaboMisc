@@ -16,6 +16,20 @@ missInject <- function(TICdat,idx){
 #' @param x object of class Binalysis or MetaboProfile
 #' @param idx info column to use for sample indexes
 #' @importFrom stats IQR quantile
+#' @examples 
+#' \dontrun{
+#' files <- metaboData::filePaths('FIE-HRMS','BdistachyonEcotypes')
+#' 
+#' info <- metaboData::runinfo('FIE-HRMS','BdistachyonEcotypes')
+#' 
+#' analysis <- binneR::binneRlyse(files, 
+#'                                info, 
+#'                                parameters = binneR::detectParameters(files))
+#' 
+#' miss_injections <- detectMissInjections(analysis)
+#' 
+#' miss_injections$missInjections
+#' }
 
 setMethod('detectMissInjections',signature = 'Binalysis',
           function(x,idx = 'fileOrder'){

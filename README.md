@@ -1,6 +1,5 @@
 # metaboMisc
 
-[![Travis build status](https://travis-ci.org/jasenfinch/metaboMisc.svg?branch=master)](https://travis-ci.org/jasenfinch/metaboMisc)
-[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/jasenfinch/metaboMisc?branch=master&svg=true)](https://ci.appveyor.com/project/jasenfinch/metaboMisc)
+ [![R build status](https://github.com/jasenfinch/metaboMisc/workflows/R-CMD-check/badge.svg)](https://github.com/jasenfinch/metaboMisc/actions)
 
 Miscellaneous functions for metabolomics analyses that do not yet have a permanent home

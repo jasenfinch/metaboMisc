@@ -38,3 +38,10 @@ setGeneric('addAssignments',function(analysis,assignment){
 setGeneric('reduce',function(x, isotopes = T, adducts = T, unknowns = F){
     standardGeneric('reduce')
 })
+
+#' @rdname export
+#' @export
+
+setGeneric('export',function(analysis,outPath = '.'){
+    standardGeneric('export')
+})
