@@ -1,6 +1,6 @@
 Package: metaboMisc
 Title: Miscellaneous Functions for Metabolomics Analyses
-Version: 0.4.0
+Version: 0.4.1
 Authors@R: person("Jasen", "Finch", email = "jsf9@aber.ac.uk", role = c("aut", "cre"))
 Description: Miscellaneous helper functions for metabolomics analyses that do not yet have a permanent home.
 biocViews: Metabolomics
@@ -21,7 +21,8 @@ Imports: binneR,
     cli,
     lubridate,
     tidyselect,
-    readr
+    readr,
+    future
 Remotes: aberHRML/binneR,
     jasenfinch/metabolyseR,
     jasenfinch/profilePro,
@@ -37,6 +38,7 @@ Collate:
     reduce.R
     plotRSD.R
     export.R
+    parallel.R
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
