@@ -1,12 +1,3 @@
-detectClusterType <- function(){
-    if (.Platform$OS.type == 'windows') {
-        type <- 'PSOCK'
-    } else {
-        type <- 'FORK'
-    }
-    return(type)
-}
-
 #' Generate a suitable parallel processing plan
 #' @description Generate a suitable parallel processing future plan for your session. See ?future::plan for more details on future plans?
 #' @examples 
