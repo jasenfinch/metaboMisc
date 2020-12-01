@@ -1,3 +1,7 @@
+# metaboMisc 0.4.3
+
+* Fixed missing method exports for `metaboMisc::addAssignments()`, `metaboMisc::detectBatchDiff()`, `metaboMisc::detectMissInjections()`, `metaboMisc::detectPairwises()` and `metaboMisc::reduce()`.
+
 # metaboMisc 0.4.2
 
 * Added `metaboMisc::featureSummary()` to summarise spectral features in the [`Binalysis`](https://aberhrml.github.io/binneR/reference/Binalysis-class.html) S4 class.

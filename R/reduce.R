@@ -9,6 +9,7 @@
 #' @importFrom dplyr group_by summarise
 #' @importFrom stringr str_split_fixed
 #' @importFrom metabolyseR preTreated preTreated<-
+#' @export
 
 setMethod('reduce',signature = 'Analysis',
           function(x,isotopes = T, adducts = T, unknowns = F){
@@ -22,6 +23,7 @@ setMethod('reduce',signature = 'Analysis',
 
 #' @rdname reduce
 #' @importFrom metabolyseR dat<-
+#' @export
 
 setMethod('reduce',signature = 'AnalysisData',
           function(x,isotopes = T, adducts = T, unknowns = F){
