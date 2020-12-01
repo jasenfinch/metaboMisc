@@ -6,6 +6,7 @@
 #' @importFrom dplyr left_join
 #' @importFrom MFassign assignments
 #' @importClassesFrom MFassign Assignment
+#' @export
 
 setMethod('addAssignments',signature = signature(analysis = 'Analysis',assignment = 'Assignment'),
           function(analysis,assignment){
@@ -30,6 +31,7 @@ setMethod('addAssignments',signature = signature(analysis = 'Analysis',assignmen
           })
 
 #' @rdname addAssignments
+#' @export
 
 setMethod('addAssignments',signature = signature(analysis = 'AnalysisData',assignment = 'Assignment'),
           function(analysis,assignment){

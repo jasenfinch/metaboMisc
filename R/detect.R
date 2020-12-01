@@ -30,6 +30,7 @@ missInject <- function(TICdat,idx){
 #' 
 #' miss_injections$missInjections
 #' }
+#' @export
 
 setMethod('detectMissInjections',signature = 'Binalysis',
           function(x,idx = 'fileOrder'){
@@ -49,6 +50,8 @@ setMethod('detectMissInjections',signature = 'Binalysis',
           })
 
 #' @rdname detectMissInjections
+#' @export
+
 setMethod('detectMissInjections',signature = 'MetaboProfile',
           function(x,idx = 'fileOrder'){
               
@@ -116,6 +119,7 @@ batchDiff <- function(TICdat,pthresh = 0.05){
 #' @importFrom tibble rowid_to_column
 #' @importFrom dplyr group_by_all
 #' @importFrom tidyselect all_of
+#' @export
 
 setMethod('detectBatchDiff',signature = 'Binalysis',
           function(x, by = 'block', pthresh = 0.05){
@@ -156,6 +160,7 @@ setMethod('detectBatchDiff',signature = 'Binalysis',
 #' @rdname detectBatchDiff
 #' @importFrom stringr str_detect
 #' @importFrom tibble deframe
+#' @export
 
 setMethod('detectBatchDiff',signature =  "MetaboProfile",
           function(x, by = 'block', pthresh = 0.05){
@@ -196,6 +201,7 @@ setMethod('detectBatchDiff',signature =  "MetaboProfile",
 #' @importFrom purrr map_chr
 #' @importFrom stringr str_c
 #' @rdname detectPairwises
+#' @export
 
 setMethod('detectPairwises',signature = 'Analysis',
           function(x,cls,type){
