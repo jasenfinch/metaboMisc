@@ -1,47 +1,44 @@
 #' @rdname preTreatModes
 
-setGeneric("preTreatModes", function(processedData,parameters,verbose = T) {
+setGeneric("preTreatModes", function(processedData,parameters,verbose = TRUE) {
     standardGeneric("preTreatModes")
 })
 
 #' @rdname detectBatchDiff
 
-setGeneric('detectBatchDiff',function(x, by = 'block', pthresh = 0.05){
-    standardGeneric('detectBatchDiff')
-})
+setGeneric('detectBatchDiff',function(x, by = 'block', pthresh = 0.05)
+    standardGeneric('detectBatchDiff'))
 
 #' @rdname detectMissInjections
 
-setGeneric('detectMissInjections',function(x,idx = 'fileOrder'){
-    standardGeneric('detectMissInjections')
-})
+setGeneric('detectMissInjections',function(x,idx = 'fileOrder')
+    standardGeneric('detectMissInjections'))
 
 #' @rdname detectPairwises
 
-setGeneric('detectPairwises',function(x,cls,type){
-    standardGeneric('detectPairwises')
-})
+setGeneric('detectPairwises',function(x,cls,type)
+    standardGeneric('detectPairwises'))
 
 #' @rdname addAssignments
 
-setGeneric('addAssignments',function(analysis,assignment){
-    standardGeneric('addAssignments')
-})
+setGeneric('addAssignments',function(analysis,assignment)
+    standardGeneric('addAssignments'))
 
 #' @rdname reduce
 
-setGeneric('reduce',function(x, isotopes = T, adducts = T, unknowns = F){
-    standardGeneric('reduce')
-})
+setGeneric('reduce',
+           function(x, 
+                    isotopes = TRUE, 
+                    adducts = TRUE, 
+                    unknowns = FALSE)
+               standardGeneric('reduce'))
 
 #' @rdname export
 
-setGeneric('export',function(analysis,outPath = '.'){
-    standardGeneric('export')
-})
+setGeneric('export',function(analysis,outPath = '.')
+    standardGeneric('export'))
 
 #' @rdname featureSummary
 
-setGeneric('featureSummary',function(x){
-    standardGeneric('featureSummary')
-})
+setGeneric('featureSummary',function(x)
+    standardGeneric('featureSummary'))
