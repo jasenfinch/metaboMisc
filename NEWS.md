@@ -1,3 +1,7 @@
+# metaboMisc 0.4.4
+
+* Fixed [`binneR::sampleInfo()`](https://aberhrml.github.io/binneR/reference/results.html) imports with binneR v2.5.0 update.
+
 # metaboMisc 0.4.3
 
 * Fixed missing method exports for `metaboMisc::addAssignments()`, `metaboMisc::detectBatchDiff()`, `metaboMisc::detectMissInjections()`, `metaboMisc::detectPairwises()` and `metaboMisc::reduce()`.
