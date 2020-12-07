@@ -6,7 +6,7 @@
 \alias{reduce,AnalysisData-method}
 \title{reduce}
 \usage{
-reduce(x, isotopes = T, adducts = T, unknowns = F)
+reduce(x, isotopes = TRUE, adducts = TRUE, unknowns = FALSE)
 
 \S4method{reduce}{Analysis}(x, isotopes = T, adducts = T, unknowns = F)
 

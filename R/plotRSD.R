@@ -52,11 +52,11 @@ setMethod('plotRSD',signature = 'Binalysis',function(analysis, cls = 'class', QC
 })
 
 #' @rdname plotRSD
-#' @importFrom profilePro sampleInfo processedData
+#' @importFrom profilePro processedData
 #' @export
 
 setMethod('plotRSD',signature = 'MetaboProfile',function(analysis, cls = 'class', QCidx = 'QC', QCparameters = NULL, histBins = 30){
-    si <- sampleInfo(analysis)
+    si <- profilePro::sampleInfo(analysis)
     d <- processedData(analysis)
     
     d %>%

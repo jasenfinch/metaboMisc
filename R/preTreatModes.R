@@ -90,7 +90,7 @@ preTreat <- function(dat,info,parameters,verbose = TRUE){
 #' @param processedData of class Binalysis or MetaboProfile
 #' @param parameters object of class AnalysisParameters containing pre-treatment parameters
 #' @param verbose console output
-#' @importMethodsFrom  binneR binnedData info
+#' @importMethodsFrom  binneR binnedData
 #' @importFrom metabolyseR metabolyse preTreatedData preTreatedInfo
 #' @importFrom dplyr bind_cols
 #' @importClassesFrom binneR Binalysis
@@ -99,10 +99,10 @@ preTreat <- function(dat,info,parameters,verbose = TRUE){
 
 setMethod('preTreatModes',signature = 'Binalysis',
           function(processedData,parameters,verbose = T){
-              dat <- binnedData(processedData)
-              sampleInfo <- info(processedData)
+              binned_data <- binnedData(processedData)
+              sample_info <- binneR::sampleInfo(processedData)
               
-              preTreated <- preTreat(dat,sampleInfo,parameters,verbose = verbose)
+              preTreated <- preTreat(binned_data,sample_info,parameters,verbose = verbose)
               
               return(preTreated)
           })

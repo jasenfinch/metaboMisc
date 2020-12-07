@@ -3,7 +3,7 @@
 #' @description Export data tables from analysis results.
 #' @param analysis S4 object of class Binalysis, Analysis, Assignment,
 #' @param outPath directory path to export to.
-#' @importFrom binneR info binnedData
+#' @importFrom binneR binnedData
 #' @importFrom readr write_csv
 #' @importFrom purrr walk
 #' @importFrom stringr str_remove_all
