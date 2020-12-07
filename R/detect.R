@@ -36,7 +36,7 @@ setMethod('detectMissInjections',signature = 'Binalysis',
           function(x,idx = 'fileOrder'){
               
               i <- x %>%
-                  info() %>%
+                  binneR::sampleInfo() %>%
                   select(idx)
               
               x %>%
@@ -124,7 +124,7 @@ batchDiff <- function(TICdat,pthresh = 0.05){
 setMethod('detectBatchDiff',signature = 'Binalysis',
           function(x, by = 'block', pthresh = 0.05){
               rawInfo <- x %>%
-                  info()
+                  binneR::sampleInfo()
               
               TICdat <- x %>%
                   binnedData %>%

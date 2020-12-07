@@ -12,7 +12,7 @@
 #' @export
 
 setMethod('plotRSD',signature = 'Binalysis',function(analysis, cls = 'class', QCidx = 'QC', QCparameters = analysisParameters('preTreat'), histBins = 30){
-    si <- info(analysis)
+    si <- binneR::sampleInfo(analysis)
     d <- binnedData(analysis)
     
     d %>%

@@ -19,7 +19,7 @@ setMethod('export',signature = 'Binalysis',function(analysis,outPath = '.'){
     }
     
     i <- analysis %>%
-        info()
+        binneR::sampleInfo()
     
     if (T %in% duplicated(i$name)) {
         i <- fixNames(i)
