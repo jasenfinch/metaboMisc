@@ -1,3 +1,7 @@
+# metaboMisc 0.4.5
+
+* Fixed breakages and function imports caused by [`metabolyseR`](https://jasenfinch.github.io/metabolyseR) to version 0.14.0.
+
 # metaboMisc 0.4.4
 
 * Fixed [`binneR::sampleInfo()`](https://aberhrml.github.io/binneR/reference/results.html) imports with binneR v2.5.0 update.
