@@ -16,7 +16,7 @@ setMethod('addAssignments',signature = signature(analysis = 'Analysis',assignmen
                   select(Feature,Name)
               
               assignedFeats <- left_join(
-                  tibble(Feature = analysis %>% preTreatedData() %>% colnames()),
+                  tibble(Feature = analysis %>% dat(type = 'pre-treated') %>% colnames()),
                   assignedFeats, 
                   by = "Feature")
               
