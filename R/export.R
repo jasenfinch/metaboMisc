@@ -61,7 +61,7 @@ setMethod('export',signature = 'Analysis',function(analysis,outPath = '.'){
     }
     
     i <- analysis %>%
-        preTreatedInfo()
+        sinfo(type = 'pre-treated')
     
     if (T %in% duplicated(i$name)) {
         i <- fixNames(i)
@@ -70,7 +70,7 @@ setMethod('export',signature = 'Analysis',function(analysis,outPath = '.'){
     write_csv(i,str_c(exportPath,'/pre-treated_sample_info.csv'))
     
     analysis %>%
-        preTreatedData() %>%
+        dat(type = 'pre-treated') %>%
         bind_cols(i %>% select(name)) %>%
         gather('m/z','Intensity',-name) %>%
         spread(name,Intensity) %>%

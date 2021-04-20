@@ -91,7 +91,7 @@ preTreat <- function(dat,info,parameters,verbose = TRUE){
 #' @param parameters object of class AnalysisParameters containing pre-treatment parameters
 #' @param verbose console output
 #' @importMethodsFrom  binneR binnedData
-#' @importFrom metabolyseR metabolyse preTreatedData preTreatedInfo
+#' @importFrom metabolyseR metabolyse
 #' @importFrom dplyr bind_cols
 #' @importClassesFrom binneR Binalysis
 #' @importClassesFrom profilePro MetaboProfile

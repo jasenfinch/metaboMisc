@@ -194,7 +194,6 @@ setMethod('detectBatchDiff',signature =  "MetaboProfile",
 #' @param cls info column to use for class information
 #' @param type type of analysis (classification or featureSelection)
 #' @importClassesFrom metabolyseR Analysis
-#' @importFrom metabolyseR preTreatedInfo
 #' @importFrom utils combn
 #' @importFrom dplyr filter select
 #' @importFrom tibble as_tibble
@@ -212,7 +211,7 @@ setMethod('detectPairwises',signature = 'Analysis',
                   minimum <- 3
               }
               info <- x %>%
-                  preTreatedInfo() %>%
+                  sinfo(type = 'pre-treated') %>% 
                   select(!!cls) %>%
                   unlist() %>%
                   table() %>%
