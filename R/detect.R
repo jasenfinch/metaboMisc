@@ -59,6 +59,7 @@ setMethod('detectMissInjections',signature = 'MetaboProfile',
               
               mi <- x %>% 
                   processedData()
+              
               if (str_detect(technique(x),'GCMS')) {
                   mi <- mi %>% 
                       rowSums() %>%
