@@ -28,6 +28,7 @@ setGeneric('detectMissInjections',function(x,idx = 'fileOrder')
     standardGeneric('detectMissInjections'))
 
 #' @rdname detectMissInjections
+#' @importFrom tibble as_tibble
 
 setMethod('detectMissInjections',signature = 'Binalysis',
           function(x,idx = 'fileOrder'){
@@ -47,24 +48,25 @@ setMethod('detectMissInjections',signature = 'Binalysis',
           })
 
 #' @rdname detectMissInjections
+#' @importFrom profilePro technique
 
 setMethod('detectMissInjections',signature = 'MetaboProfile',
           function(x,idx = 'fileOrder'){
               
               i <- x %>%
-                  .@Info %>%
+                  profilePro::sampleInfo() %>% 
                   select(all_of(idx))
               
-              if (str_detect(x@processingParameters@technique,'GCMS')) {
-                  mi <- x %>%
-                      .@Data %>%
+              mi <- x %>% 
+                  processedData()
+              if (str_detect(technique(x),'GCMS')) {
+                  mi <- mi %>% 
                       rowSums() %>%
                       tibble(value = .) %>%
                       bind_cols(i)
               } else {
-                  mi <- x %>%
-                      .@Data %>%
-                      map(rowSums) %>%
+                  mi <- mi %>% 
+                  map(rowSums) %>%
                       bind_cols() %>%
                       rowSums() %>%
                       as_tibble() %>%
@@ -151,18 +153,19 @@ setMethod('detectBatchDiff',signature = 'Binalysis',
 setMethod('detectBatchDiff',signature =  "MetaboProfile",
           function(x, by = 'block', pthresh = 0.05){
               ri <- x %>%
-                  .@Info
+                  profilePro::sampleInfo()
               
-              if (str_detect(x@processingParameters@technique,'GCMS')) {
-                  TICdat <- x %>%
-                      .@Data %>%
+              TICdat <- x %>%
+                  processedData()
+              
+              if (str_detect(technique(x),'GCMS')) {
+                  TICdat <- TICdat %>%
                       rowSums() %>%
                       {tibble(Sample = 1:length(.),
                               TIC = .,
                               batch = ri[,by] %>% deframe() %>% factor())}
               } else {
-                  TICdat <- x %>%
-                      .@Data %>%
+                  TICdat <- TICdat %>% 
                       map(rowSums) %>%
                       bind_cols() %>%
                       rowid_to_column(var = 'Sample') %>%
@@ -237,8 +240,8 @@ batchDiff <- function(TICdat,pthresh = 0.05){
 #' Detect pre-treatment parameters
 #' @rdname detectPretreatmentParameters
 #' @description Detect pre-treatment parameters for `Binalysis` or `MetaboProfile` class objects. 
-#' @param x S4 object of class `Binalysis` or `MetaboProfile`
-#' @return S4 object of class 
+#' @param x S4 object of class `Binalysis`, `MetaboProfile` or `AnalysisData`
+#' @return S4 object of class `AnalysisParameters`
 #' @examples
 #' ## Retreive example file paths and sample information 
 #' file_paths <- metaboData::filePaths('FIE-HRMS','BdistachyonEcotypes') %>% 
@@ -309,3 +312,132 @@ detectPretreatment <- function(x){
     
     return(pre_treat_params)
 } 
+
+#' Detect modelling parameters
+#' @rdname detectModellingParameters
+#' @description Detect modelling parameters for `Binalysis`, `MetaboProfile` or `Analysis` S4 classes. 
+#' @param x S4 object of class `Binalysis`,`MetaboProfile` or `Analysis`
+#' @param type detect parameters for `raw` or `pre-treated` data for `Analysis` class
+#' @param cls sample information column to use for modelling
+#' @param ... arguments to pass to the appropriate method
+#' @return S4 object of class `AnalysisParameters`
+#' @examples 
+#' library(metaboData)
+#' ## Retrieve file paths and sample information for example data
+#' files <- metaboData::filePaths('FIE-HRMS','BdistachyonEcotypes')[1:2]
+#' 
+#' info <- metaboData::runinfo('FIE-HRMS','BdistachyonEcotypes')[1:2,]
+#' 
+#' ## Perform spectral binning
+#' analysis <- binneR::binneRlyse(files, 
+#'                                info, 
+#'                                parameters = binneR::detectParameters(files))
+#' 
+#' ## Detect modelling parameters
+#' modelling_parameters <- detectModellingParameters(analysis)
+#' 
+#' modelling_parameters
+#' @export
+
+setGeneric('detectModellingParameters',function(x,...){
+    standardGeneric('detectModellingParameters')
+})
+
+#' @rdname detectModellingParameters
+#' @importFrom binneR cls 
+
+setMethod('detectModellingParameters',signature = 'Binalysis',
+          function(x){
+              idx <- cls(x)
+              
+              if (length(idx) == 0){
+                  idx <- 'class'
+              }
+              
+              sample_information <- binneR::sampleInfo(x) %>% 
+                  select(all_of(idx)) %>% 
+                  deframe()
+              
+              detectModelling(sample_information,idx)
+          })
+
+#' @rdname detectModellingParameters
+#' @importFrom profilePro processingParameters
+
+setMethod('detectModellingParameters',signature = 'MetaboProfile',
+          function(x){
+             idx <- x %>% 
+                 processingParameters() %>% 
+                 .$info %>% 
+                 .$cls
+             
+             sample_information <- x %>% 
+                 profilePro::sampleInfo() %>% 
+                 select(all_of(idx)) %>% 
+                 deframe()
+             
+             detectModelling(sample_information,idx)
+          })
+
+#' @rdname detectModellingParameters
+
+setMethod('detectModellingParameters',signature = 'Analysis',
+          function(x,type = 'pre-treated',cls = 'class'){
+              
+              sample_information <- x %>% 
+                  sinfo(type = type) %>% 
+                  select(all_of(cls)) %>% 
+                  deframe()
+              
+              detectModelling(sample_information,cls)
+          })
+
+#' @importFrom metabolyseR modellingParameters
+#' @importFrom dplyr filter
+
+detectModelling <- function(sample_info,idx){
+    
+    ## Detect if regression is needed
+    if (is.numeric(sample_info)){
+        message('Numeric class column detected, using regression')
+        if (length(sample_info) > 6){
+            detected_parameters <- modellingParameters('randomForest')
+        } else {
+            detected_parameters <- modellingParameters('linearRegression')
+        }
+        
+    } else {
+        ## Detect classification parameters
+        class_frequencies <- sample_info %>%
+            tibble(class = .) %>% 
+            group_by(class) %>% 
+            summarise(freq = n())
+        
+        if (nrow(class_frequencies) < 2){
+            detected_parameters <- list()
+        } else {
+            if (nrow(class_frequencies %>%
+                     filter(freq > 5)) < (floor(length(unique(sample_info)) / 2))) {
+                message('Less than 50% of classes have > 5 replicates. Using ANOVA.')
+                
+                detected_parameters <- modellingParameters('anova')
+            } else {
+                detected_parameters <- modellingParameters('randomForest')
+            }   
+        }
+        
+    }
+    
+    if (length(detected_parameters) > 0){
+        detected_parameters[[1]]$cls <- idx 
+        
+        if (names(detected_parameters)[1] == 'randomForest'){
+            detected_parameters[[1]]$reps <- 10
+        }
+    }
+    
+    modelling_parameters <- analysisParameters('modelling')
+    parameters(modelling_parameters,'modelling') <- detected_parameters
+    
+    return(modelling_parameters)
+}

@@ -13,10 +13,10 @@ detectPretreatmentParameters(x)
 \S4method{detectPretreatmentParameters}{MetaboProfile}(x)
 }
 \arguments{
-\item{x}{S4 object of class \code{Binalysis} or \code{MetaboProfile}}
+\item{x}{S4 object of class \code{Binalysis}, \code{MetaboProfile} or \code{AnalysisData}}
 }
 \value{
-S4 object of class
+S4 object of class \code{AnalysisParameters}
 }
 \description{
 Detect pre-treatment parameters for \code{Binalysis} or \code{MetaboProfile} class objects.
