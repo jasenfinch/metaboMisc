@@ -1,3 +1,7 @@
+# metaboMisc 0.4.6
+
+* Fixed parameter handling in `preTreatModes`.
+
 # metaboMisc 0.4.5
 
 * Fixed breakages and function imports caused by [`metabolyseR`](https://jasenfinch.github.io/metabolyseR) to version 0.14.0.
