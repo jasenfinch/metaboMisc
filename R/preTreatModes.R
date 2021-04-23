@@ -3,15 +3,15 @@
 #' @importFrom purrr map
 #' @importFrom methods new
 #' @importFrom metabolyseR dat sinfo
-#' @importFrom metabolyseR analysisData analysisParameters
+#' @importFrom metabolyseR analysisData analysisParameters parameters parameters<-
 #' @importFrom crayon blue red green
 #' @importFrom cli console_width
 #' @importFrom lubridate seconds_to_period
 
-preTreat <- function(dat,info,parameters,verbose = TRUE){
+preTreat <- function(raw_data,sample_info,parameters,verbose = TRUE){
     
-    p <- analysisParameters('preTreat')
-    p@preTreat <- parameters@preTreat
+    p <- analysisParameters('pre-treatment')
+    parameters(p,'pre-treatment') <- parameters(parameters,'pre-treatment')
     
     if (verbose == TRUE) {
         analysisStart <- date()
@@ -24,20 +24,20 @@ preTreat <- function(dat,info,parameters,verbose = TRUE){
         cat(rep('_',console_width()),'\n\n',sep = '')
     }
     
-    names(dat)[names(dat) == 'n'] <- 'Negative mode'
-    names(dat)[names(dat) == 'p'] <- 'Positive mode'
+    names(raw_data)[names(raw_data) == 'n'] <- 'Negative mode'
+    names(raw_data)[names(raw_data) == 'p'] <- 'Positive mode'
     
-    preTreated <- names(dat) %>%
+    pre_treated <- names(raw_data) %>%
         map(~{ 
             m <- .
-            d <- dat[[m]]
+            d <- raw_data[[m]]
             
             if (verbose == TRUE) {
                 startTime <- proc.time()
                 cat(blue(m),cli::symbol$continue,'\r',sep = '') 
             }
             
-            res <- metabolyse(d,info = info,parameters = p,verbose = FALSE)
+            res <- metabolyse(d,info = sample_info,parameters = p,verbose = FALSE)
             
             if (verbose == TRUE) {
                 endTime <- proc.time()
@@ -51,21 +51,18 @@ preTreat <- function(dat,info,parameters,verbose = TRUE){
             
             return(res)
         })
-    preTreatedDat <- preTreated %>%
-        map(~{
-            .@preTreated %>%
-                dat()
-        }) %>%
+    
+    pre_treated_data <- pre_treated %>%
+        map(dat,type = 'pre-treated') %>%
         bind_cols()
     
-    preTreatedInf <- preTreated[[1]]@preTreated %>% 
-        sinfo()
+    pre_treated_info <- sinfo(pre_treated[[1]],type = 'pre-treated')
     
     all <- new('Analysis')
     all@log <- list(packageVersion = packageVersion('metabolyseR'),analysis = date(),verbose = F)
     all@parameters <- parameters
-    all@rawData <- analysisData(bind_cols(dat), info)
-    all@preTreated <- analysisData(preTreatedDat,preTreatedInf)
+    raw(all) <- analysisData(bind_cols(raw_data), sample_info)
+    preTreated(all) <- analysisData(pre_treated_data,pre_treated_info)
     
     if (verbose == TRUE) {
         endTime <- proc.time()
