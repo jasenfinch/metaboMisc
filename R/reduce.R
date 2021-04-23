@@ -1,21 +1,48 @@
-#' reduce
+#' Reduce an analysis by removing isotopic, adduct or unknown features
 #' @rdname reduce
-#' @description reduce an analysis by removing isotopic, adduct or unknown features.
-#' @param x S4 class of class Analysis
+#' @description Reduce an analysis by removing isotopic, adduct or unknown features.
+#' @param x S4 class of class `Analysis` or `AnalysisData`
 #' @param isotopes TRUE/FALSE remove isotopic features.
 #' @param adducts TRUE/FALSE remove multiple adduct features.
 #' @param unknowns TRUE/FALSE remove unassigned features.
+#' @return S4 object of class `Analysis` or `AnalysisData` with features reduced
 #' @details Isotope and adduct features are filtered based on the maximum intensity peak for each molecular formulas.
-#' @importFrom dplyr group_by summarise
-#' @importFrom stringr str_split_fixed
-#' @importFrom metabolyseR preTreated preTreated<-
+#' @examples 
+#' library(MFassign)
+#' 
+#' ## Assign molecular formulas
+#' p <- assignmentParameters('FIE')
+#' p@nCores <- 2
+#' 
+#' assignment <- assignMFs(peakData,p)
+#' 
+#' ## Retrieve assigned data
+#' assigned_data <- metabolyseR::analysisData(
+#'  assignedData(assignment),
+#'  tibble::tibble(sample = seq_len(nrow(peakData)))
+#'  )
+#' 
+#' reduced_data <- reduce(assigned_data)
+#' 
+#' reduced_data
 #' @export
 
+setGeneric('reduce',
+           function(x, 
+                    isotopes = TRUE, 
+                    adducts = TRUE, 
+                    unknowns = FALSE)
+               standardGeneric('reduce'))
+
+#' @rdname reduce
+
 setMethod('reduce',signature = 'Analysis',
-          function(x,isotopes = T, adducts = T, unknowns = F){
+          function(x,isotopes = TRUE, adducts = TRUE, unknowns = FALSE){
               preTreated(x) <- x %>%
                   preTreated() %>%
-                  reduce(isotopes = isotopes,adducts = adducts,unknowns = unknowns)
+                  reduce(isotopes = isotopes,
+                         adducts = adducts,
+                         unknowns = unknowns)
               
               return(x)
           }
@@ -23,10 +50,12 @@ setMethod('reduce',signature = 'Analysis',
 
 #' @rdname reduce
 #' @importFrom metabolyseR dat<-
-#' @export
+#' @importFrom dplyr group_by summarise
+#' @importFrom stringr str_split_fixed
+#' @importFrom metabolyseR preTreated preTreated<-
 
 setMethod('reduce',signature = 'AnalysisData',
-          function(x,isotopes = T, adducts = T, unknowns = F){
+          function(x,isotopes = TRUE, adducts = TRUE, unknowns = FALSE){
               d <- x %>%
                   dat()
               
