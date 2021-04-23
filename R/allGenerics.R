@@ -4,11 +4,6 @@ setGeneric("preTreatModes", function(processedData,parameters,verbose = TRUE) {
     standardGeneric("preTreatModes")
 })
 
-#' @rdname detectBatchDiff
-
-setGeneric('detectBatchDiff',function(x, by = 'block', pthresh = 0.05)
-    standardGeneric('detectBatchDiff'))
-
 #' @rdname detectMissInjections
 
 setGeneric('detectMissInjections',function(x,idx = 'fileOrder')
