@@ -322,7 +322,6 @@ detectPretreatment <- function(x){
 #' @param ... arguments to pass to the appropriate method
 #' @return S4 object of class `AnalysisParameters`
 #' @examples 
-#' library(metaboData)
 #' ## Retrieve file paths and sample information for example data
 #' files <- metaboData::filePaths('FIE-HRMS','BdistachyonEcotypes')[1:2]
 #' 

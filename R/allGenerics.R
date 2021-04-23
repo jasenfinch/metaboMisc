@@ -1,9 +1,3 @@
-#' @rdname preTreatModes
-
-setGeneric("preTreatModes", function(processedData,parameters,verbose = TRUE) {
-    standardGeneric("preTreatModes")
-})
-
 #' @rdname addAssignments
 
 setGeneric('addAssignments',function(analysis,assignment)

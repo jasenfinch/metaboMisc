@@ -31,7 +31,6 @@ S4 object of class \code{AnalysisParameters}
 Detect modelling parameters for \code{Binalysis}, \code{MetaboProfile} or \code{Analysis} S4 classes.
 }
 \examples{
-library(metaboData)
 ## Retrieve file paths and sample information for example data
 files <- metaboData::filePaths('FIE-HRMS','BdistachyonEcotypes')[1:2]
 
