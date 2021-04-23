@@ -1,9 +1,27 @@
 #' Summarise features
 #' @rdname featureSummary
-#' @description Summarise spectral binning features.
-#' @param x S4 object of class Binalysis
-#' @importFrom dplyr n_distinct
+#' @description Summarise spectrally binned features.
+#' @param x S4 object of class `Binalysis`
+#' @return A tibble containing feature summaries
+#' @examples 
+#' ## Retrieve file paths and sample information for example data
+#' files <- metaboData::filePaths('FIE-HRMS','BdistachyonEcotypes')[1:2]
+#' 
+#' info <- metaboData::runinfo('FIE-HRMS','BdistachyonEcotypes')[1:2,]
+#' 
+#' ## Perform spectral binning
+#' analysis <- binneR::binneRlyse(files, 
+#'                                info, 
+#'                                parameters = binneR::detectParameters(files))
+#' 
+#' featureSummary(analysis)
 #' @export
+
+setGeneric('featureSummary',function(x)
+    standardGeneric('featureSummary'))
+
+#' @rdname featureSummary
+#' @importFrom dplyr n_distinct
 
 setMethod('featureSummary',signature = 'Binalysis',
           function(x){
