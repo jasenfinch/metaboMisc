@@ -37,7 +37,7 @@ preTreat <- function(raw_data,sample_info,parameters,verbose = TRUE){
                 cat(blue(m),cli::symbol$continue,'\r',sep = '') 
             }
             
-            res <- metabolyse(d,info = info,parameters = p,verbose = FALSE)
+            res <- metabolyse(d,info = sample_info,parameters = p,verbose = FALSE)
             
             if (verbose == TRUE) {
                 endTime <- proc.time()
