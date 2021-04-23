@@ -6,14 +6,14 @@
 \alias{preTreatModes,MetaboProfile-method}
 \title{Pre-treatment of multiple ionisation modes}
 \usage{
-preTreatModes(processedData, parameters, verbose = TRUE)
+preTreatModes(processed_data, parameters, verbose = TRUE)
 
-\S4method{preTreatModes}{Binalysis}(processedData, parameters, verbose = T)
+\S4method{preTreatModes}{Binalysis}(processed_data, parameters, verbose = TRUE)
 
-\S4method{preTreatModes}{MetaboProfile}(processedData, parameters, verbose = T)
+\S4method{preTreatModes}{MetaboProfile}(processed_data, parameters, verbose = TRUE)
 }
 \arguments{
-\item{processedData}{of class \code{Binalysis} or \code{MetaboProfile}}
+\item{processed_data}{S4 object of class \code{Binalysis} or \code{MetaboProfile}}
 
 \item{parameters}{object of class \code{AnalysisParameters} containing pre-treatment parameters}
 
@@ -41,7 +41,7 @@ analysis <- binneR::binneRlyse(files,
                                info, 
                                parameters = bp)
 
-## Decalre pre-treatment parameters
+## Declare pre-treatment parameters
 pre_treatment_parameters <- analysisParameters('pre-treatment')
 parameters(pre_treatment_parameters,
                         'pre-treatment') <- preTreatmentParameters(
@@ -51,7 +51,7 @@ parameters(pre_treatment_parameters,
    transform = 'TICnorm'
  )
 )
-changeParameters(pre_treatment_parameters,'parallel') <- 'no'
+changeParameter(pre_treatment_parameters,'parallel') <- 'no'
 
 ## Perform pre-treatment
 pre_treated_data <- preTreatModes(analysis,

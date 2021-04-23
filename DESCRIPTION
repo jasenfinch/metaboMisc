@@ -29,7 +29,6 @@ Remotes: aberHRML/binneR,
     jasenfinch/MFassign
 Collate:
     allGenerics.R
-    addAssignments.R
     detect.R
     filterCorrelations.R
     metaboMisc.R

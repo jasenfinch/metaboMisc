@@ -1,8 +1,3 @@
-#' @rdname addAssignments
-
-setGeneric('addAssignments',function(analysis,assignment)
-    standardGeneric('addAssignments'))
-
 #' @rdname reduce
 
 setGeneric('reduce',
