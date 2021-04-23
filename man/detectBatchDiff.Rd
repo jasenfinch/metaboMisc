@@ -4,7 +4,7 @@
 \alias{detectBatchDiff}
 \alias{detectBatchDiff,Binalysis-method}
 \alias{detectBatchDiff,MetaboProfile-method}
-\title{detectBatchDiff}
+\title{Detect batch/block differences}
 \usage{
 detectBatchDiff(x, by = "block", pthresh = 0.05)
 
@@ -13,12 +13,35 @@ detectBatchDiff(x, by = "block", pthresh = 0.05)
 \S4method{detectBatchDiff}{MetaboProfile}(x, by = "block", pthresh = 0.05)
 }
 \arguments{
-\item{x}{object of class Binalysis or MetaboProfile}
+\item{x}{object of class \code{Binalysis} or \code{MetaboProfile}}
 
 \item{by}{info class column to use for batch information}
 
 \item{pthresh}{p-value threshold for significance}
 }
+\value{
+If no differences between batches are found then \code{NULL} is returned. If significant differences are found then a tibble is returned containing the ANOVA results for each ionisation mode and showing whether batch correction is needed.
+}
 \description{
-Detect batch differences
+Detect batch/block differences within analytical runs for each ionisation mode.
+}
+\details{
+Analysis of Variance (ANOVA) is used to detect differences in total ion count (TIC) averages between batches/blocks.
+}
+\examples{
+## Retrieve file paths and sample information for example data
+files <- metaboData::filePaths('FIE-HRMS','BdistachyonEcotypes')[1:2]
+
+info <- metaboData::runinfo('FIE-HRMS','BdistachyonEcotypes')[1:2,]
+
+## Perform spectral binning
+analysis <- binneR::binneRlyse(files, 
+                               info, 
+                               parameters = binneR::detectParameters(files))
+
+## Detect batch differences
+batch_diff <- detectBatchDiff(analysis)
+
+## Display batch diffferences
+batch_diff
 }

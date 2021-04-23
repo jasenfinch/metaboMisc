@@ -1,43 +1,40 @@
-missInject <- function(TICdat,idx){
-    thresh <- quantile(TICdat$value)[2] - IQR(TICdat$value) * 1.5
-    
-    missinjections <- TICdat %>%
-        filter(value < thresh) %>%
-        select(idx) %>%
-        unlist() %>%
-        unname() %>%
-        list(idx = idx,missInjections = .)
-    return(missinjections)
-}
-
-#' detectMissInjections
+#' Detect miss injections
 #' @rdname detectMissInjections
-#' @description detect miss injected samples
-#' @param x object of class Binalysis or MetaboProfile
-#' @param idx info column to use for sample indexes
-#' @importFrom stats IQR quantile
+#' @description Detect miss injected samples.
+#' @param x object of class `Binalysis` or `MetaboProfile`
+#' @param idx sample information column to use for sample indexes
+#' @return A list containing the name of sample information column used to index the miss injections and a vector of miss injection indexes.
+#' @details 
+#' Samples with a total ion count (TIC) below 1.5 times the inter-quartile range are detected as miss injections.
 #' @examples 
-#' \dontrun{
-#' files <- metaboData::filePaths('FIE-HRMS','BdistachyonEcotypes')
+#' ## Retrieve file paths and sample information for example data
+#' files <- metaboData::filePaths('FIE-HRMS','BdistachyonEcotypes')[1:2]
 #' 
-#' info <- metaboData::runinfo('FIE-HRMS','BdistachyonEcotypes')
+#' info <- metaboData::runinfo('FIE-HRMS','BdistachyonEcotypes')[1:2,]
 #' 
+#' ## Perform spectral binning
 #' analysis <- binneR::binneRlyse(files, 
 #'                                info, 
 #'                                parameters = binneR::detectParameters(files))
 #' 
+#' ## Detect miss injections
 #' miss_injections <- detectMissInjections(analysis)
 #' 
+#' ## Display detected miss injections
 #' miss_injections$missInjections
-#' }
 #' @export
+
+setGeneric('detectMissInjections',function(x,idx = 'fileOrder')
+    standardGeneric('detectMissInjections'))
+
+#' @rdname detectMissInjections
 
 setMethod('detectMissInjections',signature = 'Binalysis',
           function(x,idx = 'fileOrder'){
               
               i <- x %>%
                   binneR::sampleInfo() %>%
-                  select(idx)
+                  select(all_of(idx))
               
               x %>%
                   binnedData %>%
@@ -50,7 +47,6 @@ setMethod('detectMissInjections',signature = 'Binalysis',
           })
 
 #' @rdname detectMissInjections
-#' @export
 
 setMethod('detectMissInjections',signature = 'MetaboProfile',
           function(x,idx = 'fileOrder'){
@@ -78,18 +74,45 @@ setMethod('detectMissInjections',signature = 'MetaboProfile',
                   missInject(idx = idx) 
           })
 
-#' detectBatchDiff
+#' @importFrom stats IQR quantile
+
+missInject <- function(TICdat,idx){
+    thresh <- quantile(TICdat$value)[2] - IQR(TICdat$value) * 1.5
+    
+    missinjections <- TICdat %>%
+        filter(value < thresh) %>%
+        select(all_of(idx)) %>%
+        unlist() %>%
+        unname() %>%
+        list(idx = idx,missInjections = .)
+    return(missinjections)
+}
+
+
+#' Detect batch/block differences
 #' @rdname detectBatchDiff
-#' @description Detect batch differences
-#' @param x object of class Binalysis or MetaboProfile
+#' @description Detect batch/block differences within analytical runs for each ionisation mode.
+#' @param x object of class `Binalysis` or `MetaboProfile`
 #' @param by info class column to use for batch information
 #' @param pthresh p-value threshold for significance
-#' @importClassesFrom binneR Binalysis
-#' @importFrom binneR binnedData
-#' @importFrom tidyr gather
-#' @importFrom tibble rowid_to_column
-#' @importFrom dplyr group_by_all
-#' @importFrom tidyselect all_of
+#' @return If no differences between batches are found then `NULL` is returned. If significant differences are found then a tibble is returned containing the ANOVA results for each ionisation mode and showing whether batch correction is needed. 
+#' @details Analysis of Variance (ANOVA) is used to detect differences in total ion count (TIC) averages between batches/blocks. 
+#' @examples 
+#' ## Retrieve file paths and sample information for example data
+#' files <- metaboData::filePaths('FIE-HRMS','BdistachyonEcotypes')[1:2]
+#' 
+#' info <- metaboData::runinfo('FIE-HRMS','BdistachyonEcotypes')[1:2,]
+#' 
+#' ## Perform spectral binning
+#' analysis <- binneR::binneRlyse(files, 
+#'                                info, 
+#'                                parameters = binneR::detectParameters(files))
+#' 
+#' ## Detect batch differences
+#' batch_diff <- detectBatchDiff(analysis)
+#' 
+#' ## Display batch diffferences
+#' batch_diff
 #' @export
 
 setGeneric('detectBatchDiff',function(x, by = 'block', pthresh = 0.05)
@@ -97,6 +120,11 @@ setGeneric('detectBatchDiff',function(x, by = 'block', pthresh = 0.05)
 )
 
 #' @rdname detectBatchDiff
+#' @importFrom binneR binnedData
+#' @importFrom tidyr gather
+#' @importFrom tibble rowid_to_column
+#' @importFrom dplyr group_by_all
+#' @importFrom tidyselect all_of
 
 setMethod('detectBatchDiff',signature = 'Binalysis',
           function(x, by = 'block', pthresh = 0.05){
@@ -206,50 +234,6 @@ batchDiff <- function(TICdat,pthresh = 0.05){
     return(ANOVAres)
 }
 
-#' detectPairwises
-#' @description Detect availble pairwise comparisons
-#' @param x object of class Analysis
-#' @param cls info column to use for class information
-#' @param type type of analysis (classification or featureSelection)
-#' @importClassesFrom metabolyseR Analysis
-#' @importFrom utils combn
-#' @importFrom dplyr filter select
-#' @importFrom tibble as_tibble
-#' @importFrom purrr map_chr
-#' @importFrom stringr str_c
-#' @rdname detectPairwises
-#' @export
-
-setMethod('detectPairwises',signature = 'Analysis',
-          function(x,cls,type){
-              if (type == 'classification') {
-                  minimum <- 6
-              }
-              if (type == 'featureSelection') {
-                  minimum <- 3
-              }
-              info <- x %>%
-                  sinfo(type = 'pre-treated') %>% 
-                  select(!!cls) %>%
-                  unlist() %>%
-                  table() %>%
-                  as_tibble() %>%
-                  filter(n >= minimum) %>%
-                  select(1) %>%
-                  unlist() %>%
-                  sort()
-              if (length(info) > 0) {
-                  com <- combn(info,2) %>%
-                      t() %>%
-                      split(1:nrow(.)) %>%
-                      map_chr(str_c,collapse = '~')
-              } else {
-                  com <- character()
-              }
-              return(com)
-          }
-)
-
 #' Detect pre-treatment parameters
 #' @rdname detectPretreatmentParameters
 #' @description Detect pre-treatment parameters for `Binalysis` or `MetaboProfile` class objects. 
@@ -271,6 +255,8 @@ setMethod('detectPairwises',signature = 'Analysis',
 #' 
 #' ## Detect pre-treatment parameters
 #' pp <- detectPretreatmentParameters(bd) 
+#' 
+#' pp
 #' @export
 
 setGeneric('detectPretreatmentParameters',function(x){

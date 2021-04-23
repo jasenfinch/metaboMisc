@@ -4,16 +4,6 @@ setGeneric("preTreatModes", function(processedData,parameters,verbose = TRUE) {
     standardGeneric("preTreatModes")
 })
 
-#' @rdname detectMissInjections
-
-setGeneric('detectMissInjections',function(x,idx = 'fileOrder')
-    standardGeneric('detectMissInjections'))
-
-#' @rdname detectPairwises
-
-setGeneric('detectPairwises',function(x,cls,type)
-    standardGeneric('detectPairwises'))
-
 #' @rdname addAssignments
 
 setGeneric('addAssignments',function(analysis,assignment)

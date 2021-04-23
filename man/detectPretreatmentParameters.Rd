@@ -37,4 +37,6 @@ bd <- binneR::binneRlyse(file_paths,sample_information,bp)
 
 ## Detect pre-treatment parameters
 pp <- detectPretreatmentParameters(bd) 
+
+pp
 }
