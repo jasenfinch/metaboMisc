@@ -27,18 +27,6 @@ Remotes: aberHRML/binneR,
     jasenfinch/metabolyseR,
     jasenfinch/profilePro,
     jasenfinch/MFassign
-Collate:
-    allGenerics.R
-    detect.R
-    filterCorrelations.R
-    metaboMisc.R
-    preTreatModes.R
-    theme_neat.R
-    reduce.R
-    plotRSD.R
-    export.R
-    parallel.R
-    featureSummary.R
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
