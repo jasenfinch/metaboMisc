@@ -1,7 +1,7 @@
 #' Pre-treatment of multiple ionisation modes
 #' @rdname preTreatModes
 #' @description Pre-treat both positive and negative ionisation modes for `Binalysis` and `MetaboProfile` classes.
-#' @param processedData of class `Binalysis` or `MetaboProfile`
+#' @param processed_data S4 object of class `Binalysis` or `MetaboProfile`
 #' @param parameters object of class `AnalysisParameters` containing pre-treatment parameters
 #' @param verbose console output
 #' @return S4 object of class `Analysis`
@@ -21,7 +21,7 @@
 #'                                info, 
 #'                                parameters = bp)
 #' 
-#' ## Decalre pre-treatment parameters
+#' ## Declare pre-treatment parameters
 #' pre_treatment_parameters <- analysisParameters('pre-treatment')
 #' parameters(pre_treatment_parameters,
 #'                         'pre-treatment') <- preTreatmentParameters(
@@ -38,7 +38,7 @@
 #'                                   pre_treatment_parameters)
 #' @export
 
-setGeneric("preTreatModes", function(processedData,parameters,verbose = TRUE) {
+setGeneric("preTreatModes", function(processed_data,parameters,verbose = TRUE) {
     standardGeneric("preTreatModes")
 })
 
@@ -46,9 +46,9 @@ setGeneric("preTreatModes", function(processedData,parameters,verbose = TRUE) {
 #' @importFrom  binneR binnedData
 
 setMethod('preTreatModes',signature = 'Binalysis',
-          function(processedData,parameters,verbose = T){
-              binned_data <- binnedData(processedData)
-              sample_info <- binneR::sampleInfo(processedData)
+          function(processed_data,parameters,verbose = TRUE){
+              binned_data <- binnedData(processed_data)
+              sample_info <- binneR::sampleInfo(processed_data)
               
               preTreated <- preTreat(binned_data,sample_info,parameters,verbose = verbose)
               
@@ -58,11 +58,14 @@ setMethod('preTreatModes',signature = 'Binalysis',
 #' @rdname preTreatModes
 
 setMethod('preTreatModes',signature = 'MetaboProfile',
-          function(processedData,parameters,verbose = T){
-              dat <- processedData@Data
-              sInfo <- processedData@Info
+          function(processed_data,parameters,verbose = TRUE){
+              sample_info <- profilePro::sampleInfo(processed_data)
+              processed_data <- processedData(processed_data) 
               
-              preTreated <- preTreat(dat,sInfo,parameters,verbose = verbose)
+              preTreated <- preTreat(processed_data,
+                                     sample_info,
+                                     parameters,
+                                     verbose = verbose)
               
               return(preTreated)
           })

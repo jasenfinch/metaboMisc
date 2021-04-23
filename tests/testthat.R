@@ -1,6 +1,7 @@
 library(testthat)
 library(metaboMisc)
 library(metaboData)
+library(metabolyseR)
 
 ## Example Binalysis class
 file_paths <- metaboData::filePaths('FIE-HRMS','BdistachyonEcotypes') %>% 
@@ -22,7 +23,7 @@ file_paths <- list.files(
 file_names <- basename(file_paths)
 sample_names <- tools::file_path_sans_ext(file_names)
 
-sample_info <- tibble(fileOrder = seq_along(file_paths),
+sample_info <- tibble::tibble(fileOrder = seq_along(file_paths),
                       injOrder = seq_along(file_paths),
                       fileName = file_names,
                       batch = 1,
