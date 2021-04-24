@@ -3,6 +3,7 @@
 \name{export}
 \alias{export}
 \alias{export,Binalysis-method}
+\alias{export,MetaboProfile-method}
 \alias{export,Analysis-method}
 \alias{export,Assignment-method}
 \title{Export results}
@@ -10,6 +11,8 @@
 export(analysis, outPath = ".")
 
 \S4method{export}{Binalysis}(analysis, outPath = ".")
+
+\S4method{export}{MetaboProfile}(analysis, outPath = ".")
 
 \S4method{export}{Analysis}(analysis, outPath = ".")
 

@@ -4,7 +4,7 @@
 
 * Removed redundant methods and functions: `detectPairwises()`, `addAssignments()`, `filterCorrelations()`, `theme_neat()`.
 
-* Improved documentation and added examplesl
+* Improved documentation and added examples.
 
 * Added unit testing infrastructure.
 

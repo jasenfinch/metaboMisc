@@ -52,6 +52,7 @@ setMethod('export',signature = 'Binalysis',
         })
 })
 
+#' @rdname export
 #' @importFrom profilePro peakInfo
 
 setMethod('export',signature = 'MetaboProfile',
@@ -95,7 +96,6 @@ setMethod('export',signature = 'MetaboProfile',
 #' @importFrom dplyr bind_cols everything mutate select
 #' @importFrom tidyr gather spread
 #' @importFrom stringr str_sub str_split_fixed
-#' @export
 
 setMethod('export',signature = 'Analysis',
           function(analysis,outPath = '.'){
@@ -132,7 +132,6 @@ setMethod('export',signature = 'Analysis',
 
 #' @rdname export
 #' @importFrom MFassign assignments summariseAssignment
-#' @export
 
 setMethod('export',signature = 'Assignment',function(analysis,outPath = '.'){
     

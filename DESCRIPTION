@@ -24,7 +24,8 @@ Imports: binneR,
     tidyselect,
     readr,
     future,
-    patchwork
+    patchwork,
+    ggplot2
 Remotes: aberHRML/binneR,
     jasenfinch/metabolyseR,
     jasenfinch/profilePro,
