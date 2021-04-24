@@ -1,8 +1,10 @@
 Package: metaboMisc
 Title: Miscellaneous Functions for Metabolomics Analyses
-Version: 0.4.6
+Version: 0.5.0
 Authors@R: person("Jasen", "Finch", email = "jsf9@aber.ac.uk", role = c("aut", "cre"))
 Description: Miscellaneous helper functions for metabolomics analyses that do not yet have a permanent home.
+URL:  https://jasenfinch.github.io/metaboMisc
+BugReports: https://github.com/jasenfinch/metaboMisc/issues
 biocViews: Metabolomics
 Depends: R (>= 3.4)
 Imports: binneR,
@@ -15,32 +17,29 @@ Imports: binneR,
     tidyr,
     tibble,
     stringr,
-    ggplot2,
     MFassign,
     crayon,
     cli,
     lubridate,
     tidyselect,
     readr,
-    future
-Remotes: aberHRML/binneR,
-    jasenfinch/metabolyseR,
-    jasenfinch/profilePro,
-    jasenfinch/MFassign
-Collate:
-    allGenerics.R
-    addAssignments.R
-    detect.R
-    filterCorrelations.R
-    metaboMisc.R
-    preTreatModes.R
-    theme_neat.R
-    reduce.R
-    plotRSD.R
-    export.R
-    parallel.R
-    featureSummary.R
+    future,
+    patchwork,
+    ggplot2
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
+Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
+Suggests: 
+    testthat (>= 3.0.0),
+    metaboData,
+    faahKO,
+    xcms,
+    covr
+Config/testthat/edition: 3
+Remotes: aberHRML/binneR,
+    jasenfinch/metabolyseR,
+    jasenfinch/profilePro,
+    jasenfinch/MFassign,
+    aberHRML/metaboData

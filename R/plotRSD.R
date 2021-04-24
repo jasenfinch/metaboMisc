@@ -1,96 +1,78 @@
-#' plotRSD
+#' Plot relative standard deviation (RSD) distributions
 #' @rdname plotRSD
-#' @description Plot RSD distributions of processed data in quality control samples.
-#' @param analysis S4 object of class Binalysis or MetaboProfile
-#' @param cls info column to use for class labels
-#' @param QCidx QC sample label
-#' @param QCparameters alternative parameters for QC sample pre-treatment. See details
-#' @param histBins number of bins to use for histogram plotting
-#' @details If QCparameters is set as NULL, the default QC pre-treatment parameters are used as given by \code{analysisParameters('preTreat')}. Alternative pre-treatment routines can be used by specifying an AnalysisParameters object for QCparameters.
-#' @importFrom metabolyseR plotRSD raw<-
-#' @importFrom magrittr set_names
+#' @description Plot RSD distributions of processed data.
+#' @param analysis S4 object of class `Binalysis` or `MetaboProfile`
+#' @param cls info column to use for class labels.
+#' @return A list of plots of RSD distributions
+#' @examples 
+#' ## Retrieve file paths and sample information for example data
+#' files <- metaboData::filePaths('FIE-HRMS','BdistachyonEcotypes')[1:2]
+#' 
+#' info <- metaboData::runinfo('FIE-HRMS','BdistachyonEcotypes')[1:2,]
+#' 
+#' ## Perform spectral binning
+#' analysis <- binneR::binneRlyse(files, 
+#'                                info, 
+#'                                parameters = binneR::detectParameters(files))
+#' 
+#' ## Plot RSD distributions
+#' plotRSD(analysis)
 #' @export
 
-setMethod('plotRSD',signature = 'Binalysis',function(analysis, cls = 'class', QCidx = 'QC', QCparameters = analysisParameters('preTreat'), histBins = 30){
+setMethod('plotRSD',signature = 'Binalysis',function(analysis, cls = 'class'){
     si <- binneR::sampleInfo(analysis)
     d <- binnedData(analysis)
     
-    d %>%
-        names() %>%
-        map(~{
-            da <- d[[.]]
-            
-            if (. == 'n') {
-                title <- 'Negative Mode'
-            }
-            
-            if (. == 'p') {
-                title <- 'Positive Mode'
-            }
-            
-            if  (is.null(QCparameters)) {
-                p <- analysisParameters('preTreat')
-            } else {
-                p <- QCparameters
-            }
-            
-            if (!('QC' %in% names(p@preTreat))) {
-                stop('QC pre-treatment parameters not found in "QCparameters"',call. = FALSE)
-            }
-            
-            p@preTreat <- p@preTreat['QC']
-            p@preTreat$QC <- p@preTreat$QC[!(names(p@preTreat$QC) == 'removeQC')]
-            p@preTreat$QC <- p@preTreat$QC[!(names(p@preTreat$QC) == 'RSDfilter')]
-            
-            ad <- new('Analysis')
-            raw(ad) <- analysisData(da,si)
-            
-            ad %>%
-                plotRSD(cls = cls,QCidx = QCidx,QCparameters = p,histBins = histBins,title = title)
-        }) %>%
-        set_names(names(d))
+    rsdPlot(d,
+            si,
+            cls = cls)
 })
 
 #' @rdname plotRSD
 #' @importFrom profilePro processedData
 #' @export
 
-setMethod('plotRSD',signature = 'MetaboProfile',function(analysis, cls = 'class', QCidx = 'QC', QCparameters = NULL, histBins = 30){
+setMethod('plotRSD',signature = 'MetaboProfile',function(analysis, cls = 'class'){
     si <- profilePro::sampleInfo(analysis)
     d <- processedData(analysis)
     
+    rsdPlot(d,
+            si,
+            cls = cls) 
+})
+
+#' @importFrom metabolyseR plotRSD raw<-
+#' @importFrom magrittr set_names
+#' @importFrom patchwork plot_annotation
+#' @importFrom ggplot2 theme element_text
+
+rsdPlot <- function(d,si,cls = 'class'){
     d %>%
         names() %>%
         map(~{
-            da <- d[[.]]
             
-            if (. == 'n') {
-                title <- 'Negative Mode'
-            }
-            
-            if (. == 'p') {
-                title <- 'Positive Mode'
-            }
-            
-            if  (is.null(QCparameters)) {
-                p <- analysisParameters('preTreat')
+            if (is.na(.x)){
+                title <- ''
+                da <- d[[1]]
             } else {
-                p <- QCparameters
+                da <- d[[.x]]
+                
+                if (.x == 'n') {
+                    title <- 'Negative Mode'
+                }
+                
+                if (.x == 'p') {
+                    title <- 'Positive Mode'
+                }   
             }
             
-            if (!('QC' %in% names(p@preTreat))) {
-                stop('QC pre-treatment parameters not found in "QCparameters"',call. = FALSE)
-            }
-            
-            p@preTreat <- p@preTreat['QC']
-            p@preTreat$QC <- p@preTreat$QC[!(names(p@preTreat$QC) == 'removeQC')]
-            p@preTreat$QC <- p@preTreat$QC[!(names(p@preTreat$QC) == 'RSDfilter')]
-            
-            ad <- new('Analysis')
-            raw(ad) <- analysisData(da,si)
+            ad <- analysisData(da,si)
             
             ad %>%
-                plotRSD(cls = cls,QCidx = QCidx,QCparameters = p,histBins = histBins,title = title)
+                plotRSD(cls = cls) +
+                plot_annotation(title = title,
+                                theme = theme(plot.title = element_text(face = 'bold',
+                                                                        size = 14)))
         }) %>%
         set_names(names(d))
-})
+}

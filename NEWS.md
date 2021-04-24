@@ -1,3 +1,17 @@
+# metaboMisc 0.5.0
+
+* Added `pkgdown` site available [here](https://jasenfinch.github.io/metaboMisc).
+
+* Removed redundant methods and functions: `detectPairwises()`, `addAssignments()`, `filterCorrelations()`, `theme_neat()`.
+
+* Improved documentation and added examples.
+
+* Added unit testing infrastructure.
+
+* Added `detectPretreatmentParameters` and `detectModellingParameters` methods.
+
+* The `magrittr` pipe (`%>%`) is now re-exported.
+
 # metaboMisc 0.4.6
 
 * Fixed parameter handling in `preTreatModes`.
@@ -22,4 +36,4 @@
 
 * Added a `NEWS.md` file to track changes to the package.
 
-* Added `metaboMisc::suitableParallelPlan()` to generate a suitable parallel processing [`future`](https://cran.r-project.org/web/packages/future/index.html) plan.
+* Added `metaboMisc::suitableParallelPlan()` to generate a suitable parallel processing [`future`](https://cran.r-project.org/packages=future) plan.

@@ -3,38 +3,34 @@
 \name{plotRSD,Binalysis-method}
 \alias{plotRSD,Binalysis-method}
 \alias{plotRSD,MetaboProfile-method}
-\title{plotRSD}
+\title{Plot relative standard deviation (RSD) distributions}
 \usage{
-\S4method{plotRSD}{Binalysis}(
-  analysis,
-  cls = "class",
-  QCidx = "QC",
-  QCparameters = analysisParameters("preTreat"),
-  histBins = 30
-)
+\S4method{plotRSD}{Binalysis}(analysis, cls = "class")
 
-\S4method{plotRSD}{MetaboProfile}(
-  analysis,
-  cls = "class",
-  QCidx = "QC",
-  QCparameters = NULL,
-  histBins = 30
-)
+\S4method{plotRSD}{MetaboProfile}(analysis, cls = "class")
 }
 \arguments{
-\item{analysis}{S4 object of class Binalysis or MetaboProfile}
+\item{analysis}{S4 object of class \code{Binalysis} or \code{MetaboProfile}}
 
-\item{cls}{info column to use for class labels}
-
-\item{QCidx}{QC sample label}
-
-\item{QCparameters}{alternative parameters for QC sample pre-treatment. See details}
-
-\item{histBins}{number of bins to use for histogram plotting}
+\item{cls}{info column to use for class labels.}
+}
+\value{
+A list of plots of RSD distributions
 }
 \description{
-Plot RSD distributions of processed data in quality control samples.
+Plot RSD distributions of processed data.
 }
-\details{
-If QCparameters is set as NULL, the default QC pre-treatment parameters are used as given by \code{analysisParameters('preTreat')}. Alternative pre-treatment routines can be used by specifying an AnalysisParameters object for QCparameters.
+\examples{
+## Retrieve file paths and sample information for example data
+files <- metaboData::filePaths('FIE-HRMS','BdistachyonEcotypes')[1:2]
+
+info <- metaboData::runinfo('FIE-HRMS','BdistachyonEcotypes')[1:2,]
+
+## Perform spectral binning
+analysis <- binneR::binneRlyse(files, 
+                               info, 
+                               parameters = binneR::detectParameters(files))
+
+## Plot RSD distributions
+plotRSD(analysis)
 }
