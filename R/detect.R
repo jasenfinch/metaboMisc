@@ -296,9 +296,9 @@ detectPretreatment <- function(x){
                 correction = list(
                     center = list(block = 'block',
                                   type = 'median'
-                    )),
-                parameters(pre_treat_params,'pre-treatment')
-            ))
+                    ))
+            ),
+            parameters(pre_treat_params,'pre-treatment'))
     }
     
     if (length(miss_injections$missInjections) > 0){
