@@ -295,7 +295,7 @@ detectPretreatment <- function(x){
             list(
                 correction = list(
                     center = list(block = 'block',
-                                  type = 'median',
+                                  type = 'median'
                     )),
                 parameters(pre_treat_params,'pre-treatment')
             ))
