@@ -1,3 +1,15 @@
+# metaboMisc 0.5.0
+
+* Added `pkgdown` site available [here](https://jasenfinch.github.io/metaboMisc).
+
+* Removed redundant methods and functions: `detectPairwises()`, `addAssignments()`, `filterCorrelations()`, `theme_neat()`.
+
+* Improved documenation and added examples
+
+* Added unit testing infrastructure
+
+* Added `detectPretreatmentParameters` and `detectModellingParameters` methods.
+
 # metaboMisc 0.4.6
 
 * Fixed parameter handling in `preTreatModes`.
