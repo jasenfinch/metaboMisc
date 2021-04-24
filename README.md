@@ -18,3 +18,13 @@ The `metaboMisc` package can be installed from GitHub using the following:
 ``` r
 remotes::install_github('jasenfinch/metaboMisc')
 ```
+
+## Learn more
+
+The package documentation can be browsed online at
+<https://jasenfinch.github.io/metaboMisc/>.
+
+If you believe you’ve found a bug in `metaboMisc`, please file a bug
+(and, if possible, a [reproducible
+example](https://reprex.tidyverse.org)) at
+<https://github.com/jasenfinch/metaboMisc/issues>.
