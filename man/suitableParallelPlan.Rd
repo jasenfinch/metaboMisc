@@ -10,5 +10,7 @@ suitableParallelPlan()
 Generate a suitable parallel processing future plan for your session. See \code{?future::plan} for more details on future plans.
 }
 \examples{
+\dontrun{
 suitableParallelPlan()
+}
 }
