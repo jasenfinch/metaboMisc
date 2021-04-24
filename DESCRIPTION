@@ -29,7 +29,8 @@ Imports: binneR,
 Remotes: aberHRML/binneR,
     jasenfinch/metabolyseR,
     jasenfinch/profilePro,
-    jasenfinch/MFassign
+    jasenfinch/MFassign,
+    aberHRML/metaboData
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
