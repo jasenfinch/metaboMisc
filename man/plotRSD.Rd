@@ -3,26 +3,14 @@
 \name{plotRSD,Binalysis-method}
 \alias{plotRSD,Binalysis-method}
 \alias{plotRSD,MetaboProfile-method}
-\title{plotRSD}
+\title{Plot relative standard deviation (RSD) distributions}
 \usage{
-\S4method{plotRSD}{Binalysis}(
-  analysis,
-  cls = "class",
-  QCidx = "QC",
-  QCparameters = analysisParameters("preTreat"),
-  histBins = 30
-)
+\S4method{plotRSD}{Binalysis}(analysis, cls = "class")
 
-\S4method{plotRSD}{MetaboProfile}(
-  analysis,
-  cls = "class",
-  QCidx = "QC",
-  QCparameters = NULL,
-  histBins = 30
-)
+\S4method{plotRSD}{MetaboProfile}(analysis, cls = "class")
 }
 \arguments{
-\item{analysis}{S4 object of class Binalysis or MetaboProfile}
+\item{analysis}{S4 object of class \code{Binalysis} or \code{MetaboProfile}}
 
 \item{cls}{info column to use for class labels}
 
@@ -36,5 +24,5 @@
 Plot RSD distributions of processed data in quality control samples.
 }
 \details{
-If QCparameters is set as NULL, the default QC pre-treatment parameters are used as given by \code{analysisParameters('preTreat')}. Alternative pre-treatment routines can be used by specifying an AnalysisParameters object for QCparameters.
+If \code{QCparameters} is set as NULL, the default QC pre-treatment parameters are used as given by \code{analysisParameters('preTreat')}. Alternative pre-treatment routines can be used by specifying an \code{AnalysisParameters} object for \code{QCparameters}.
 }
