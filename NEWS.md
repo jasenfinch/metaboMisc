@@ -1,3 +1,7 @@
+# metaboMisc 0.5.1
+
+* Fixed error in `detectPretreatmentParameters()`.
+
 # metaboMisc 0.5.0
 
 * Added `pkgdown` site available [here](https://jasenfinch.github.io/metaboMisc).
