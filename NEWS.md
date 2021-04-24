@@ -4,11 +4,13 @@
 
 * Removed redundant methods and functions: `detectPairwises()`, `addAssignments()`, `filterCorrelations()`, `theme_neat()`.
 
-* Improved documenation and added examples
+* Improved documentation and added examplesl
 
-* Added unit testing infrastructure
+* Added unit testing infrastructure.
 
 * Added `detectPretreatmentParameters` and `detectModellingParameters` methods.
+
+* The `magrittr` pipe (`%>%`) is now re-exported.
 
 # metaboMisc 0.4.6
 
