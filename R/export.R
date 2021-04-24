@@ -110,7 +110,7 @@ setMethod('export',signature = 'Analysis',
     i <- analysis %>%
         sinfo(type = 'pre-treated')
     
-    if (T %in% duplicated(i$name)) {
+    if (TRUE %in% duplicated(i$name)) {
         i <- fixNames(i)
     }
     

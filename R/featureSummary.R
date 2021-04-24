@@ -41,8 +41,8 @@ setMethod('featureSummary',signature = 'Binalysis',
                                                      length(Intensity) * 100,2),
                       .groups = 'drop') %>%
                   {{
-                      .$Mode[.$Mode == 'n'] = 'Negative'
-                      .$Mode[.$Mode == 'p'] = 'Positive'
+                      .$Mode[.$Mode == 'n'] <- 'Negative'
+                      .$Mode[.$Mode == 'p'] <- 'Positive'
                       .
                   }}
           })

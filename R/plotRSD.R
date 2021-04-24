@@ -51,7 +51,7 @@ rsdPlot <- function(d,si,cls = 'class'){
         map(~{
             
             if (is.na(.x)){
-                title = ''
+                title <- ''
                 da <- d[[1]]
             } else {
                 da <- d[[.x]]

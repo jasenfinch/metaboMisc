@@ -3,6 +3,8 @@ Title: Miscellaneous Functions for Metabolomics Analyses
 Version: 0.5.0
 Authors@R: person("Jasen", "Finch", email = "jsf9@aber.ac.uk", role = c("aut", "cre"))
 Description: Miscellaneous helper functions for metabolomics analyses that do not yet have a permanent home.
+URL:  https://jasenfinch.github.io/metaboMisc
+BugReports: https://github.com/jasenfinch/metaboMisc/issues
 biocViews: Metabolomics
 Depends: R (>= 3.4)
 Imports: binneR,
@@ -21,7 +23,8 @@ Imports: binneR,
     lubridate,
     tidyselect,
     readr,
-    future
+    future,
+    patchwork
 Remotes: aberHRML/binneR,
     jasenfinch/metabolyseR,
     jasenfinch/profilePro,

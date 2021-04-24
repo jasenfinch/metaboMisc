@@ -4,6 +4,7 @@
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![R build status](https://github.com/jasenfinch/metaboMisc/workflows/R-CMD-check/badge.svg)](https://github.com/jasenfinch/metaboMisc/actions)
 [![Codecov test coverage](https://codecov.io/gh/jasenfinch/metaboMisc/branch/master/graph/badge.svg)](https://codecov.io/gh/jasenfinch/metaboMisc?branch=master)
+[![license](https://img.shields.io/badge/license-GNU%20GPL%20v3.0-blue.svg)](https://github.com/jasenfinch/metaboMisc/blob/master/DESCRIPTION)
 <!-- badges: end -->
 
 > Miscellaneous Functions for Metabolomics Analyses

@@ -133,7 +133,7 @@ preTreat <- function(raw_data,sample_info,parameters,verbose = TRUE){
     pre_treated_info <- sinfo(pre_treated[[1]],type = 'pre-treated')
     
     all <- new('Analysis')
-    all@log <- list(packageVersion = packageVersion('metabolyseR'),analysis = date(),verbose = F)
+    all@log <- list(packageVersion = packageVersion('metabolyseR'),analysis = date(),verbose = FALSE)
     all@parameters <- parameters
     raw(all) <- analysisData(bind_cols(raw_data), sample_info)
     preTreated(all) <- analysisData(pre_treated_data,pre_treated_info)
