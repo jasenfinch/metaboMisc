@@ -44,7 +44,7 @@ setMethod('plotRSD',signature = 'MetaboProfile',function(analysis, cls = 'class'
 #' @importFrom metabolyseR plotRSD raw<-
 #' @importFrom magrittr set_names
 #' @importFrom patchwork plot_annotation
-#' @importFrom ggplot2 theme
+#' @importFrom ggplot2 theme element_text
 
 rsdPlot <- function(d,si,cls = 'class'){
     d %>%
