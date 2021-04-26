@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot relative standard deviation (RSD) distributions — plotRSD,Binalysis-method • metaboMisc</title>
+<title>Export a csv — exportCSV • metaboMisc</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Plot relative standard deviation (RSD) distributions — plotRSD,Binalysis-method" />
-<meta property="og:description" content="Plot RSD distributions of processed data." />
+<meta property="og:title" content="Export a csv — exportCSV" />
+<meta property="og:description" content="Export a csv and return the file path of the exported csv." />
 
 
 
@@ -111,53 +111,41 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot relative standard deviation (RSD) distributions</h1>
-    <small class="dont-index">Source: <a href='https://github.com/jasenfinch/metaboMisc/blob/master/R/plot.R'><code>R/plot.R</code></a></small>
-    <div class="hidden name"><code>plotRSD.Rd</code></div>
+    <h1>Export a csv</h1>
+    <small class="dont-index">Source: <a href='https://github.com/jasenfinch/metaboMisc/blob/master/R/export.R'><code>R/export.R</code></a></small>
+    <div class="hidden name"><code>exportCSV.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Plot RSD distributions of processed data.</p>
+    <p>Export a csv and return the file path of the exported csv.</p>
     </div>
 
-    <pre class="usage"><span class='co'># S4 method for Binalysis</span>
-<span class='fu'>plotRSD</span><span class='op'>(</span><span class='va'>analysis</span>, cls <span class='op'>=</span> <span class='st'>"class"</span><span class='op'>)</span>
-
-<span class='co'># S4 method for MetaboProfile</span>
-<span class='fu'>plotRSD</span><span class='op'>(</span><span class='va'>analysis</span>, cls <span class='op'>=</span> <span class='st'>"class"</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>exportCSV</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>file</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>analysis</th>
-      <td><p>S4 object of class <code>Binalysis</code> or <code>MetaboProfile</code></p></td>
+      <th>x</th>
+      <td><p>a data frame or tibble to export</p></td>
     </tr>
     <tr>
-      <th>cls</th>
-      <td><p>info column to use for class labels.</p></td>
+      <th>file</th>
+      <td><p>file or connection to write to</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>arguments to pass to <code><a href='https://readr.tidyverse.org/reference/write_delim.html'>readr::write_csv()</a></code></p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A list of plots of RSD distributions</p>
+    <p>The file path of the exported csv.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## Retrieve file paths and sample information for example data</span>
-<span class='va'>files</span> <span class='op'>&lt;-</span> <span class='fu'>metaboData</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/metaboData/man/filePaths.html'>filePaths</a></span><span class='op'>(</span><span class='st'>'FIE-HRMS'</span>,<span class='st'>'BdistachyonEcotypes'</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>]</span>
-
-<span class='va'>info</span> <span class='op'>&lt;-</span> <span class='fu'>metaboData</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/metaboData/man/runinfo.html'>runinfo</a></span><span class='op'>(</span><span class='st'>'FIE-HRMS'</span>,<span class='st'>'BdistachyonEcotypes'</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>,<span class='op'>]</span>
-
-<span class='co'>## Perform spectral binning</span>
-<span class='va'>analysis</span> <span class='op'>&lt;-</span> <span class='fu'>binneR</span><span class='fu'>::</span><span class='fu'><a href='https://aberHRML.github.io/binneR/reference/binneRlyse.html'>binneRlyse</a></span><span class='op'>(</span><span class='va'>files</span>, 
-                               <span class='va'>info</span>, 
-                               parameters <span class='op'>=</span> <span class='fu'>binneR</span><span class='fu'>::</span><span class='fu'><a href='https://aberHRML.github.io/binneR/reference/detectParameters.html'>detectParameters</a></span><span class='op'>(</span><span class='va'>files</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'><span style='color: #0000BB;'>binneR</span><span> </span><span style='color: #BB0000;'>v2.5.3</span><span> Mon Apr 26 15:55:45 2021</span></div><div class='output co'>#&gt; <span class='message'>________________________________________________________________________________</span></div><div class='output co'>#&gt; <span class='message'>Scans: 5:14 </span></div><div class='output co'>#&gt; <span class='message'>________________________________________________________________________________</span></div><div class='output co'>#&gt; <span class='message'>Reading raw data</span></div><div class='output co'>#&gt; <span class='message'>Gathering bins</span></div><div class='output co'>#&gt; <span class='message'>Removing single scan events</span></div><div class='output co'>#&gt; <span class='message'>Averaging intensities across scans</span></div><div class='output co'>#&gt; <span class='message'>Calculating bin metrics</span></div><div class='output co'>#&gt; <span class='message'>Calculating accurate m/z</span></div><div class='output co'>#&gt; <span class='message'>Building intensity matrix</span></div><div class='output co'>#&gt; <span class='message'>Gathering file headers</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'></span><span style='color: #00BB00;'>Completed! </span><span>[3.4S]</span></div><div class='input'>
-<span class='co'>## Plot RSD distributions</span>
-<span class='fu'>plotRSD</span><span class='op'>(</span><span class='va'>analysis</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $n</div><div class='img'><img src='plotRSD-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
-#&gt; $p</div><div class='img'><img src='plotRSD-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; </div></span></pre>
+    <pre class="examples"><div class='input'><span class='fu'>exportCSV</span><span class='op'>(</span><span class='va'>iris</span>, <span class='st'>"iris.csv"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "iris.csv"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
