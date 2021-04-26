@@ -10,6 +10,8 @@ test_that("export Binalysis works", {
 })
 
 test_that("export MetaboProfile works", {
+    skip('Skip tests involving MetaboProfile class')
+    
     export(lcd,temp_dir)
     
     expect_true(file.exists(str_c(temp_dir,'/exports/1_mode_raw_data.csv')))
