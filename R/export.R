@@ -1,3 +1,19 @@
+#' Export a csv
+#' @description Export a csv and return the file path of the exported csv.
+#' @param x a data frame or tibble to export
+#' @param file file or connection to write to
+#' @param ... arguments to pass to `readr::write_csv()`
+#' @return The file path of the exported csv.
+#' @examples
+#' exportCSV(iris, "iris.csv")
+#' @export
+
+exportCSV <- function(x,file,...){
+    write_csv(x = x,file = file,...)
+    
+    return(file)
+}
+
 #' Export results
 #' @rdname export
 #' @description Export data tables from `Binalysis`,`MetaboProfile`, `Analysis` and `Assignment` classes.

@@ -1,3 +1,5 @@
 test_that("addAssignments works", {
-  added_assignemnts <- addAssignments(a,assignment)
+  added_assignments <- addAssignments(a,assignment)
+  
+  expect_s4_class(added_assignments,'Analysis')
 })
