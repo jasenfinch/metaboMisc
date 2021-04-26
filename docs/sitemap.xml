@@ -4,6 +4,12 @@
     <loc>https://jasenfinch.github.io/metaboMisc//index.html</loc>
   </url>
   <url>
+    <loc>https://jasenfinch.github.io/metaboMisc//reference/addAssignments.html</loc>
+  </url>
+  <url>
+    <loc>https://jasenfinch.github.io/metaboMisc//reference/convertSampleInfo.html</loc>
+  </url>
+  <url>
     <loc>https://jasenfinch.github.io/metaboMisc//reference/detectBatchDiff.html</loc>
   </url>
   <url>
@@ -17,6 +23,9 @@
   </url>
   <url>
     <loc>https://jasenfinch.github.io/metaboMisc//reference/export.html</loc>
+  </url>
+  <url>
+    <loc>https://jasenfinch.github.io/metaboMisc//reference/exportCSV.html</loc>
   </url>
   <url>
     <loc>https://jasenfinch.github.io/metaboMisc//reference/featureSummary.html</loc>

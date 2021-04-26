@@ -1,3 +1,11 @@
+# metaboMisc 0.5.2
+
+* Added `addAssignments()` method for `Analysis` and `Assignment` classes.
+
+* Added `exportCSV()` that exports data to .csv format and returns the file path of the exported file.
+
+* Added `convertSampleInfo()` to convert sample information returned from `grover::runInfo` to a format compatible with the `binneR` and `profilePro` packages.
+
 # metaboMisc 0.5.1
 
 * Fixed error in `detectPretreatmentParameters()`.

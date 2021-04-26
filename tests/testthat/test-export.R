@@ -1,6 +1,14 @@
 
 temp_dir <- tempdir()
 
+test_that('exportCSV works',{
+    
+    file_path <- exportCSV(iris,'iris.csv')
+    
+    expect_match(file_path,'iris.csv')
+    expect_snapshot_file('iris.csv',binary = FALSE)
+})
+
 test_that("export Binalysis works", {
     export(bd,temp_dir)
     
@@ -10,6 +18,8 @@ test_that("export Binalysis works", {
 })
 
 test_that("export MetaboProfile works", {
+    skip('Skip tests involving MetaboProfile class')
+    
     export(lcd,temp_dir)
     
     expect_true(file.exists(str_c(temp_dir,'/exports/1_mode_raw_data.csv')))
