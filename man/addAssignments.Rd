@@ -12,7 +12,7 @@ addAssignments(analysis, assignment)
 \arguments{
 \item{analysis}{S4 object of class \code{Analysis}}
 
-\item{assignmwnt}{S4 object of class \code{Assignment}}
+\item{assignment}{S4 object of class \code{Assignment}}
 }
 \value{
 An S4 object of class \code{Analysis}

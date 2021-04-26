@@ -2,7 +2,7 @@
 #' @rdname addAssignments
 #' @description Add molecular formaul assignments to an `Analysis` class object.
 #' @param analysis S4 object of class `Analysis`
-#' @param assignmwnt S4 object of class `Assignment`
+#' @param assignment S4 object of class `Assignment`
 #' @return An S4 object of class `Analysis`
 #' @details Molecular formula assignments are added to the `Analysis` pre-treated data 
 #' @export
