@@ -36,10 +36,12 @@ Suggests:
     metaboData,
     faahKO,
     xcms,
-    covr
+    covr,
+    grover
 Config/testthat/edition: 3
 Remotes: aberHRML/binneR,
     jasenfinch/metabolyseR,
     jasenfinch/profilePro,
     jasenfinch/MFassign,
-    aberHRML/metaboData
+    aberHRML/metaboData,
+    jasenfinch/grover
