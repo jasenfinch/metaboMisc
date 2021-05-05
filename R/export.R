@@ -38,6 +38,7 @@ setGeneric('exportData',function(x,outPath = '.',...)
 #' @rdname export
 #' @importFrom binneR binnedData
 #' @importFrom stringr str_remove_all
+#' @importFrom purrr map_chr
 
 setMethod('exportData',signature = 'Binalysis',
           function(x,outPath = '.'){
@@ -119,6 +120,8 @@ setMethod('exportData',signature = 'Analysis',
                   select(Mode,everything()) %>%
                   exportCSV(str_c(outPath,'/',type,'_data.csv'))
           })
+
+#' @rdname export
 
 setMethod('exportData',signature = 'Assignment',
           function(x,outPath = '.'){

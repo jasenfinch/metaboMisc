@@ -5,6 +5,7 @@
 \alias{exportData,Binalysis-method}
 \alias{exportData,MetaboProfile-method}
 \alias{exportData,Analysis-method}
+\alias{exportData,Assignment-method}
 \alias{exportSampleInfo}
 \alias{exportSampleInfo,Binalysis-method}
 \alias{exportSampleInfo,MetaboProfile-method}
@@ -37,6 +38,8 @@ exportData(x, outPath = ".", ...)
 \S4method{exportData}{MetaboProfile}(x, outPath = ".")
 
 \S4method{exportData}{Analysis}(x, outPath = ".", type = "raw", idx = "name")
+
+\S4method{exportData}{Assignment}(x, outPath = ".")
 
 exportSampleInfo(x, outPath = ".", ...)
 

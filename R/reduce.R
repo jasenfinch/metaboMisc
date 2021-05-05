@@ -12,7 +12,6 @@
 #' 
 #' ## Assign molecular formulas
 #' p <- assignmentParameters('FIE')
-#' p@nCores <- 2
 #' 
 #' assignment <- assignMFs(peakData,p)
 #' 
