@@ -21,7 +21,7 @@
 #'  tibble::tibble(sample = seq_len(nrow(peakData)))
 #'  )
 #' 
-#' reduced_data <- reduce(assigned_data)
+#' reduced_data <- metaboMisc::reduce(assigned_data)
 #' 
 #' reduced_data
 #' @export
