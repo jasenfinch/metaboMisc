@@ -10,32 +10,38 @@ test_that('exportCSV works',{
 })
 
 test_that("export Binalysis works", {
-    export(bd,temp_dir)
+    fp <- export(bd,temp_dir)
     
-    expect_true(file.exists(str_c(temp_dir,'/exports/negative_mode_raw_data.csv')))
-    expect_true(file.exists(str_c(temp_dir,'/exports/positive_mode_raw_data.csv')))
-    expect_true(file.exists(str_c(temp_dir,'/exports/raw_sample_info.csv')))
+    expect_identical(basename(fp),c('sample_information.csv',
+                                    'accurate_data.csv',
+                                    'negative_mode_processed_data.csv',
+                                    'positive_mode_processed_data.csv'))
 })
 
 test_that("export MetaboProfile works", {
     skip('Skip tests involving MetaboProfile class')
     
-    export(lcd,temp_dir)
+    fp <- export(lcd,temp_dir)
     
-    expect_true(file.exists(str_c(temp_dir,'/exports/1_mode_raw_data.csv')))
-    expect_true(file.exists(str_c(temp_dir,'/exports/raw_sample_info.csv')))
+    expect_identical(basename(fp),c('sample_information.csv',
+                                    'peak_info.csv',
+                                    '/1_mode_processed_data.csv'))
 })
 
 test_that("export Analysis works", {
-    export(a,temp_dir)
+    fp <- export(a,temp_dir,type = 'pre-treated')
     
-    expect_true(file.exists(str_c(temp_dir,'/exports/pre-treated_data.csv')))
-    expect_true(file.exists(str_c(temp_dir,'/exports/pre-treated_sample_info.csv')))
+    expect_identical(basename(fp),c('pre-treated_sample_information.csv',
+                                    'pre-treated_data.csv',
+                                    'modelling_performance_metrics.csv',
+                                    'modelling_importance_metrics.csv',
+                                    'correlations.csv'))
 })
 
 test_that("export Assignment works", {
-    export(assignment,temp_dir)
+    fp <- export(assignment,temp_dir)
     
-    expect_true(file.exists(str_c(temp_dir,'/exports/molecular_formula_assignments.csv')))
-    expect_true(file.exists(str_c(temp_dir,'/exports/summarised_molecular_formula_assignments.csv')))
+    expect_identical(basename(fp),c('assignments.csv',
+                                    'assigned_data.csv',
+                                    'summarised_assignments.csv'))
 })
