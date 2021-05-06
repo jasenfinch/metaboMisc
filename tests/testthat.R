@@ -44,11 +44,12 @@ bd <- binneR::binneRlyse(file_paths,sample_information,bp)
 
 ## Example Analysis class
 a <- new('Analysis')
-preTreated(a) <- analysisData(abr1$neg,abr1$fact)
+preTreated(a) <- analysisData(abr1$neg[,200:300],abr1$fact)
+mp <- analysisParameters(c('modelling','correlations'))
+a <- reAnalyse(a,mp)
 
 ## Example Assingment class
 p <- assignmentParameters('FIE')
-p@nCores <- 2
 
 assignment <- assignMFs(peakData,p)
 

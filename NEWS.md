@@ -1,3 +1,9 @@
+# metaboMisc 0.5.3
+
+* Added generic methods for exporting individual elements of the `Binalysis`, `MetaboProfile`, `Analysis` and `Assignment` classes.
+
+* `export` methods now return vectors of file paths of the exported files.
+
 # metaboMisc 0.5.2
 
 * Added `addAssignments()` method for `Analysis` and `Assignment` classes.

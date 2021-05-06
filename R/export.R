@@ -4,11 +4,18 @@
 #' @param file file or connection to write to
 #' @param ... arguments to pass to `readr::write_csv()`
 #' @return The file path of the exported csv.
+#' @details If the file path directory does not exist, the directory is created prior to export.
 #' @examples
 #' exportCSV(iris, "iris.csv")
+#' @importFrom readr write_csv
 #' @export
 
 exportCSV <- function(x,file,...){
+    
+    if (!dir.exists(dirname(file))){
+        dir.create(dirname(file))
+    }
+    
     write_csv(x = x,file = file,...)
     
     return(file)
@@ -17,95 +24,308 @@ exportCSV <- function(x,file,...){
 #' Export results
 #' @rdname export
 #' @description Export data tables from `Binalysis`,`MetaboProfile`, `Analysis` and `Assignment` classes.
-#' @param analysis S4 object of class `Binalysis`, `MetaboProfile`, `Analysis` or `Assignment`,
+#' @param x S4 object of class `Binalysis`, `MetaboProfile`, `Analysis` or `Assignment`,
 #' @param outPath directory path to export to.
+#' @param type data type to extract. `raw` or `pre-treated`
+#' @param idx sample information column name to use as sample IDs
+#' @param ... arguments to pass to relevant method
+#' @return A character vector of exported file paths.
 #' @export
 
-setGeneric('export',function(analysis,outPath = '.')
-    standardGeneric('export')
-)
+setGeneric('exportData',function(x,outPath = '.',...)
+    standardGeneric('exportData'))
 
 #' @rdname export
 #' @importFrom binneR binnedData
-#' @importFrom readr write_csv
-#' @importFrom purrr walk
 #' @importFrom stringr str_remove_all
+#' @importFrom purrr map_chr
 
-setMethod('export',signature = 'Binalysis',
-          function(analysis,outPath = '.'){
-    exportPath <- str_c(outPath,'/exports')
-    
-    message('Exporting binned data')
-    
-    if (!dir.exists(exportPath)) {
-        dir.create(exportPath)
-    }
-    
-    i <- analysis %>%
-        binneR::sampleInfo()
-    
-    if (TRUE %in% duplicated(i$name)) {
-        i <- fixNames(i)
-    }
-    
-    write_csv(i,str_c(exportPath,'/','raw_sample_info.csv'))
-    
-    bd <- analysis %>%
-        binnedData() 
-    
-    names(bd)[names(bd) == 'p'] <- 'positive'
-    names(bd)[names(bd) == 'n'] <- 'negative'
-    
-    bd %>%
-        names() %>%
-        walk(~{
-            m <- .
-            bind_cols(bd[[m]],i %>% select(name)) %>%
-                gather('m/z','Intensity',-name) %>%
-                spread(name,Intensity) %>%
-                mutate(`m/z` = str_remove_all(`m/z`, '[:alpha:]') %>% as.numeric()) %>%
-                write_csv(str_c(exportPath,'/',m,'_mode_raw_data.csv'))
-        })
-})
-
-#' @rdname export
-#' @importFrom profilePro peakInfo
-
-setMethod('export',signature = 'MetaboProfile',
-          function(analysis,outPath = '.'){
-              exportPath <- str_c(outPath,'/exports')
+setMethod('exportData',signature = 'Binalysis',
+          function(x,outPath = '.'){
+              bd <- x %>%
+                  binnedData() 
               
-              message('Exporting spectrally processed data')
+              i <- x %>% 
+                  binneR::sampleInfo()
               
-              if (!dir.exists(exportPath)) {
-                  dir.create(exportPath)
+              if (TRUE %in% duplicated(i$name)) {
+                  i <- fixNames(i)
               }
               
-              i <- analysis %>%
+              names(bd)[names(bd) == 'p'] <- 'positive'
+              names(bd)[names(bd) == 'n'] <- 'negative'
+              
+              file_paths <- bd %>%
+                  names() %>%
+                  map_chr(~{
+                      bind_cols(bd[[.x]],i %>% select(name)) %>%
+                          gather('m/z','Intensity',-name) %>%
+                          spread(name,Intensity) %>%
+                          mutate(`m/z` = str_remove_all(`m/z`, '[:alpha:]') %>% as.numeric()) %>%
+                          exportCSV(str_c(outPath,'/',.x,'_mode_processed_data.csv'))
+                  })
+              
+              return(file_paths)
+          })
+
+#' @rdname export
+
+setMethod('exportData',signature = 'MetaboProfile',
+          function(x,outPath = '.'){
+              
+              i <- x %>%
                   profilePro::sampleInfo()
               
               if (TRUE %in% duplicated(i$name)) {
                   i <- fixNames(i)
               }
               
-              write_csv(i,str_c(exportPath,'/','raw_sample_info.csv'))
-              
-              write_csv(peakInfo(analysis) %>% 
-                            select(-peakidx),str_c(exportPath,'/peak_info.csv'))
-              
-              pd <- analysis %>%
+              pd <- x %>%
                   processedData() 
               
               names(pd)[is.na(names(pd))] <- '1'
               
-              pd %>%
+              file_paths <- pd %>%
                   names() %>%
-                  walk(~{
+                  map_chr(~{
                       bind_cols(pd[[.x]],i %>% select(name)) %>%
                           gather('Feature','Intensity',-name) %>%
                           spread(name,Intensity) %>%
-                          write_csv(str_c(exportPath,'/',.x,'_mode_raw_data.csv'))
+                          exportCSV(str_c(outPath,'/',.x,'_mode_processed_data.csv'))
                   })
+              
+              return(file_paths)
+          })
+
+#' @rdname export
+
+setMethod('exportData',signature = 'Analysis',
+          function(x,outPath = '.',type = 'raw',idx = 'name'){
+              i <- x %>%
+                  sinfo(type = type)
+              
+              if (TRUE %in% duplicated(i[[idx]])) {
+                  i <- fixNames(i)
+              }
+              
+              x %>%
+                  dat(type = type) %>%
+                  bind_cols(i %>% select(all_of(idx))) %>%
+                  gather('m/z','Intensity',-idx) %>%
+                  spread(idx,Intensity) %>%
+                  mutate(Mode = str_sub(`m/z`,1,1)) %>%
+                  mutate(`m/z` = str_split_fixed(`m/z`,' ',2)[,1] %>%
+                             str_remove_all('[:alpha:]') %>%
+                             as.numeric()) %>%
+                  select(Mode,everything()) %>%
+                  exportCSV(str_c(outPath,'/',type,'_data.csv'))
+          })
+
+#' @rdname export
+
+setMethod('exportData',signature = 'Assignment',
+          function(x,outPath = '.'){
+              x %>% 
+                  assignedData() %>% 
+                  exportCSV(str_c(outPath,'/assigned_data.csv'))
+          })
+
+#' @rdname export
+#' @export
+
+setGeneric('exportSampleInfo',function(x,outPath = '.',...)
+    standardGeneric('exportSampleInfo'))
+
+#' @rdname export
+
+setMethod('exportSampleInfo',signature = 'Binalysis',
+          function(x,outPath = '.'){
+              
+              i <- x %>%
+                  binneR::sampleInfo()
+              
+              if (TRUE %in% duplicated(i$name)) {
+                  i <- fixNames(i)
+              }
+              
+              exportCSV(i,str_c(outPath,'/sample_information.csv'))
+          })
+
+#' @rdname export
+
+setMethod('exportSampleInfo',signature = 'MetaboProfile',
+          function(x,outPath = '.'){
+              i <- x %>%
+                  profilePro::sampleInfo()
+              
+              if (TRUE %in% duplicated(i$name)) {
+                  i <- fixNames(i)
+              }
+              
+              exportCSV(i,str_c(outPath,'/sample_information.csv'))
+          })
+
+#' @rdname export
+
+setMethod('exportSampleInfo',signature = 'Analysis',
+          function(x,outPath = '.',type = 'raw'){
+              si <- x %>% 
+                  sinfo(type = type)
+              
+              exportCSV(si,str_c(outPath,'/',type,'_sample_information.csv'))
+          })
+
+#' @rdname export
+#' @export
+
+setGeneric('exportAccurateData',function(x,outPath = '.')
+    standardGeneric('exportAccurateData'))
+
+#' @rdname export
+#' @importFrom binneR accurateData
+
+setMethod('exportAccurateData',signature = 'Binalysis',
+          function(x,outPath = '.'){
+              bi <- x %>% 
+                  accurateData()
+              
+              exportCSV(bi,str_c(outPath,'/accurate_data.csv'))
+          })
+
+#' @rdname export
+#' @export
+
+setGeneric('exportPeakInfo',function(x,outPath = '.')
+    standardGeneric('exportPeakInfo'))
+
+#' @rdname export
+
+setMethod('exportPeakInfo',signature = 'MetaboProfile',
+          function(x,outPath = '.'){
+              exportCSV(peakInfo(x) %>% 
+                            select(-peakidx),str_c(outPath,'/peak_info.csv'))
+          })
+
+#' @rdname export
+#' @export
+
+setGeneric('exportModellingMetrics',function(x,outPath = '.')
+    standardGeneric('exportModellingMetrics'))
+
+#' @rdname export
+#' @importFrom metabolyseR metrics
+
+setMethod('exportModellingMetrics',signature = 'Analysis',
+          function(x,outPath = '.'){
+              performance <- x %>% 
+                  metrics()
+              
+              if (nrow(performance) > 0){
+                  exportCSV(performance,str_c(outPath,'/modelling_performance_metrics.csv'))
+              }
+          })
+
+#' @rdname export
+#' @export
+
+setGeneric('exportModellingImportance',function(x,outPath = '.')
+    standardGeneric('exportModellingImportance'))
+
+#' @rdname export
+#' @importFrom metabolyseR importance
+
+setMethod('exportModellingImportance',signature = 'Analysis',
+          function(x,outPath = '.'){
+              importances <- x %>% 
+                  importance()
+              
+              if (nrow(importances) > 0){
+                  exportCSV(importances,str_c(outPath,'/modelling_importance_metrics.csv'))
+              }
+          })
+
+#' @rdname export
+#' @export
+
+setGeneric('exportCorrelations',function(x,outPath = '.')
+    standardGeneric('exportCorrelations'))
+
+#' @rdname export
+#' @importFrom metabolyseR analysisResults
+
+setMethod('exportCorrelations',signature = 'Analysis',
+          function(x,outPath = '.'){
+              correl <- x %>% 
+                  analysisResults('correlations')
+              
+              if (length(correl) > 0){
+                  exportCSV(correl,str_c(outPath,'/correlations.csv'))
+              }
+          })
+
+#' @rdname export
+#' @export
+
+setGeneric('exportAssignments',function(x,outPath = '.')
+    standardGeneric('exportAssignments'))
+
+#' @rdname export
+#' @importFrom MFassign assignments
+
+setMethod('exportAssignments',signature = 'Assignment',
+          function(x,outPath = '.'){
+              x %>% 
+                  assignments() %>% 
+                  select(-Iteration,-Score,-Name) %>%
+                  exportCSV(str_c(outPath,'/assignments.csv'))
+          })
+
+#' @rdname export
+#' @export
+
+setGeneric('exportSummarisedAssignments',function(x,outPath = '.')
+    standardGeneric('exportSummarisedAssignments'))
+
+#' @rdname export
+#' @importFrom MFassign summariseAssignment
+
+setMethod('exportSummarisedAssignments',signature = 'Assignment',
+          function(x,outPath = '.'){
+              x %>% 
+                  summariseAssignment() %>% 
+                  exportCSV(str_c(outPath,'/summarised_assignments.csv'))
+          })
+
+#' @rdname export
+#' @export
+
+setGeneric('export',function(x,outPath = '.',...)
+    standardGeneric('export')
+)
+
+#' @rdname export
+
+setMethod('export',signature = 'Binalysis',
+          function(x,outPath = '.'){
+              
+              si_fp <- exportSampleInfo(x,outPath)
+              ad_fp <- exportAccurateData(x,outPath)
+              bd_fp <- exportData(x,outPath)
+              
+              return(c(si_fp,ad_fp,bd_fp))
+          })
+
+#' @rdname export
+#' @importFrom profilePro peakInfo
+
+setMethod('export',signature = 'MetaboProfile',
+          function(x,outPath = '.'){
+              
+              si_fp <- exportSampleInfo(x,outPath)
+              pi_fp <- exportPeakInfo(x,outPath)
+              pd_fp <- exportData(x,outPath)
+              
+              return(c(si_fp,pi_fp,pd_fp))
           })
 
 #' @rdname export
@@ -114,59 +334,29 @@ setMethod('export',signature = 'MetaboProfile',
 #' @importFrom stringr str_sub str_split_fixed
 
 setMethod('export',signature = 'Analysis',
-          function(analysis,outPath = '.'){
-    exportPath <- str_c(outPath,'/exports')
-    
-    message('Exporting pre-treated data')
-    
-    if (!dir.exists(exportPath)) {
-        dir.create(exportPath)
-    }
-    
-    i <- analysis %>%
-        sinfo(type = 'pre-treated')
-    
-    if (TRUE %in% duplicated(i$name)) {
-        i <- fixNames(i)
-    }
-    
-    write_csv(i,str_c(exportPath,'/pre-treated_sample_info.csv'))
-    
-    analysis %>%
-        dat(type = 'pre-treated') %>%
-        bind_cols(i %>% select(name)) %>%
-        gather('m/z','Intensity',-name) %>%
-        spread(name,Intensity) %>%
-        mutate(Mode = str_sub(`m/z`,1,1)) %>%
-        mutate(`m/z` = str_split_fixed(`m/z`,' ',2)[,1] %>%
-                   str_remove_all('[:alpha:]') %>%
-                   as.numeric()) %>%
-        select(Mode,everything()) %>%
-        write_csv(str_c(exportPath,'/pre-treated_data.csv'))
-    
-})
+          function(x,outPath = '.',type = 'raw',idx = 'name'){
+              si_fp <- exportSampleInfo(x,outPath,type)
+              ad_fp <- exportData(x,outPath,type,idx)
+              mm_fp <- exportModellingMetrics(x,outPath)
+              mi_fp <- exportModellingImportance(x,outPath)
+              co_fp <- exportCorrelations(x,outPath)
+              
+              c(si_fp,
+                ad_fp,
+                mm_fp,
+                mi_fp,
+                co_fp) %>% 
+                  return()
+          })
 
 #' @rdname export
-#' @importFrom MFassign assignments summariseAssignment
 
-setMethod('export',signature = 'Assignment',function(analysis,outPath = '.'){
+setMethod('export',signature = 'Assignment',function(x,outPath = '.'){
+    as_fp <- exportAssignments(x,outPath)
+    ad_fp <- exportData(x,outPath)
+    sa_fp <- exportSummarisedAssignments(x,outPath)
     
-    message('Exporting molecular formula assignments')
-    
-    exportPath <- str_c(outPath,'/exports')
-    
-    if (!dir.exists(exportPath)) {
-        dir.create(exportPath)
-    }
-    
-    analysis %>%
-        assignments() %>%
-        select(-Iteration,-Score,-Name) %>%
-        write_csv(str_c(exportPath,'/','molecular_formula_assignments.csv'))
-    
-    analysis %>%
-        summariseAssignment() %>%
-        write_csv(str_c(exportPath,'/','summarised_molecular_formula_assignments.csv'))
+    return(c(as_fp,ad_fp,sa_fp))
 })
 
 #' @importFrom dplyr bind_rows

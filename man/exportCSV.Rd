@@ -19,6 +19,9 @@ The file path of the exported csv.
 \description{
 Export a csv and return the file path of the exported csv.
 }
+\details{
+If the file path directory does not exist, the directory is created prior to export.
+}
 \examples{
 exportCSV(iris, "iris.csv")
 }
