@@ -247,6 +247,22 @@ setMethod('exportModellingImportance',signature = 'Analysis',
 #' @rdname export
 #' @export
 
+setGeneric('exportModelling',function(x,outPath = '.')
+    standardGeneric('exportModelling'))
+
+#' @rdname export
+
+setMethod('exportModelling',signature = 'Analysis',
+          function(x,outPath = '.'){
+              m_fp <- exportModellingMetrics(x,outPath)
+              i_fp <- exportModellingImportance(x,outPath)
+              
+             return(c(m_fp,i_fp))
+          })
+
+#' @rdname export
+#' @export
+
 setGeneric('exportCorrelations',function(x,outPath = '.')
     standardGeneric('exportCorrelations'))
 
@@ -337,14 +353,12 @@ setMethod('export',signature = 'Analysis',
           function(x,outPath = '.',type = 'raw',idx = 'name'){
               si_fp <- exportSampleInfo(x,outPath,type)
               ad_fp <- exportData(x,outPath,type,idx)
-              mm_fp <- exportModellingMetrics(x,outPath)
-              mi_fp <- exportModellingImportance(x,outPath)
+              m_fp <- exportModelling(x,outPath)
               co_fp <- exportCorrelations(x,outPath)
               
               c(si_fp,
                 ad_fp,
-                mm_fp,
-                mi_fp,
+                m_fp,
                 co_fp) %>% 
                   return()
           })

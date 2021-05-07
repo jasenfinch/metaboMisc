@@ -1,3 +1,7 @@
+# metaboMisc 0.5.4
+
+* Added `exportModelling()` method for the `Analysis` class.
+
 # metaboMisc 0.5.3
 
 * Added generic methods for exporting individual elements of the `Binalysis`, `MetaboProfile`, `Analysis` and `Assignment` classes.

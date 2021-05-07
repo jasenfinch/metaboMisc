@@ -18,6 +18,8 @@
 \alias{exportModellingMetrics,Analysis-method}
 \alias{exportModellingImportance}
 \alias{exportModellingImportance,Analysis-method}
+\alias{exportModelling}
+\alias{exportModelling,Analysis-method}
 \alias{exportCorrelations}
 \alias{exportCorrelations,Analysis-method}
 \alias{exportAssignments}
@@ -64,6 +66,10 @@ exportModellingMetrics(x, outPath = ".")
 exportModellingImportance(x, outPath = ".")
 
 \S4method{exportModellingImportance}{Analysis}(x, outPath = ".")
+
+exportModelling(x, outPath = ".")
+
+\S4method{exportModelling}{Analysis}(x, outPath = ".")
 
 exportCorrelations(x, outPath = ".")
 
