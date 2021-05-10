@@ -1,14 +1,15 @@
 #' Convert sample information to a workflow compatible format
 #' @description Convert sample information from `grover::runInfo` to a format compatible with `binneR` and `profilePro`.
 #' @param sample_info tibble containing sample information as returned from `grover::runInfo`
+#' @param gzip_ext add `.gz` extension to file names
 #' @return A tibble containing converted sample information.
 #' @importFrom stringr str_replace_all
 #' @importFrom dplyr rename arrange
 #' @importFrom tools file_path_sans_ext
 #' @export
 
-convertSampleInfo <- function(sample_info){
-    sample_info %>%
+convertSampleInfo <- function(sample_info,gzip_ext = TRUE){
+    sample_info <- sample_info %>%
         select(`RAW file`,
                `Creation date`,
                `User text 0`:`User text 4`) %>%
@@ -34,4 +35,11 @@ convertSampleInfo <- function(sample_info){
                block,
                name,
                class)
+    
+    if (isTRUE(gzip_ext)) {
+        sample_info <- sample_info %>% 
+           mutate(fileName = str_c(fileName,'.gz')) 
+    }
+    
+    return(sample_info)
 }
