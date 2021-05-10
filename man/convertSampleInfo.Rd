@@ -4,10 +4,12 @@
 \alias{convertSampleInfo}
 \title{Convert sample information to a workflow compatible format}
 \usage{
-convertSampleInfo(sample_info)
+convertSampleInfo(sample_info, gzip_ext = TRUE)
 }
 \arguments{
 \item{sample_info}{tibble containing sample information as returned from \code{grover::runInfo}}
+
+\item{gzip_ext}{add \code{.gz} extension to file names}
 }
 \value{
 A tibble containing converted sample information.

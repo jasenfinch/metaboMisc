@@ -36,7 +36,7 @@ convertSampleInfo <- function(sample_info,gzip_ext = TRUE){
                name,
                class)
     
-    if (isTRUE(zipped_file_names)) {
+    if (isTRUE(gzip_ext)) {
         sample_info <- sample_info %>% 
            mutate(fileName = str_c(fileName,'.gz')) 
     }
