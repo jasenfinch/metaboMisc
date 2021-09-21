@@ -44,13 +44,7 @@ jobs:
       - name: System dependencies
         run: |
           sudo apt-get install -y libopenbabel-dev libnetcdf-dev libglpk-dev libgit2-dev libsodium-dev
-    
-      - name: Install erah
-        run: |
-          install.packages('remotes')
-          remotes::install_github('xdomingoal/erah-devel')
-        shell: Rscript {0}
-        
+          
       - uses: r-lib/actions/setup-r-dependencies@v1
         with:
           extra-packages: |

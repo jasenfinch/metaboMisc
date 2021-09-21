@@ -7,4 +7,4 @@
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
-^iris\.csv$
+^tests/testthat/_snaps/export/iris\.csv$
