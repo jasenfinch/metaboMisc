@@ -3,10 +3,11 @@ temp_dir <- tempdir()
 
 test_that('exportCSV works',{
     
-    file_path <- exportCSV(iris,'iris.csv')
+    file_path <- paste0(temp_dir,'/iris.csv')
+    exported_file_path <- exportCSV(iris,file_path)
     
-    expect_match(file_path,'iris.csv')
-    expect_snapshot_file('iris.csv',binary = FALSE)
+    expect_match(exported_file_path,file_path)
+    expect_snapshot_file(exported_file_path)
 })
 
 test_that("export Binalysis works", {
