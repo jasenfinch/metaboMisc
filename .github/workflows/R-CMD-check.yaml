@@ -43,7 +43,7 @@ jobs:
 
       - name: System dependencies
         run: |
-          apt install libopenbabel-dev libnetcdf-dev libglpk-dev libgit2-dev libsodium-dev
+          sudo apt-get install -y libopenbabel-dev libnetcdf-dev libglpk-dev libgit2-dev libsodium-dev
     
       - uses: r-lib/actions/setup-r-dependencies@v1
         with:
