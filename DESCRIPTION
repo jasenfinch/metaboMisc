@@ -1,9 +1,9 @@
 Package: metaboMisc
 Title: Miscellaneous Functions for Metabolomics Analyses
-Version: 0.5.5
+Version: 0.5.6
 Authors@R: person("Jasen", "Finch", email = "jsf9@aber.ac.uk", role = c("aut", "cre"))
 Description: Miscellaneous helper functions for metabolomics analyses that do not yet have a permanent home.
-URL:  https://jasenfinch.github.io/metaboMisc
+URL: https://jasenfinch.github.io/metaboMisc
 BugReports: https://github.com/jasenfinch/metaboMisc/issues
 biocViews: Metabolomics
 Depends: R (>= 3.4)
@@ -28,9 +28,8 @@ Imports: binneR,
     ggplot2
 License: GPL (>= 3)
 Encoding: UTF-8
-LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Suggests: 
     testthat (>= 3.0.0),
     metaboData,

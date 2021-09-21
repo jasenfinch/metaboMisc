@@ -1,3 +1,7 @@
+# metaboMisc 0.5.6
+
+* Fixed missing argument error in `detectPretreatmentParameters()` when miss injections are detected.
+
 # metaboMisc 0.5.5
 
 * Added `gzip_ext` argument to `convertSampleInfo()` to enable the addition of the `.gz` file extension to file names in the `fileNames` column.
