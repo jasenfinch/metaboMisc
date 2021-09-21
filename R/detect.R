@@ -307,7 +307,7 @@ detectPretreatment <- function(x){
                 remove = list(
                     samples = list(idx = miss_injections$idx,samples = miss_injections$missInjections)
                 )),
-            parameters(pre_treat_params)
+            parameters(pre_treat_params,'pre-treatment')
         )
     }
     
