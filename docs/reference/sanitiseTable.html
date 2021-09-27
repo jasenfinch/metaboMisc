@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Add molecular formula assignments — addAssignments • metaboMisc</title>
+<title>Sanitise a data table — sanitiseTable • metaboMisc</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Add molecular formula assignments — addAssignments" />
-<meta property="og:description" content="Add molecular formaul assignments to an Analysis class object." />
+<meta property="og:title" content="Sanitise a data table — sanitiseTable" />
+<meta property="og:description" content="Sanitise a data table by restricting the number of rows and rounding numeric columns." />
 
 
 
@@ -111,40 +111,48 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Add molecular formula assignments</h1>
-    <small class="dont-index">Source: <a href='https://github.com/jasenfinch/metaboMisc/blob/master/R/add.R'><code>R/add.R</code></a></small>
-    <div class="hidden name"><code>addAssignments.Rd</code></div>
+    <h1>Sanitise a data table</h1>
+    <small class="dont-index">Source: <a href='https://github.com/jasenfinch/metaboMisc/blob/master/R/sanitise.R'><code>R/sanitise.R</code></a></small>
+    <div class="hidden name"><code>sanitiseTable.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Add molecular formaul assignments to an <code>Analysis</code> class object.</p>
+    <p>Sanitise a data table by restricting the number of rows and rounding numeric columns.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>addAssignments</span><span class='op'>(</span><span class='va'>analysis</span>, <span class='va'>assignment</span><span class='op'>)</span>
-
-<span class='co'># S4 method for Analysis,Assignment</span>
-<span class='fu'>addAssignments</span><span class='op'>(</span><span class='va'>analysis</span>, <span class='va'>assignment</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>sanitiseTable</span><span class='op'>(</span><span class='va'>x</span>, maxRows <span class='op'>=</span> <span class='fl'>5000</span>, sigFig <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>analysis</th>
-      <td><p>S4 object of class <code>Analysis</code></p></td>
+      <th>x</th>
+      <td><p>A tibble or data.frame containing the data to be sanitised</p></td>
     </tr>
     <tr>
-      <th>assignment</th>
-      <td><p>S4 object of class <code>Assignment</code></p></td>
+      <th>maxRows</th>
+      <td><p>Maximum number of rows with which to restrict the table</p></td>
+    </tr>
+    <tr>
+      <th>sigFig</th>
+      <td><p>Significant figures with which to round numeric columns</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An S4 object of class <code>Analysis</code></p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>Molecular formula assignments are added to the <code>Analysis</code> pre-treated data</p>
-
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>sanitiseTable</span><span class='op'>(</span><span class='va'>iris</span>,maxRows <span class='op'>=</span> <span class='fl'>10</span>,sigFig <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Number of rows in table restricted to 10.</span></div><div class='output co'>#&gt;    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+#&gt; 1             5           4            1         0.2  setosa
+#&gt; 2             5           3            1         0.2  setosa
+#&gt; 3             5           3            1         0.2  setosa
+#&gt; 4             5           3            2         0.2  setosa
+#&gt; 5             5           4            1         0.2  setosa
+#&gt; 6             5           4            2         0.4  setosa
+#&gt; 7             5           3            1         0.3  setosa
+#&gt; 8             5           3            2         0.2  setosa
+#&gt; 9             4           3            1         0.2  setosa
+#&gt; 10            5           3            2         0.1  setosa</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

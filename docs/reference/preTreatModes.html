@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metaboMisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.7</span>
       </span>
     </div>
 
@@ -169,7 +169,7 @@
 <span class='va'>analysis</span> <span class='op'>&lt;-</span> <span class='fu'>binneR</span><span class='fu'>::</span><span class='fu'><a href='https://aberHRML.github.io/binneR/reference/binneRlyse.html'>binneRlyse</a></span><span class='op'>(</span><span class='va'>files</span>, 
                                <span class='va'>info</span>, 
                                parameters <span class='op'>=</span> <span class='va'>bp</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'><span style='color: #0000BB;'>binneR</span> <span style='color: #BB0000;'>v2.5.3</span> Tue Sep 21 09:04:34 2021</span></div><div class='output co'>#&gt; <span class='message'>________________________________________________________________________________</span></div><div class='output co'>#&gt; <span class='message'>Scans: 5:14 </span></div><div class='output co'>#&gt; <span class='message'>________________________________________________________________________________</span></div><div class='output co'>#&gt; <span class='message'>Reading raw data</span></div><div class='output co'>#&gt; <span class='message'>Gathering bins</span></div><div class='output co'>#&gt; <span class='message'>Removing single scan events</span></div><div class='output co'>#&gt; <span class='message'>Averaging intensities across scans</span></div><div class='output co'>#&gt; <span class='message'>Calculating bin metrics</span></div><div class='output co'>#&gt; <span class='message'>Calculating accurate m/z</span></div><div class='output co'>#&gt; <span class='message'>Building intensity matrix</span></div><div class='output co'>#&gt; <span class='message'>Gathering file headers</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'><span style='color: #00BB00;'>Completed! </span>[2.3S]</span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'><span style='color: #0000BB;'>binneR</span> <span style='color: #BB0000;'>v2.5.3</span> Mon Sep 27 11:19:42 2021</span></div><div class='output co'>#&gt; <span class='message'>________________________________________________________________________________</span></div><div class='output co'>#&gt; <span class='message'>Scans: 5:14 </span></div><div class='output co'>#&gt; <span class='message'>________________________________________________________________________________</span></div><div class='output co'>#&gt; <span class='message'>Reading raw data</span></div><div class='output co'>#&gt; <span class='message'>Gathering bins</span></div><div class='output co'>#&gt; <span class='message'>Removing single scan events</span></div><div class='output co'>#&gt; <span class='message'>Averaging intensities across scans</span></div><div class='output co'>#&gt; <span class='message'>Calculating bin metrics</span></div><div class='output co'>#&gt; <span class='message'>Calculating accurate m/z</span></div><div class='output co'>#&gt; <span class='message'>Building intensity matrix</span></div><div class='output co'>#&gt; <span class='message'>Gathering file headers</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'><span style='color: #00BB00;'>Completed! </span>[2.3S]</span></div><div class='input'>
 <span class='co'>## Declare pre-treatment parameters</span>
 <span class='va'>pre_treatment_parameters</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://jasenfinch.github.io/metabolyseR//reference/analysisParameters.html'>analysisParameters</a></span><span class='op'>(</span><span class='st'>'pre-treatment'</span><span class='op'>)</span>
 <span class='fu'><a href='https://jasenfinch.github.io/metabolyseR//reference/parameters.html'>parameters</a></span><span class='op'>(</span><span class='va'>pre_treatment_parameters</span>,
@@ -186,7 +186,7 @@
 <span class='va'>pre_treated_data</span> <span class='op'>&lt;-</span> <span class='fu'>preTreatModes</span><span class='op'>(</span><span class='va'>analysis</span>,
                                   <span class='va'>pre_treatment_parameters</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 
-#&gt; <span style='color: #0000BB;'>metabolyseR</span> <span style='color: #BB0000;'>v0.14.3</span> Tue Sep 21 09:04:37 2021
+#&gt; <span style='color: #0000BB;'>metabolyseR</span> <span style='color: #BB0000;'>v0.14.3</span> Mon Sep 27 11:19:44 2021
 #&gt; ________________________________________________________________________________
 #&gt; <span style='color: #BBBB00;'>Parameters:</span>
 #&gt; pre-treatment
@@ -204,7 +204,7 @@
 #&gt; 
 #&gt; ________________________________________________________________________________
 #&gt; 
-#&gt; <span style='color: #0000BB;'>Negative mode</span>…<span style='color: #0000BB;'>Negative mode</span> 		<span style='color: #00BB00;'>✓</span> [0.6S]
+#&gt; <span style='color: #0000BB;'>Negative mode</span>…<span style='color: #0000BB;'>Negative mode</span> 		<span style='color: #00BB00;'>✓</span> [0.5S]
 #&gt; <span style='color: #0000BB;'>Positive mode</span>…<span style='color: #0000BB;'>Positive mode</span> 		<span style='color: #00BB00;'>✓</span> [0.6S]
 #&gt; ________________________________________________________________________________
 #&gt; 
