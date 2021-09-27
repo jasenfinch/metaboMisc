@@ -1,3 +1,9 @@
+# metaboMisc 0.5.7
+
+* Removed `aberHRML/metaboData` from the Remotes field in the DESCRIPTION to ensure that the CRAN version  of metaboData is installed.
+
+* Added `sanitiseTable()` that can be used to restrict the number of  rows in a table and round numeric columns to a given number of significant figures. 
+
 # metaboMisc 0.5.6
 
 * Fixed missing argument error in `detectPretreatmentParameters()` when miss injections are detected.
