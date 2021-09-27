@@ -6,6 +6,7 @@
 #' @examples
 #' sanitiseTable(iris,maxRows = 10,sigFig = 1)
 #' @importFrom dplyr mutate_if
+#' @export
 
 
 sanitiseTable <- function(x,maxRows = 5000,sigFig = 3){
