@@ -1,3 +1,7 @@
+# metabMisc 0.5.8
+
+* Numbers of characters in strings are now limited by `sanitiseTable()`.
+
 # metaboMisc 0.5.7
 
 * Removed `aberHRML/metaboData` from the Remotes field in the DESCRIPTION to ensure that the CRAN version  of metaboData is installed.
