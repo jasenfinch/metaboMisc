@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metaboMisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.8</span>
       </span>
     </div>
 
@@ -153,25 +153,44 @@
     <p>Analysis of Variance (ANOVA) is used to detect differences in total ion count (TIC) averages between batches/blocks.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## Retrieve file paths and sample information for example data</span>
-<span class='va'>files</span> <span class='op'>&lt;-</span> <span class='fu'>metaboData</span><span class='fu'>::</span><span class='fu'><a href='https://aberHRML.github.io/metaboData//reference/filePaths.html'>filePaths</a></span><span class='op'>(</span><span class='st'>'FIE-HRMS'</span>,<span class='st'>'BdistachyonEcotypes'</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>]</span>
-
-<span class='va'>info</span> <span class='op'>&lt;-</span> <span class='fu'>metaboData</span><span class='fu'>::</span><span class='fu'><a href='https://aberHRML.github.io/metaboData//reference/runinfo.html'>runinfo</a></span><span class='op'>(</span><span class='st'>'FIE-HRMS'</span>,<span class='st'>'BdistachyonEcotypes'</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>,<span class='op'>]</span>
-
-<span class='co'>## Perform spectral binning</span>
-<span class='va'>analysis</span> <span class='op'>&lt;-</span> <span class='fu'>binneR</span><span class='fu'>::</span><span class='fu'><a href='https://aberHRML.github.io/binneR/reference/binneRlyse.html'>binneRlyse</a></span><span class='op'>(</span><span class='va'>files</span>, 
-                               <span class='va'>info</span>, 
-                               parameters <span class='op'>=</span> <span class='fu'>binneR</span><span class='fu'>::</span><span class='fu'><a href='https://aberHRML.github.io/binneR/reference/detectParameters.html'>detectParameters</a></span><span class='op'>(</span><span class='va'>files</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘purrr’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:metaboMisc’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    reduce</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #0000BB;'>binneR</span> <span style='color: #BB0000;'>v2.5.3</span> Mon Sep 27 11:19:18 2021</span></div><div class='output co'>#&gt; <span class='message'>________________________________________________________________________________</span></div><div class='output co'>#&gt; <span class='message'>Scans: 5:14 </span></div><div class='output co'>#&gt; <span class='message'>________________________________________________________________________________</span></div><div class='output co'>#&gt; <span class='message'>Reading raw data</span></div><div class='output co'>#&gt; <span class='message'>Gathering bins</span></div><div class='output co'>#&gt; <span class='message'>Removing single scan events</span></div><div class='output co'>#&gt; <span class='message'>Averaging intensities across scans</span></div><div class='output co'>#&gt; <span class='message'>Calculating bin metrics</span></div><div class='output co'>#&gt; <span class='message'>Calculating accurate m/z</span></div><div class='output co'>#&gt; <span class='message'>Building intensity matrix</span></div><div class='output co'>#&gt; <span class='message'>Gathering file headers</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'><span style='color: #00BB00;'>Completed! </span>[2.9S]</span></div><div class='input'>
-<span class='co'>## Detect batch differences</span>
-<span class='va'>batch_diff</span> <span class='op'>&lt;-</span> <span class='fu'>detectBatchDiff</span><span class='op'>(</span><span class='va'>analysis</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Batches with &lt; 3 replicates removed: "3", "5"</span></div><div class='output co'>#&gt; <span class='message'>Only 1 batch detected, skipping detection</span></div><div class='input'>
-<span class='co'>## Display batch diffferences</span>
-<span class='va'>batch_diff</span>
-</div><div class='output co'>#&gt; NULL</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'>## Retrieve file paths and sample information for example data</span></span>
+<span class='r-in'><span class='va'>files</span> <span class='op'>&lt;-</span> <span class='fu'>metaboData</span><span class='fu'>::</span><span class='fu'><a href='https://aberHRML.github.io/metaboData//reference/filePaths.html'>filePaths</a></span><span class='op'>(</span><span class='st'>'FIE-HRMS'</span>,<span class='st'>'BdistachyonEcotypes'</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>]</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>info</span> <span class='op'>&lt;-</span> <span class='fu'>metaboData</span><span class='fu'>::</span><span class='fu'><a href='https://aberHRML.github.io/metaboData//reference/runinfo.html'>runinfo</a></span><span class='op'>(</span><span class='st'>'FIE-HRMS'</span>,<span class='st'>'BdistachyonEcotypes'</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>,<span class='op'>]</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Perform spectral binning</span></span>
+<span class='r-in'><span class='va'>analysis</span> <span class='op'>&lt;-</span> <span class='fu'>binneR</span><span class='fu'>::</span><span class='fu'><a href='https://aberHRML.github.io/binneR/reference/binneRlyse.html'>binneRlyse</a></span><span class='op'>(</span><span class='va'>files</span>, </span>
+<span class='r-in'>                               <span class='va'>info</span>, </span>
+<span class='r-in'>                               parameters <span class='op'>=</span> <span class='fu'>binneR</span><span class='fu'>::</span><span class='fu'><a href='https://aberHRML.github.io/binneR/reference/detectParameters.html'>detectParameters</a></span><span class='op'>(</span><span class='va'>files</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Attaching package: ‘purrr’</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> The following object is masked from ‘package:metaboMisc’:</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>     reduce</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'>binneR</span> <span style='color: #BB0000;'>v2.6.2</span> Wed Nov 17 09:52:25 2021</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> ________________________________________________________________________________</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Scans: 5:14 </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> ________________________________________________________________________________</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Reading raw data</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Gathering bins</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Removing single scan events</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Averaging intensities across scans</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Calculating bin metrics</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Calculating accurate m/z</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Building intensity matrix</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Gathering file headers</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BB00;'>Completed! </span>[2.6S]</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Detect batch differences</span></span>
+<span class='r-in'><span class='va'>batch_diff</span> <span class='op'>&lt;-</span> <span class='fu'>detectBatchDiff</span><span class='op'>(</span><span class='va'>analysis</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Batches with &lt; 3 replicates removed: "3", "5"</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Only 1 batch detected, skipping detection</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Display batch diffferences</span></span>
+<span class='r-in'><span class='va'>batch_diff</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> NULL</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

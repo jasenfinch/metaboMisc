@@ -4,7 +4,7 @@
 \alias{sanitiseTable}
 \title{Sanitise a data table}
 \usage{
-sanitiseTable(x, maxRows = 5000, sigFig = 3)
+sanitiseTable(x, maxRows = 5000, sigFig = 3, maxCharacters = 100)
 }
 \arguments{
 \item{x}{A tibble or data.frame containing the data to be sanitised}
@@ -12,6 +12,8 @@ sanitiseTable(x, maxRows = 5000, sigFig = 3)
 \item{maxRows}{Maximum number of rows with which to restrict the table}
 
 \item{sigFig}{Significant figures with which to round numeric columns}
+
+\item{maxCharacters}{Maximum number of characters allowed in a string before it is truncated}
 }
 \description{
 Sanitise a data table by restricting the number of rows and rounding numeric columns.

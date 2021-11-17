@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metaboMisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.8</span>
       </span>
     </div>
 
@@ -150,66 +150,84 @@
     <p>S4 object of class <code>Analysis</code></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://jasenfinch.github.io/metabolyseR'>metabolyseR</a></span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘metabolyseR’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:stats’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    anova</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    raw, split</span></div><div class='input'>
-<span class='co'>## Retrieve file paths and sample information for example data</span>
-<span class='va'>files</span> <span class='op'>&lt;-</span> <span class='fu'>metaboData</span><span class='fu'>::</span><span class='fu'><a href='https://aberHRML.github.io/metaboData//reference/filePaths.html'>filePaths</a></span><span class='op'>(</span><span class='st'>'FIE-HRMS'</span>,<span class='st'>'BdistachyonEcotypes'</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>]</span>
-
-<span class='va'>info</span> <span class='op'>&lt;-</span> <span class='fu'>metaboData</span><span class='fu'>::</span><span class='fu'><a href='https://aberHRML.github.io/metaboData//reference/runinfo.html'>runinfo</a></span><span class='op'>(</span><span class='st'>'FIE-HRMS'</span>,<span class='st'>'BdistachyonEcotypes'</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>,<span class='op'>]</span>
-
-<span class='co'>## Detect spectral binning parameters</span>
-<span class='va'>bp</span> <span class='op'>&lt;-</span> <span class='fu'>binneR</span><span class='fu'>::</span><span class='fu'><a href='https://aberHRML.github.io/binneR/reference/detectParameters.html'>detectParameters</a></span><span class='op'>(</span><span class='va'>files</span><span class='op'>)</span>
-
-<span class='co'>## Perform spectral binning</span>
-<span class='va'>analysis</span> <span class='op'>&lt;-</span> <span class='fu'>binneR</span><span class='fu'>::</span><span class='fu'><a href='https://aberHRML.github.io/binneR/reference/binneRlyse.html'>binneRlyse</a></span><span class='op'>(</span><span class='va'>files</span>, 
-                               <span class='va'>info</span>, 
-                               parameters <span class='op'>=</span> <span class='va'>bp</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'><span style='color: #0000BB;'>binneR</span> <span style='color: #BB0000;'>v2.5.3</span> Mon Sep 27 11:19:42 2021</span></div><div class='output co'>#&gt; <span class='message'>________________________________________________________________________________</span></div><div class='output co'>#&gt; <span class='message'>Scans: 5:14 </span></div><div class='output co'>#&gt; <span class='message'>________________________________________________________________________________</span></div><div class='output co'>#&gt; <span class='message'>Reading raw data</span></div><div class='output co'>#&gt; <span class='message'>Gathering bins</span></div><div class='output co'>#&gt; <span class='message'>Removing single scan events</span></div><div class='output co'>#&gt; <span class='message'>Averaging intensities across scans</span></div><div class='output co'>#&gt; <span class='message'>Calculating bin metrics</span></div><div class='output co'>#&gt; <span class='message'>Calculating accurate m/z</span></div><div class='output co'>#&gt; <span class='message'>Building intensity matrix</span></div><div class='output co'>#&gt; <span class='message'>Gathering file headers</span></div><div class='output co'>#&gt; </div><div class='output co'>#&gt; <span class='message'><span style='color: #00BB00;'>Completed! </span>[2.3S]</span></div><div class='input'>
-<span class='co'>## Declare pre-treatment parameters</span>
-<span class='va'>pre_treatment_parameters</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://jasenfinch.github.io/metabolyseR//reference/analysisParameters.html'>analysisParameters</a></span><span class='op'>(</span><span class='st'>'pre-treatment'</span><span class='op'>)</span>
-<span class='fu'><a href='https://jasenfinch.github.io/metabolyseR//reference/parameters.html'>parameters</a></span><span class='op'>(</span><span class='va'>pre_treatment_parameters</span>,
-                        <span class='st'>'pre-treatment'</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://jasenfinch.github.io/metabolyseR//reference/pre-treatment-parameters.html'>preTreatmentParameters</a></span><span class='op'>(</span>
- <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-   occupancyFilter <span class='op'>=</span> <span class='st'>'maximum'</span>,
-   impute <span class='op'>=</span> <span class='st'>'all'</span>,
-   transform <span class='op'>=</span> <span class='st'>'TICnorm'</span>
- <span class='op'>)</span>
-<span class='op'>)</span>
-<span class='fu'>changeParameter</span><span class='op'>(</span><span class='va'>pre_treatment_parameters</span>,<span class='st'>'parallel'</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='st'>'no'</span>
-
-<span class='co'>## Perform pre-treatment</span>
-<span class='va'>pre_treated_data</span> <span class='op'>&lt;-</span> <span class='fu'>preTreatModes</span><span class='op'>(</span><span class='va'>analysis</span>,
-                                  <span class='va'>pre_treatment_parameters</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt; <span style='color: #0000BB;'>metabolyseR</span> <span style='color: #BB0000;'>v0.14.3</span> Mon Sep 27 11:19:44 2021
-#&gt; ________________________________________________________________________________
-#&gt; <span style='color: #BBBB00;'>Parameters:</span>
-#&gt; pre-treatment
-#&gt; 	occupancyFilter
-#&gt; 		maximum
-#&gt; 			cls = class
-#&gt; 			occupancy = 2/3
-#&gt; 	impute
-#&gt; 		all
-#&gt; 			occupancy = 2/3
-#&gt; 			parallel = no
-#&gt; 			seed = 1234
-#&gt; 	transform
-#&gt; 		TICnorm
-#&gt; 
-#&gt; ________________________________________________________________________________
-#&gt; 
-#&gt; <span style='color: #0000BB;'>Negative mode</span>…<span style='color: #0000BB;'>Negative mode</span> 		<span style='color: #00BB00;'>✓</span> [0.5S]
-#&gt; <span style='color: #0000BB;'>Positive mode</span>…<span style='color: #0000BB;'>Positive mode</span> 		<span style='color: #00BB00;'>✓</span> [0.6S]
-#&gt; ________________________________________________________________________________
-#&gt; 
-#&gt; <span style='color: #00BB00;'>Complete! </span>[1.2S]
-#&gt; </div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://jasenfinch.github.io/metabolyseR'>metabolyseR</a></span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Attaching package: ‘metabolyseR’</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> The following object is masked from ‘package:stats’:</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>     anova</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> The following objects are masked from ‘package:base’:</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>     raw, split</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Retrieve file paths and sample information for example data</span></span>
+<span class='r-in'><span class='va'>files</span> <span class='op'>&lt;-</span> <span class='fu'>metaboData</span><span class='fu'>::</span><span class='fu'><a href='https://aberHRML.github.io/metaboData//reference/filePaths.html'>filePaths</a></span><span class='op'>(</span><span class='st'>'FIE-HRMS'</span>,<span class='st'>'BdistachyonEcotypes'</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>]</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>info</span> <span class='op'>&lt;-</span> <span class='fu'>metaboData</span><span class='fu'>::</span><span class='fu'><a href='https://aberHRML.github.io/metaboData//reference/runinfo.html'>runinfo</a></span><span class='op'>(</span><span class='st'>'FIE-HRMS'</span>,<span class='st'>'BdistachyonEcotypes'</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>,<span class='op'>]</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Detect spectral binning parameters</span></span>
+<span class='r-in'><span class='va'>bp</span> <span class='op'>&lt;-</span> <span class='fu'>binneR</span><span class='fu'>::</span><span class='fu'><a href='https://aberHRML.github.io/binneR/reference/detectParameters.html'>detectParameters</a></span><span class='op'>(</span><span class='va'>files</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Perform spectral binning</span></span>
+<span class='r-in'><span class='va'>analysis</span> <span class='op'>&lt;-</span> <span class='fu'>binneR</span><span class='fu'>::</span><span class='fu'><a href='https://aberHRML.github.io/binneR/reference/binneRlyse.html'>binneRlyse</a></span><span class='op'>(</span><span class='va'>files</span>, </span>
+<span class='r-in'>                               <span class='va'>info</span>, </span>
+<span class='r-in'>                               parameters <span class='op'>=</span> <span class='va'>bp</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'>binneR</span> <span style='color: #BB0000;'>v2.6.2</span> Wed Nov 17 09:52:51 2021</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> ________________________________________________________________________________</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Scans: 5:14 </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> ________________________________________________________________________________</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Reading raw data</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Gathering bins</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Removing single scan events</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Averaging intensities across scans</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Calculating bin metrics</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Calculating accurate m/z</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Building intensity matrix</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Gathering file headers</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BB00;'>Completed! </span>[2.5S]</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Declare pre-treatment parameters</span></span>
+<span class='r-in'><span class='va'>pre_treatment_parameters</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://jasenfinch.github.io/metabolyseR//reference/analysisParameters.html'>analysisParameters</a></span><span class='op'>(</span><span class='st'>'pre-treatment'</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://jasenfinch.github.io/metabolyseR//reference/parameters.html'>parameters</a></span><span class='op'>(</span><span class='va'>pre_treatment_parameters</span>,</span>
+<span class='r-in'>                        <span class='st'>'pre-treatment'</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://jasenfinch.github.io/metabolyseR//reference/pre-treatment-parameters.html'>preTreatmentParameters</a></span><span class='op'>(</span></span>
+<span class='r-in'> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span></span>
+<span class='r-in'>   occupancyFilter <span class='op'>=</span> <span class='st'>'maximum'</span>,</span>
+<span class='r-in'>   impute <span class='op'>=</span> <span class='st'>'all'</span>,</span>
+<span class='r-in'>   transform <span class='op'>=</span> <span class='st'>'TICnorm'</span></span>
+<span class='r-in'> <span class='op'>)</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>changeParameter</span><span class='op'>(</span><span class='va'>pre_treatment_parameters</span>,<span class='st'>'parallel'</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='st'>'no'</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Perform pre-treatment</span></span>
+<span class='r-in'><span class='va'>pre_treated_data</span> <span class='op'>&lt;-</span> <span class='fu'>preTreatModes</span><span class='op'>(</span><span class='va'>analysis</span>,</span>
+<span class='r-in'>                                  <span class='va'>pre_treatment_parameters</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'>metabolyseR</span> <span style='color: #BB0000;'>v0.14.5</span> Wed Nov 17 09:52:53 2021</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ________________________________________________________________________________</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BBBB00;'>Parameters:</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> pre-treatment</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	occupancyFilter</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 		maximum</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 			cls = class</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 			occupancy = 2/3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	impute</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 		all</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 			occupancy = 2/3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 			parallel = no</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 			seed = 1234</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	transform</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 		TICnorm</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ________________________________________________________________________________</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'>Negative mode</span>…<span style='color: #0000BB;'>Negative mode</span> 		<span style='color: #00BB00;'>✓</span> [1.1S]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'>Positive mode</span>…<span style='color: #0000BB;'>Positive mode</span> 		<span style='color: #00BB00;'>✓</span> [0.9S]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ________________________________________________________________________________</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BB00;'>Complete! </span>[2.1S]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

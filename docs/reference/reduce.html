@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metaboMisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.8</span>
       </span>
     </div>
 
@@ -157,43 +157,65 @@
     <p>Isotope and adduct features are filtered based on the maximum intensity peak for each molecular formulas.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>MFassign</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Loading required package: ggraph</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: ggplot2</span></div><div class='input'>
-<span class='co'>## Assign molecular formulas</span>
-<span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/MFassign/man/assignmentParameters.html'>assignmentParameters</a></span><span class='op'>(</span><span class='st'>'FIE'</span><span class='op'>)</span>
-
-<span class='va'>assignment</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/MFassign/man/assignMFs.html'>assignMFs</a></span><span class='op'>(</span><span class='va'>peakData</span>,<span class='va'>p</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'><span style='color: #0000BB;'></span>
-#&gt; <span class='message'>MFassign </span><span style='color: #BB0000;'>v0.7.10</span> Mon Sep 27 11:19:46 2021</span></div><div class='output co'>#&gt; <span class='message'>________________________________________________________________________________</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #BBBB00;'>Assignment Parameters: </span></span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>	 Technique:		 FIE </span>
-#&gt; <span class='message'>	 Max M:			 1000 </span>
-#&gt; <span class='message'>	 Max MF score:		 5 </span>
-#&gt; <span class='message'>	 PPM threshold:		 5 </span>
-#&gt; <span class='message'>	 Relationship limit:	 0.001 </span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>	 Adducts: </span>
-#&gt; <span class='message'>	 n: [M-H]1-, [M+Cl]1-, [M+K-2H]1-, [M-2H]2-, [M+Cl37]1-, [2M-H]1-</span>
-#&gt; <span class='message'>	 p: [M+H]1+, [M+K]1+, [M+Na]1+, [M+K41]1+, [M+NH4]1+, [M+2H]2+, [2M+H]1+ </span>
-#&gt; <span class='message'>	 Isotopes: 13C, 18O, 13C2 </span>
-#&gt; <span class='message'>	 Transformations: M - [O] + [NH2], M - [OH] + [NH2], M + [H2], M - [H2] + [O], M - [H] + [CH3], M - [H] + [NH2], M - [H] + [OH], M + [H2O], M - [H3] + [H2O], M - [H] + [CHO2], M - [H] + [SO3], M - [H] + [PO3H2]</span></div><div class='output co'>#&gt; <span class='message'>________________________________________________________________________________</span></div><div class='output co'>#&gt; <span class='message'>No. m/z:	9</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #0000BB;'>Calculating correlations </span>…</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #0000BB;'>Calculating correlations </span>	<span style='color: #00BB00;'>✓</span> [24 correlations] [0.1S]</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #0000BB;'>Filtering correlations </span>…</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #0000BB;'>Filtering correlations </span>		<span style='color: #00BB00;'>✓</span> [24 correlations] [0S]</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #0000BB;'>Preparing correlations </span>…</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #0000BB;'>Preparing correlations </span>		<span style='color: #00BB00;'>✓</span> [0S]</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #0000BB;'>Calculating relationships </span>…</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #0000BB;'>Calculating relationships </span>	<span style='color: #00BB00;'>✓</span> [7.3S]</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #0000BB;'>Adduct &amp; isotope assignment </span>…</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #0000BB;'>Adduct &amp; isotope assignment </span>	<span style='color: #00BB00;'>✓</span> [12.2S]</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #0000BB;'>Transformation assignment iteration 1 </span>…</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #0000BB;'>Transformation assignment iteration 1 </span>	<span style='color: #00BB00;'>✓</span> [0S]</span></div><div class='output co'>#&gt; <span class='message'>________________________________________________________________________________</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'><span style='color: #00BB00;'>Complete! </span>[19.6S]</span></div><div class='input'>
-<span class='co'>## Retrieve assigned data</span>
-<span class='va'>assigned_data</span> <span class='op'>&lt;-</span> <span class='fu'>metabolyseR</span><span class='fu'>::</span><span class='fu'><a href='https://jasenfinch.github.io/metabolyseR//reference/analysisData.html'>analysisData</a></span><span class='op'>(</span>
- <span class='fu'><a href='https://rdrr.io/pkg/MFassign/man/assignedData.html'>assignedData</a></span><span class='op'>(</span><span class='va'>assignment</span><span class='op'>)</span>,
- <span class='fu'>tibble</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>sample <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>peakData</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
- <span class='op'>)</span>
-
-<span class='va'>reduced_data</span> <span class='op'>&lt;-</span> <span class='fu'>metaboMisc</span><span class='fu'>::</span><span class='fu'>reduce</span><span class='op'>(</span><span class='va'>assigned_data</span><span class='op'>)</span>
-
-<span class='va'>reduced_data</span>
-</div><div class='output co'>#&gt; 
-#&gt; AnalysisData object containing:
-#&gt; 
-#&gt; Samples: 60 
-#&gt; Features: 1 
-#&gt; Info: 1 
-#&gt; </div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>MFassign</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required package: ggraph</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required package: ggplot2</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Assign molecular formulas</span></span>
+<span class='r-in'><span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/MFassign/man/assignmentParameters.html'>assignmentParameters</a></span><span class='op'>(</span><span class='st'>'FIE'</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>assignment</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/MFassign/man/assignMFs.html'>assignMFs</a></span><span class='op'>(</span><span class='va'>peakData</span>,<span class='va'>p</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'>MFassign </span><span style='color: #BB0000;'>v0.7.10</span> Wed Nov 17 09:52:56 2021</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> ________________________________________________________________________________</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #BBBB00;'>Assignment Parameters: </span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> 	 Technique:		 FIE </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> 	 Max M:			 1000 </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> 	 Max MF score:		 5 </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> 	 PPM threshold:		 5 </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> 	 Relationship limit:	 0.001 </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> 	 Adducts: </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> 	 n: [M-H]1-, [M+Cl]1-, [M+K-2H]1-, [M-2H]2-, [M+Cl37]1-, [2M-H]1-</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> 	 p: [M+H]1+, [M+K]1+, [M+Na]1+, [M+K41]1+, [M+NH4]1+, [M+2H]2+, [2M+H]1+ </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> 	 Isotopes: 13C, 18O, 13C2 </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> 	 Transformations: M - [O] + [NH2], M - [OH] + [NH2], M + [H2], M - [H2] + [O], M - [H] + [CH3], M - [H] + [NH2], M - [H] + [OH], M + [H2O], M - [H3] + [H2O], M - [H] + [CHO2], M - [H] + [SO3], M - [H] + [PO3H2]</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> ________________________________________________________________________________</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> No. m/z:	9</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'>Calculating correlations </span>…</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'>Calculating correlations </span>	<span style='color: #00BB00;'>✓</span> [24 correlations] [0.1S]</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'>Filtering correlations </span>…</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'>Filtering correlations </span>		<span style='color: #00BB00;'>✓</span> [24 correlations] [0S]</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'>Preparing correlations </span>…</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'>Preparing correlations </span>		<span style='color: #00BB00;'>✓</span> [0S]</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'>Calculating relationships </span>…</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'>Calculating relationships </span>	<span style='color: #00BB00;'>✓</span> [12.4S]</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'>Adduct &amp; isotope assignment </span>…</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'>Adduct &amp; isotope assignment </span>	<span style='color: #00BB00;'>✓</span> [15.7S]</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'>Transformation assignment iteration 1 </span>…</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'>Transformation assignment iteration 1 </span>	<span style='color: #00BB00;'>✓</span> [0S]</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> ________________________________________________________________________________</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> <span style='color: #00BB00;'>Complete! </span>[28.2S]</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## Retrieve assigned data</span></span>
+<span class='r-in'><span class='va'>assigned_data</span> <span class='op'>&lt;-</span> <span class='fu'>metabolyseR</span><span class='fu'>::</span><span class='fu'><a href='https://jasenfinch.github.io/metabolyseR//reference/analysisData.html'>analysisData</a></span><span class='op'>(</span></span>
+<span class='r-in'> <span class='fu'><a href='https://rdrr.io/pkg/MFassign/man/assignedData.html'>assignedData</a></span><span class='op'>(</span><span class='va'>assignment</span><span class='op'>)</span>,</span>
+<span class='r-in'> <span class='fu'>tibble</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>sample <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>peakData</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'> <span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>reduced_data</span> <span class='op'>&lt;-</span> <span class='fu'>metaboMisc</span><span class='fu'>::</span><span class='fu'>reduce</span><span class='op'>(</span><span class='va'>assigned_data</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>reduced_data</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AnalysisData object containing:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Samples: 60 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Features: 1 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Info: 1 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
