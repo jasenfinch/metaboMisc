@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metaboMisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.8</span>
       </span>
     </div>
 
@@ -120,7 +120,7 @@
     <p>Sanitise a data table by restricting the number of rows and rounding numeric columns.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>sanitiseTable</span><span class='op'>(</span><span class='va'>x</span>, maxRows <span class='op'>=</span> <span class='fl'>5000</span>, sigFig <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>sanitiseTable</span><span class='op'>(</span><span class='va'>x</span>, maxRows <span class='op'>=</span> <span class='fl'>5000</span>, sigFig <span class='op'>=</span> <span class='fl'>3</span>, maxCharacters <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -137,22 +137,28 @@
       <th>sigFig</th>
       <td><p>Significant figures with which to round numeric columns</p></td>
     </tr>
+    <tr>
+      <th>maxCharacters</th>
+      <td><p>Maximum number of characters allowed in a string before it is truncated</p></td>
+    </tr>
     </table>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>sanitiseTable</span><span class='op'>(</span><span class='va'>iris</span>,maxRows <span class='op'>=</span> <span class='fl'>10</span>,sigFig <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Number of rows in table restricted to 10.</span></div><div class='output co'>#&gt;    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
-#&gt; 1             5           4            1         0.2  setosa
-#&gt; 2             5           3            1         0.2  setosa
-#&gt; 3             5           3            1         0.2  setosa
-#&gt; 4             5           3            2         0.2  setosa
-#&gt; 5             5           4            1         0.2  setosa
-#&gt; 6             5           4            2         0.4  setosa
-#&gt; 7             5           3            1         0.3  setosa
-#&gt; 8             5           3            2         0.2  setosa
-#&gt; 9             4           3            1         0.2  setosa
-#&gt; 10            5           3            2         0.1  setosa</div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'>sanitiseTable</span><span class='op'>(</span><span class='va'>iris</span>,maxRows <span class='op'>=</span> <span class='fl'>10</span>,sigFig <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Number of rows in table restricted to 10.</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1             5           4            1         0.2  setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2             5           3            1         0.2  setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3             5           3            1         0.2  setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4             5           3            2         0.2  setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5             5           4            1         0.2  setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6             5           4            2         0.4  setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7             5           3            1         0.3  setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8             5           3            2         0.2  setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9             4           3            1         0.2  setosa</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10            5           3            2         0.1  setosa</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
