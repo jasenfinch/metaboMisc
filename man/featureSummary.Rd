@@ -3,11 +3,14 @@
 \name{featureSummary}
 \alias{featureSummary}
 \alias{featureSummary,Binalysis-method}
+\alias{featureSummary,MetaboProfile-method}
 \title{Summarise features}
 \usage{
 featureSummary(x)
 
 \S4method{featureSummary}{Binalysis}(x)
+
+\S4method{featureSummary}{MetaboProfile}(x)
 }
 \arguments{
 \item{x}{S4 object of class \code{Binalysis}}

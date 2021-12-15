@@ -16,7 +16,7 @@ sanitiseTable(x, maxRows = 5000, sigFig = 3, maxCharacters = 100)
 \item{maxCharacters}{Maximum number of characters allowed in a string before it is truncated}
 }
 \description{
-Sanitise a data table by restricting the number of rows and rounding numeric columns.
+Sanitise a data table by restricting the number of rows or characters and rounding numeric columns.
 }
 \examples{
 sanitiseTable(iris,maxRows = 10,sigFig = 1)
