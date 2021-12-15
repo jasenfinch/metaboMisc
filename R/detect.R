@@ -60,20 +60,27 @@ setMethod('detectMissInjections',signature = 'MetaboProfile',
               mi <- x %>% 
                   processedData()
               
-              if (str_detect(technique(x),'GCMS')) {
-                  mi <- mi %>% 
-                      rowSums() %>%
-                      tibble(value = .) %>%
-                      bind_cols(i)
-              } else {
-                  mi <- mi %>% 
-                  map(rowSums) %>%
-                      bind_cols() %>%
-                      rowSums() %>%
-                      as_tibble() %>%
-                      bind_cols(i)    
+              if (!is.list(mi)){
+                  mi <- list(mi)   
               }
-              mi %>%
+              
+              mi <- mi %>% 
+                  map(rowSums)
+              
+              if (mi %>% 
+                  names() %>% 
+                  is.na() %>% 
+                  any()) {
+                  names(mi) <- replace(names(mi),
+                                       is.na(names(mi)),
+                                       'NA')
+              }
+              
+              mi %>% 
+                  bind_cols() %>%
+                  rowSums() %>%
+                  as_tibble() %>%
+                  bind_cols(i) %>%
                   missInject(idx = idx) 
           })
 
@@ -159,20 +166,29 @@ setMethod('detectBatchDiff',signature =  "MetaboProfile",
               TICdat <- x %>%
                   processedData()
               
-              if (str_detect(technique(x),'GCMS')) {
-                  TICdat <- TICdat %>%
-                      rowSums() %>%
-                      {tibble(Sample = 1:length(.),
-                              TIC = .,
-                              batch = ri[,by] %>% deframe() %>% factor())}
-              } else {
-                  TICdat <- TICdat %>% 
-                      map(rowSums) %>%
-                      bind_cols() %>%
-                      rowid_to_column(var = 'Sample') %>%
-                      mutate(batch = ri[,by] %>% unlist() %>% factor()) %>%
-                      gather('Mode','TIC',-batch,-Sample)   
+              if (!is.list(TICdat)){
+                  TICdat <- list(TICdat)
               }
+              
+              TICdat <- TICdat %>% 
+                  map(rowSums) 
+              
+              if (TICdat %>% 
+                  names() %>% 
+                  is.na() %>% 
+                  any()) {
+                  names(TICdat) <- replace(names(TICdat),
+                                       is.na(names(TICdat)),
+                                       'NA')
+              }
+              
+              TICdat <- TICdat %>%
+                  bind_cols() %>%
+                  rowid_to_column(var = 'Sample') %>%
+                  mutate(batch = ri[,by] %>% 
+                             unlist() %>% 
+                             factor()) %>%
+                  gather('Mode','TIC',-batch,-Sample)   
               
               diff <- batchDiff(TICdat,pthresh)
               return(diff) 
@@ -366,17 +382,17 @@ setMethod('detectModellingParameters',signature = 'Binalysis',
 
 setMethod('detectModellingParameters',signature = 'MetaboProfile',
           function(x){
-             idx <- x %>% 
-                 processingParameters() %>% 
-                 .$info %>% 
-                 .$cls
-             
-             sample_information <- x %>% 
-                 profilePro::sampleInfo() %>% 
-                 select(all_of(idx)) %>% 
-                 deframe()
-             
-             detectModelling(sample_information,idx)
+              idx <- x %>% 
+                  processingParameters() %>% 
+                  .$info %>% 
+                  .$cls
+              
+              sample_information <- x %>% 
+                  profilePro::sampleInfo() %>% 
+                  select(all_of(idx)) %>% 
+                  deframe()
+              
+              detectModelling(sample_information,idx)
           })
 
 #' @rdname detectModellingParameters
