@@ -19,7 +19,7 @@ sanitiseTable <- function(x,maxRows = 5000,sigFig = 3,maxCharacters = 100){
         x <- x[seq_len(maxRows),]
     }
     
-    a <- map_df(x,~{
+    x <- map_df(x,~{
         if (typeof(.x) == 'character'){
             limit_characters <- .x %>% 
                 nchar() %>% 
