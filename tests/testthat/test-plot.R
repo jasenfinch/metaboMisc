@@ -5,7 +5,6 @@ test_that("plotRSD works for Binalysis class", {
 })
 
 test_that("plotRSD works for MetaboProfile class", {
-    skip('Skip tests involving MetaboProfile class')
     
     pl <- plotRSD(lcd)
     

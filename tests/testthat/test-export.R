@@ -20,13 +20,12 @@ test_that("export Binalysis works", {
 })
 
 test_that("export MetaboProfile works", {
-    skip('Skip tests involving MetaboProfile class')
     
     fp <- export(lcd,temp_dir)
     
     expect_identical(basename(fp),c('sample_information.csv',
                                     'peak_info.csv',
-                                    '/1_mode_processed_data.csv'))
+                                    'processed_data.csv'))
 })
 
 test_that("export Analysis works", {

@@ -14,5 +14,5 @@ test_that("tables can be sanitised", {
     
     expect_equal(nrow(x),n_rows)
     expect_equal(x$Sepal.Length[1],5)
-    expect_equal(max(nchar(x$Species)),max_char)
+    expect_true(all(str_detect(x$Species,'set...')))
 })
