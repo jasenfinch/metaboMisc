@@ -33,7 +33,7 @@ sample_info <- tibble::tibble(fileOrder = seq_along(file_paths),
                               name = sample_names,
                               class = substr(sample_names,1,2))
 
-parameters <- profileParameters('LCMS-RP',nCores = 2)
+parameters <- profileParameters('LCMS-RP')
 processingParameters(parameters)$peakDetection <- xcms::CentWaveParam(snthresh = 20,
                                                                       noise = 1000)
 processingParameters(parameters)$retentionTimeCorrection <- xcms::ObiwarpParam()
