@@ -8,6 +8,8 @@
 
 * Enabled unit tests for methods for the `MetaboProfile` class.
 
+* `detectPretreatmentParameters()` now detects the presence of QC samples.
+
 # metaboMisc 0.5.8
 
 * Numbers of characters in strings are now limited by `sanitiseTable()`.
