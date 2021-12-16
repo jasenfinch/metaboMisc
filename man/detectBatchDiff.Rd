@@ -30,7 +30,7 @@ Analysis of Variance (ANOVA) is used to detect differences in total ion count (T
 }
 \examples{
 ## Retrieve file paths and sample information for example data
-files <- metaboData::filePaths('FIE-HRMS','BdistachyonEcotypes')[1:2]
+files <- metaboData::filePaths('FIE-HRMS','BdistachyonEcotypes',ask = FALSE)[1:2]
 
 info <- metaboData::runinfo('FIE-HRMS','BdistachyonEcotypes')[1:2,]
 
