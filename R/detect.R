@@ -288,7 +288,7 @@ setGeneric('detectPretreatmentParameters',function(x,
 })
 
 #' @rdname detectPretreatmentParameters
-#' @importFrom metabolyseR changeParameter
+#' @importFrom metabolyseR changeParameter<-
 
 setMethod('detectPretreatmentParameters',signature = 'Binalysis',
           function(x,cls = 'class',QCidx = 'QC'){
