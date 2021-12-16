@@ -178,8 +178,8 @@ setMethod('detectBatchDiff',signature =  "MetaboProfile",
                   is.na() %>% 
                   any()) {
                   names(TICdat) <- replace(names(TICdat),
-                                       is.na(names(TICdat)),
-                                       'NA')
+                                           is.na(names(TICdat)),
+                                           'NA')
               }
               
               TICdat <- TICdat %>%
@@ -258,6 +258,8 @@ batchDiff <- function(TICdat,pthresh = 0.05){
 #' @rdname detectPretreatmentParameters
 #' @description Detect pre-treatment parameters for `Binalysis` or `MetaboProfile` class objects. 
 #' @param x S4 object of class `Binalysis`, `MetaboProfile` or `AnalysisData`
+#' @param cls the name of the  sample information table column containing the sample class information
+#' @param QCidx QC sample class label
 #' @return S4 object of class `AnalysisParameters`
 #' @examples
 #' ## Retreive example file paths and sample information 
@@ -279,22 +281,48 @@ batchDiff <- function(TICdat,pthresh = 0.05){
 #' pp
 #' @export
 
-setGeneric('detectPretreatmentParameters',function(x){
+setGeneric('detectPretreatmentParameters',function(x,
+                                                   cls = 'class',
+                                                   QCidx = 'QC'){
     standardGeneric('detectPretreatmentParameters')
 })
 
 #' @rdname detectPretreatmentParameters
 
 setMethod('detectPretreatmentParameters',signature = 'Binalysis',
-          function(x){
-              detectPretreatment(x)
+          function(x,cls = 'class',QCidx = 'QC'){
+              pp <-  detectPretreatment(x)
+              
+              sample_info <- binneR::sampleInfo(x)
+              
+              if (!detectQC(sample_info,cls,QCidx)){
+                  parameters(pp,'pre-treatment')$QC <- NULL
+              } else {
+                  changeParameter(pp,'QCidx','pre-treatment') <- QCidx
+              }
+              
+              changeParameter(pp,'cls','pre-treatment') <- cls
+              
+              return(pp)
           })
 
 #' @rdname detectPretreatmentParameters
 
 setMethod('detectPretreatmentParameters',signature = 'MetaboProfile',
-          function(x){
-              detectPretreatment(x)
+          function(x,cls = 'class',QCidx = 'QC'){
+              pp <- detectPretreatment(x)
+              
+              sample_info <- profilePro::sampleInfo(x)
+              
+              if (!detectQC(sample_info,cls,QCidx)){
+                  parameters(pp,'pre-treatment')$QC <- NULL
+              } else {
+                  changeParameter(pp,'QCidx','pre-treatment') <- QCidx
+              }
+              
+              changeParameter(pp,'cls','pre-treatment') <- cls
+              
+              return(pp)
           })
 
 #' @importFrom metabolyseR parameters<- parameters
@@ -329,6 +357,10 @@ detectPretreatment <- function(x){
     
     return(pre_treat_params)
 } 
+
+detectQC <- function(sample_info,cls,QCidx){
+    any(str_detect(sample_info[[cls]],'QC'))
+}
 
 #' Detect modelling parameters
 #' @rdname detectModellingParameters
