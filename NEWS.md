@@ -1,4 +1,16 @@
-# metabMisc 0.5.8
+# metaboMisc 0.5.9
+
+* Corrected the exported file name for mode-less processed data for the `MetaboProfile` class.
+
+* Fixed the character sanitation in `sanitiseTable()`.
+
+* Fixed extraneous console messages in `detectMissInjections()` and `detectBatchDiff()` methods for the `MetaboProfile` class.
+
+* Enabled unit tests for methods for the `MetaboProfile` class.
+
+* `detectPretreatmentParameters()` now detects the presence of QC samples.
+
+# metaboMisc 0.5.8
 
 * Numbers of characters in strings are now limited by `sanitiseTable()`.
 

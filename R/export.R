@@ -88,10 +88,20 @@ setMethod('exportData',signature = 'MetaboProfile',
               file_paths <- pd %>%
                   names() %>%
                   map_chr(~{
+                      prefix <- .x
+                      
+                      if (prefix != 'n' | prefix != 'p'){
+                          prefix <- ''
+                      } else {
+                       prefix <- switch(prefix,
+                                        n = 'negative_mode_',
+                                        p = 'positive_mode_')   
+                      }
+                      
                       bind_cols(pd[[.x]],i %>% select(name)) %>%
                           gather('Feature','Intensity',-name) %>%
                           spread(name,Intensity) %>%
-                          exportCSV(str_c(outPath,'/',.x,'_mode_processed_data.csv'))
+                          exportCSV(str_c(outPath,'/',prefix,'processed_data.csv'))
                   })
               
               return(file_paths)

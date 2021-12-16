@@ -21,28 +21,48 @@ setGeneric('featureSummary',function(x)
     standardGeneric('featureSummary'))
 
 #' @rdname featureSummary
-#' @importFrom dplyr n_distinct
 
 setMethod('featureSummary',signature = 'Binalysis',
           function(x){
               x %>%
-                  binnedData() %>%
-                  map(~{{
-                      .x %>%
-                          rowid_to_column(var = 'Sample') %>%
-                          gather('Feature','Intensity',-Sample)
-                  }}) %>%
-                  bind_rows() %>%
-                  mutate(Mode = str_sub(Feature,1,1)) %>%
-                  group_by(Mode) %>%
-                  summarise(
-                      `Number of bins` = n_distinct(Feature),
-                      `Missing Data (%)` = round(length(which(Intensity == 0)) / 
-                                                     length(Intensity) * 100,2),
-                      .groups = 'drop') %>%
-                  {{
-                      .$Mode[.$Mode == 'n'] <- 'Negative'
-                      .$Mode[.$Mode == 'p'] <- 'Positive'
-                      .
-                  }}
+                  binnedData() %>% 
+                  featSummary()
           })
+
+#' @rdname featureSummary
+
+setMethod('featureSummary',signature = 'MetaboProfile',
+          function(x){
+              x %>% 
+                  processedData() %>% 
+                  featSummary()
+          })
+
+#' @importFrom dplyr n_distinct
+
+featSummary <- function(x){
+    
+    if (!is.list(x)){
+        x <- list(x)
+    }
+    
+    x %>%
+        map(~{{
+            .x %>%
+                rowid_to_column(var = 'Sample') %>%
+                gather('Feature','Intensity',-Sample)
+        }}) %>%
+        bind_rows() %>%
+        mutate(Mode = str_sub(Feature,1,1)) %>%
+        mutate(Mode = replace(Mode, 
+                              Mode != 'n' & Mode != 'p',
+                              NA)) %>% 
+        group_by(Mode) %>%
+        summarise(
+            `Number of bins` = n_distinct(Feature),
+            `Missing Data (%)` = round(length(which(Intensity == 0)) / 
+                                           length(Intensity) * 100,2),
+            .groups = 'drop') %>%
+        mutate(Mode = replace(Mode,Mode == 'n','Negative') %>% 
+                   replace(Mode == 'p','Positive'))
+}

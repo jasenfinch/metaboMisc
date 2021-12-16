@@ -60,20 +60,27 @@ setMethod('detectMissInjections',signature = 'MetaboProfile',
               mi <- x %>% 
                   processedData()
               
-              if (str_detect(technique(x),'GCMS')) {
-                  mi <- mi %>% 
-                      rowSums() %>%
-                      tibble(value = .) %>%
-                      bind_cols(i)
-              } else {
-                  mi <- mi %>% 
-                  map(rowSums) %>%
-                      bind_cols() %>%
-                      rowSums() %>%
-                      as_tibble() %>%
-                      bind_cols(i)    
+              if (!is.list(mi)){
+                  mi <- list(mi)   
               }
-              mi %>%
+              
+              mi <- mi %>% 
+                  map(rowSums)
+              
+              if (mi %>% 
+                  names() %>% 
+                  is.na() %>% 
+                  any()) {
+                  names(mi) <- replace(names(mi),
+                                       is.na(names(mi)),
+                                       'NA')
+              }
+              
+              mi %>% 
+                  bind_cols() %>%
+                  rowSums() %>%
+                  as_tibble() %>%
+                  bind_cols(i) %>%
                   missInject(idx = idx) 
           })
 
@@ -102,7 +109,7 @@ missInject <- function(TICdat,idx){
 #' @details Analysis of Variance (ANOVA) is used to detect differences in total ion count (TIC) averages between batches/blocks. 
 #' @examples 
 #' ## Retrieve file paths and sample information for example data
-#' files <- metaboData::filePaths('FIE-HRMS','BdistachyonEcotypes')[1:2]
+#' files <- metaboData::filePaths('FIE-HRMS','BdistachyonEcotypes',ask = FALSE)[1:2]
 #' 
 #' info <- metaboData::runinfo('FIE-HRMS','BdistachyonEcotypes')[1:2,]
 #' 
@@ -159,20 +166,29 @@ setMethod('detectBatchDiff',signature =  "MetaboProfile",
               TICdat <- x %>%
                   processedData()
               
-              if (str_detect(technique(x),'GCMS')) {
-                  TICdat <- TICdat %>%
-                      rowSums() %>%
-                      {tibble(Sample = 1:length(.),
-                              TIC = .,
-                              batch = ri[,by] %>% deframe() %>% factor())}
-              } else {
-                  TICdat <- TICdat %>% 
-                      map(rowSums) %>%
-                      bind_cols() %>%
-                      rowid_to_column(var = 'Sample') %>%
-                      mutate(batch = ri[,by] %>% unlist() %>% factor()) %>%
-                      gather('Mode','TIC',-batch,-Sample)   
+              if (!is.list(TICdat)){
+                  TICdat <- list(TICdat)
               }
+              
+              TICdat <- TICdat %>% 
+                  map(rowSums) 
+              
+              if (TICdat %>% 
+                  names() %>% 
+                  is.na() %>% 
+                  any()) {
+                  names(TICdat) <- replace(names(TICdat),
+                                           is.na(names(TICdat)),
+                                           'NA')
+              }
+              
+              TICdat <- TICdat %>%
+                  bind_cols() %>%
+                  rowid_to_column(var = 'Sample') %>%
+                  mutate(batch = ri[,by] %>% 
+                             unlist() %>% 
+                             factor()) %>%
+                  gather('Mode','TIC',-batch,-Sample)   
               
               diff <- batchDiff(TICdat,pthresh)
               return(diff) 
@@ -242,6 +258,8 @@ batchDiff <- function(TICdat,pthresh = 0.05){
 #' @rdname detectPretreatmentParameters
 #' @description Detect pre-treatment parameters for `Binalysis` or `MetaboProfile` class objects. 
 #' @param x S4 object of class `Binalysis`, `MetaboProfile` or `AnalysisData`
+#' @param cls the name of the  sample information table column containing the sample class information
+#' @param QCidx QC sample class label
 #' @return S4 object of class `AnalysisParameters`
 #' @examples
 #' ## Retreive example file paths and sample information 
@@ -263,22 +281,49 @@ batchDiff <- function(TICdat,pthresh = 0.05){
 #' pp
 #' @export
 
-setGeneric('detectPretreatmentParameters',function(x){
+setGeneric('detectPretreatmentParameters',function(x,
+                                                   cls = 'class',
+                                                   QCidx = 'QC'){
     standardGeneric('detectPretreatmentParameters')
 })
 
 #' @rdname detectPretreatmentParameters
+#' @importFrom metabolyseR changeParameter<-
 
 setMethod('detectPretreatmentParameters',signature = 'Binalysis',
-          function(x){
-              detectPretreatment(x)
+          function(x,cls = 'class',QCidx = 'QC'){
+              pp <-  detectPretreatment(x)
+              
+              sample_info <- binneR::sampleInfo(x)
+              
+              if (!detectQC(sample_info,cls,QCidx)){
+                  parameters(pp,'pre-treatment')$QC <- NULL
+              } else {
+                  changeParameter(pp,'QCidx','pre-treatment') <- QCidx
+              }
+              
+              changeParameter(pp,'cls','pre-treatment') <- cls
+              
+              return(pp)
           })
 
 #' @rdname detectPretreatmentParameters
 
 setMethod('detectPretreatmentParameters',signature = 'MetaboProfile',
-          function(x){
-              detectPretreatment(x)
+          function(x,cls = 'class',QCidx = 'QC'){
+              pp <- detectPretreatment(x)
+              
+              sample_info <- profilePro::sampleInfo(x)
+              
+              if (!detectQC(sample_info,cls,QCidx)){
+                  parameters(pp,'pre-treatment')$QC <- NULL
+              } else {
+                  changeParameter(pp,'QCidx','pre-treatment') <- QCidx
+              }
+              
+              changeParameter(pp,'cls','pre-treatment') <- cls
+              
+              return(pp)
           })
 
 #' @importFrom metabolyseR parameters<- parameters
@@ -313,6 +358,10 @@ detectPretreatment <- function(x){
     
     return(pre_treat_params)
 } 
+
+detectQC <- function(sample_info,cls,QCidx){
+    any(str_detect(sample_info[[cls]],'QC'))
+}
 
 #' Detect modelling parameters
 #' @rdname detectModellingParameters
@@ -366,17 +415,17 @@ setMethod('detectModellingParameters',signature = 'Binalysis',
 
 setMethod('detectModellingParameters',signature = 'MetaboProfile',
           function(x){
-             idx <- x %>% 
-                 processingParameters() %>% 
-                 .$info %>% 
-                 .$cls
-             
-             sample_information <- x %>% 
-                 profilePro::sampleInfo() %>% 
-                 select(all_of(idx)) %>% 
-                 deframe()
-             
-             detectModelling(sample_information,idx)
+              idx <- x %>% 
+                  processingParameters() %>% 
+                  .$info %>% 
+                  .$cls
+              
+              sample_information <- x %>% 
+                  profilePro::sampleInfo() %>% 
+                  select(all_of(idx)) %>% 
+                  deframe()
+              
+              detectModelling(sample_information,idx)
           })
 
 #' @rdname detectModellingParameters

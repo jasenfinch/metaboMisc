@@ -7,7 +7,7 @@ test_that('miss injection detectioni works for Binalysis class',{
 })
 
 test_that('miss injection detectioni works for MetaboProfile class',{
-  skip('Skip tests involving MetaboProfile class')
+  
   
   miss_injections <- detectMissInjections(lcd)
   
@@ -24,8 +24,6 @@ test_that('batch correction detection works for Binalysis class',{
 })
 
 test_that('batch correction detection works for MetaboProfile class',{
-  skip('Skip tests involving MetaboProfile class')
-  
   batch_diff <- detectBatchDiff(lcd)
   
   expect_null(batch_diff)
@@ -38,7 +36,7 @@ test_that('pre-treatment parameter detection works for Binalysis class',{
 })
 
 test_that('pre-treatment parameter detection works for MetaboProfile class',{
-  skip('Skip tests involving MetaboProfile class')
+  
   
   pp <- detectPretreatmentParameters(lcd)  
   
@@ -52,7 +50,7 @@ test_that('modelling parameter detection works for Binalysis class',{
 })
 
 test_that('modelling parameter detection works for MetaboProfile class',{
-  skip('Skip tests involving MetaboProfile class')
+  
   
   mp <- detectModellingParameters(lcd)
   

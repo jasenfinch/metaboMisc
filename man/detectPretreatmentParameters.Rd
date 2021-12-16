@@ -6,14 +6,18 @@
 \alias{detectPretreatmentParameters,MetaboProfile-method}
 \title{Detect pre-treatment parameters}
 \usage{
-detectPretreatmentParameters(x)
+detectPretreatmentParameters(x, cls = "class", QCidx = "QC")
 
-\S4method{detectPretreatmentParameters}{Binalysis}(x)
+\S4method{detectPretreatmentParameters}{Binalysis}(x, cls = "class", QCidx = "QC")
 
-\S4method{detectPretreatmentParameters}{MetaboProfile}(x)
+\S4method{detectPretreatmentParameters}{MetaboProfile}(x, cls = "class", QCidx = "QC")
 }
 \arguments{
 \item{x}{S4 object of class \code{Binalysis}, \code{MetaboProfile} or \code{AnalysisData}}
+
+\item{cls}{the name of the  sample information table column containing the sample class information}
+
+\item{QCidx}{QC sample class label}
 }
 \value{
 S4 object of class \code{AnalysisParameters}
