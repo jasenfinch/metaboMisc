@@ -359,8 +359,8 @@ detectPretreatment <- function(x){
     return(pre_treat_params)
 } 
 
-detectQC <- function(sample_info,cls,QCidx){
-    any(str_detect(sample_info[[cls]],'QC'))
+detectQC <- function(sample_info,cls,QCidx = 'QC'){
+    any(QCidx %in% sample_info[[cls]])
 }
 
 #' Detect modelling parameters

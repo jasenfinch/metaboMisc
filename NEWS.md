@@ -1,3 +1,7 @@
+# metaboMisc 0.5.10
+
+* `detectPretreatmentParameters()` now fully matches the `QCidx` argument against the supplied class information when detecting the presence of QC samples.
+
 # metaboMisc 0.5.9
 
 * Corrected the exported file name for mode-less processed data for the `MetaboProfile` class.
