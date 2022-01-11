@@ -5,6 +5,7 @@
 [![R-CMD-check](https://github.com/jasenfinch/metaboMisc/workflows/R-CMD-check/badge.svg)](https://github.com/jasenfinch/metaboMisc/actions)
 [![Codecov test coverage](https://codecov.io/gh/jasenfinch/metaboMisc/branch/master/graph/badge.svg)](https://codecov.io/gh/jasenfinch/metaboMisc?branch=master)
 [![license](https://img.shields.io/badge/license-GNU%20GPL%20v3.0-blue.svg)](https://github.com/jasenfinch/metaboMisc/blob/master/DESCRIPTION)
+[![GitHub release](https://img.shields.io/github/release/jasenfinch/metaboMisc.svg)](https://GitHub.com/jasenfinch/metaboMisc/releases/)
 <!-- badges: end -->
 
 > Miscellaneous Functions for Metabolomics Analyses
