@@ -13,7 +13,8 @@
 exportCSV <- function(x,file,...){
     
     if (!dir.exists(dirname(file))){
-        dir.create(dirname(file))
+        dir.create(dirname(file),
+                   recursive = TRUE)
     }
     
     write_csv(x = x,file = file,...)
