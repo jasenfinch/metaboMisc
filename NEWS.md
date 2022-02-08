@@ -1,3 +1,7 @@
+# metaboMisc 0.5.11
+
+* `exportCSV()` now recursively creates the destination directory if it does not already exist.
+
 # metaboMisc 0.5.10
 
 * `detectPretreatmentParameters()` now fully matches the `QCidx` argument against the supplied class information when detecting the presence of QC samples.
