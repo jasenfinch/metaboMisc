@@ -94,6 +94,7 @@ missInject <- function(TICdat,idx){
         select(all_of(idx)) %>%
         unlist() %>%
         unname() %>%
+        sort() %>% 
         list(idx = idx,missInjections = .)
     return(missinjections)
 }
