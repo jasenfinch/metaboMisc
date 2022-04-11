@@ -6,11 +6,11 @@
 \alias{detectMissInjections,MetaboProfile-method}
 \title{Detect miss injections}
 \usage{
-detectMissInjections(x, idx = "fileOrder")
+detectMissInjections(x, idx = "injOrder")
 
-\S4method{detectMissInjections}{Binalysis}(x, idx = "fileOrder")
+\S4method{detectMissInjections}{Binalysis}(x, idx = "injOrder")
 
-\S4method{detectMissInjections}{MetaboProfile}(x, idx = "fileOrder")
+\S4method{detectMissInjections}{MetaboProfile}(x, idx = "injOrder")
 }
 \arguments{
 \item{x}{object of class \code{Binalysis} or \code{MetaboProfile}}

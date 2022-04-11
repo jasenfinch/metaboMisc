@@ -24,14 +24,14 @@
 #' miss_injections$missInjections
 #' @export
 
-setGeneric('detectMissInjections',function(x,idx = 'fileOrder')
+setGeneric('detectMissInjections',function(x,idx = 'injOrder')
     standardGeneric('detectMissInjections'))
 
 #' @rdname detectMissInjections
 #' @importFrom tibble as_tibble
 
 setMethod('detectMissInjections',signature = 'Binalysis',
-          function(x,idx = 'fileOrder'){
+          function(x,idx = 'injOrder'){
               
               i <- x %>%
                   binneR::sampleInfo() %>%
@@ -51,7 +51,7 @@ setMethod('detectMissInjections',signature = 'Binalysis',
 #' @importFrom profilePro technique
 
 setMethod('detectMissInjections',signature = 'MetaboProfile',
-          function(x,idx = 'fileOrder'){
+          function(x,idx = 'injOrder'){
               
               i <- x %>%
                   profilePro::sampleInfo() %>% 
