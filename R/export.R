@@ -84,26 +84,34 @@ setMethod('exportData',signature = 'MetaboProfile',
               pd <- x %>%
                   processedData() 
               
-              names(pd)[is.na(names(pd))] <- '1'
-              
-              file_paths <- pd %>%
-                  names() %>%
-                  map_chr(~{
-                      prefix <- .x
-                      
-                      if (prefix != 'n' | prefix != 'p'){
-                          prefix <- ''
-                      } else {
-                       prefix <- switch(prefix,
-                                        n = 'negative_mode_',
-                                        p = 'positive_mode_')   
-                      }
-                      
-                      bind_cols(pd[[.x]],i %>% select(name)) %>%
-                          gather('Feature','Intensity',-name) %>%
-                          spread(name,Intensity) %>%
-                          exportCSV(str_c(outPath,'/',prefix,'processed_data.csv'))
-                  })
+              if (is.data.frame(pd)){
+                  file_paths <- pd %>% 
+                      bind_cols(i %>% select(name)) %>% 
+                      gather('Feature','Intensity',-name) %>%
+                      spread(name,Intensity) %>%
+                      exportCSV(str_c(outPath,'/','processed_data.csv'))
+              } else {
+                  names(pd)[is.na(names(pd))] <- '1'
+                  
+                  file_paths <- pd %>%
+                      names() %>%
+                      map_chr(~{
+                          prefix <- .x
+                          
+                          if (prefix != 'n' | prefix != 'p'){
+                              prefix <- ''
+                          } else {
+                              prefix <- switch(prefix,
+                                               n = 'negative_mode_',
+                                               p = 'positive_mode_')   
+                          }
+                          
+                          bind_cols(pd[[.x]],i %>% select(name)) %>%
+                              gather('Feature','Intensity',-name) %>%
+                              spread(name,Intensity) %>%
+                              exportCSV(str_c(outPath,'/',prefix,'processed_data.csv'))
+                      })
+              }
               
               return(file_paths)
           })
@@ -268,7 +276,7 @@ setMethod('exportModelling',signature = 'Analysis',
               m_fp <- exportModellingMetrics(x,outPath)
               i_fp <- exportModellingImportance(x,outPath)
               
-             return(c(m_fp,i_fp))
+              return(c(m_fp,i_fp))
           })
 
 #' @rdname export
