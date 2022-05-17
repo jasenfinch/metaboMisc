@@ -8,7 +8,7 @@
 #' @return S4 object of class `Analysis` or `AnalysisData` with features reduced
 #' @details Isotope and adduct features are filtered based on the maximum intensity peak for each molecular formulas.
 #' @examples 
-#' library(MFassign)
+#' library(assignments)
 #' 
 #' ## Assign molecular formulas
 #' p <- assignmentParameters('FIE')

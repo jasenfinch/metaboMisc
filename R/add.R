@@ -12,7 +12,7 @@ setGeneric('addAssignments',
            standardGeneric('addAssignments'))
 
 #' @rdname addAssignments
-#' @importFrom MFassign assignedData
+#' @importFrom assignments assignedData
 
 setMethod('addAssignments',signature = c('Analysis','Assignment'),
           function(analysis,assignment){

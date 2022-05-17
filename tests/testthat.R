@@ -3,7 +3,7 @@ library(metaboMisc)
 library(metaboData)
 library(profilePro)
 library(metabolyseR)
-library(MFassign)
+library(assignments)
 
 ## Example Binalysis class
 file_paths <- metaboData::filePaths('FIE-HRMS','BdistachyonEcotypes') %>% 

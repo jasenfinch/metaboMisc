@@ -305,7 +305,7 @@ setGeneric('exportAssignments',function(x,outPath = '.')
     standardGeneric('exportAssignments'))
 
 #' @rdname export
-#' @importFrom MFassign assignments
+#' @importFrom assignments assignments
 
 setMethod('exportAssignments',signature = 'Assignment',
           function(x,outPath = '.'){
@@ -322,7 +322,7 @@ setGeneric('exportSummarisedAssignments',function(x,outPath = '.')
     standardGeneric('exportSummarisedAssignments'))
 
 #' @rdname export
-#' @importFrom MFassign summariseAssignment
+#' @importFrom assignments summariseAssignment
 
 setMethod('exportSummarisedAssignments',signature = 'Assignment',
           function(x,outPath = '.'){

@@ -31,7 +31,7 @@ Reduce an analysis by removing isotopic, adduct or unknown features.
 Isotope and adduct features are filtered based on the maximum intensity peak for each molecular formulas.
 }
 \examples{
-library(MFassign)
+library(assignments)
 
 ## Assign molecular formulas
 p <- assignmentParameters('FIE')
