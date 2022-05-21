@@ -322,12 +322,12 @@ setGeneric('exportSummarisedAssignments',function(x,outPath = '.')
     standardGeneric('exportSummarisedAssignments'))
 
 #' @rdname export
-#' @importFrom assignments summariseAssignment
+#' @importFrom assignments summariseAssignments
 
 setMethod('exportSummarisedAssignments',signature = 'Assignment',
           function(x,outPath = '.'){
               x %>% 
-                  summariseAssignment() %>% 
+                  summariseAssignments() %>% 
                   exportCSV(str_c(outPath,'/summarised_assignments.csv'))
           })
 
