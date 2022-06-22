@@ -71,7 +71,6 @@ setMethod('preTreatModes',signature = 'MetaboProfile',
           })
 
 #' @importFrom utils packageVersion
-#' @importFrom magrittr %>%
 #' @importFrom purrr map
 #' @importFrom methods new
 #' @importFrom metabolyseR dat sinfo metabolyse
