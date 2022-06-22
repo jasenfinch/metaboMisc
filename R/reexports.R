@@ -1,4 +1,4 @@
-#' @importFrom magrittr %>%
+#' @importFrom jfmisc %>%
 #' @rdname reexports
 #' @export
-magrittr::`%>%`
+jfmisc::`%>%`

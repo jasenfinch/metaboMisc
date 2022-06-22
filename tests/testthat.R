@@ -4,6 +4,7 @@ library(metaboData)
 library(profilePro)
 library(metabolyseR)
 library(assignments)
+library(construction)
 
 ## Example Binalysis class
 file_paths <- metaboData::filePaths('FIE-HRMS','BdistachyonEcotypes') %>% 
@@ -49,8 +50,12 @@ mp <- analysisParameters(c('modelling','correlations'))
 a <- reAnalyse(a,mp)
 
 ## Example Assingment class
-p <- assignmentParameters('FIE')
+p <- assignmentParameters('FIE-HRMS')
+ 
+assignment <- assignMFs(feature_data,p)
 
-assignment <- assignMFs(peakData,p)
+## Example Construction class
+
+structural_classifications <- construction(assignment)
 
 test_check("metaboMisc")

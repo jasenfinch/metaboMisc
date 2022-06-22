@@ -9,10 +9,10 @@ biocViews: Metabolomics
 Depends: R (>= 3.4)
 Imports: binneR,
     construction,
+    jfmisc,
     metabolyseR,
     dplyr,
     profilePro,
-    magrittr,
     purrr,
     methods,
     tidyr,
@@ -23,7 +23,6 @@ Imports: binneR,
     cli,
     lubridate,
     tidyselect,
-    readr,
     future,
     patchwork,
     ggplot2
@@ -40,7 +39,8 @@ Suggests:
     grover
 Config/testthat/edition: 3
 Remotes: aberHRML/binneR,
-    jasenfinch/metabolyseR,
+    jasenfinch/construction@devel,
+    jasenfinch/metabolyseR@devel,
     jasenfinch/profilePro,
     jasenfinch/MFassign@devel,
     jasenfinch/grover

@@ -1,27 +1,3 @@
-#' Export a csv
-#' @description Export a csv and return the file path of the exported csv.
-#' @param x a data frame or tibble to export
-#' @param file file or connection to write to
-#' @param ... arguments to pass to `readr::write_csv()`
-#' @return The file path of the exported csv.
-#' @details If the file path directory does not exist, the directory is created prior to export.
-#' @examples
-#' exportCSV(iris, "iris.csv")
-#' @importFrom readr write_csv
-#' @export
-
-exportCSV <- function(x,file,...){
-    
-    if (!dir.exists(dirname(file))){
-        dir.create(dirname(file),
-                   recursive = TRUE)
-    }
-    
-    write_csv(x = x,file = file,...)
-    
-    return(file)
-}
-
 #' Export results
 #' @rdname export
 #' @description Export data tables from `Binalysis`,`MetaboProfile`, `Analysis` and `Assignment` classes.
@@ -40,6 +16,7 @@ setGeneric('exportData',function(x,outPath = '.',...)
 #' @importFrom binneR binnedData
 #' @importFrom stringr str_remove_all
 #' @importFrom purrr map_chr
+#' @importFrom jfmisc exportCSV
 
 setMethod('exportData',signature = 'Binalysis',
           function(x,outPath = '.'){
@@ -59,7 +36,8 @@ setMethod('exportData',signature = 'Binalysis',
               file_paths <- bd %>%
                   names() %>%
                   map_chr(~{
-                      bind_cols(bd[[.x]],i %>% select(name)) %>%
+                      bind_cols(bd[[.x]],i %>% 
+                                    select(name)) %>%
                           gather('m/z','Intensity',-name) %>%
                           spread(name,Intensity) %>%
                           mutate(`m/z` = str_remove_all(`m/z`, '[:alpha:]') %>% as.numeric()) %>%
@@ -311,7 +289,7 @@ setMethod('exportAssignments',signature = 'Assignment',
           function(x,outPath = '.'){
               x %>% 
                   assignments() %>% 
-                  select(-Iteration,-Score,-Name) %>%
+                  select(-Iteration,-`MF Plausibility (%)`,-Name) %>%
                   exportCSV(str_c(outPath,'/assignments.csv'))
           })
 
