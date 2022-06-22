@@ -13,12 +13,12 @@
 #' ## Assign molecular formulas
 #' p <- assignmentParameters('FIE')
 #' 
-#' assignment <- assignMFs(peakData,p)
+#' assignment <- assignMFs(feature_data,p)
 #' 
 #' ## Retrieve assigned data
 #' assigned_data <- metabolyseR::analysisData(
 #'  assignedData(assignment),
-#'  tibble::tibble(sample = seq_len(nrow(peakData)))
+#'  tibble::tibble(sample = seq_len(nrow(feature_data)))
 #'  )
 #' 
 #' reduced_data <- metaboMisc::reduce(assigned_data)
