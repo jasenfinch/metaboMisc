@@ -332,6 +332,38 @@ setMethod('exportSummarisedAssignments',signature = 'Assignment',
           })
 
 #' @rdname export
+#' @importFrom construction classifications
+#' @export
+
+setGeneric('exportConstruction',function(x,outPath = '.')
+    standardGeneric('exportConstruction'))
+
+#' @rdname export
+
+setMethod('exportConstruction',signature = 'Construction',
+          function(x,outPath = '.'){
+              x %>% 
+                  classifications() %>% 
+                  exportCSV(str_c(outPath,'/consensus_structural_classifications.csv'))
+          })
+
+#' @rdname export
+#' @export
+
+setGeneric('exportSummarisedConstruction',function(x,outPath = '.')
+    standardGeneric('exportSummarisedConstruction'))
+
+#' @rdname export
+#' @importFrom construction summariseClassifications
+
+setMethod('exportSummarisedConstruction',signature = 'Construction',
+          function(x,outPath = '.'){
+              x %>% 
+                  summariseClassifications() %>% 
+                  exportCSV(str_c(outPath,'/summarised_consensus_structural_classifications.csv'))
+          })
+
+#' @rdname export
 #' @export
 
 setGeneric('export',function(x,outPath = '.',...)
@@ -390,6 +422,15 @@ setMethod('export',signature = 'Assignment',function(x,outPath = '.'){
     sa_fp <- exportSummarisedAssignments(x,outPath)
     
     return(c(as_fp,ad_fp,sa_fp))
+})
+
+#' @rdname export
+
+setMethod('export',signature = 'Construction',function(x,outPath = '.'){
+    cl_fp <- exportConstruction(x,outPath)
+    scl_fp <- exportSummarisedConstruction(x,outPath)
+    
+    return(c(cl_fp,scl_fp))
 })
 
 #' @importFrom dplyr bind_rows

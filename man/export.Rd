@@ -26,11 +26,16 @@
 \alias{exportAssignments,Assignment-method}
 \alias{exportSummarisedAssignments}
 \alias{exportSummarisedAssignments,Assignment-method}
+\alias{exportConstruction}
+\alias{exportConstruction,Construction-method}
+\alias{exportSummarisedConstruction}
+\alias{exportSummarisedConstruction,Construction-method}
 \alias{export}
 \alias{export,Binalysis-method}
 \alias{export,MetaboProfile-method}
 \alias{export,Analysis-method}
 \alias{export,Assignment-method}
+\alias{export,Construction-method}
 \title{Export results}
 \usage{
 exportData(x, outPath = ".", ...)
@@ -83,6 +88,14 @@ exportSummarisedAssignments(x, outPath = ".")
 
 \S4method{exportSummarisedAssignments}{Assignment}(x, outPath = ".")
 
+exportConstruction(x, outPath = ".")
+
+\S4method{exportConstruction}{Construction}(x, outPath = ".")
+
+exportSummarisedConstruction(x, outPath = ".")
+
+\S4method{exportSummarisedConstruction}{Construction}(x, outPath = ".")
+
 export(x, outPath = ".", ...)
 
 \S4method{export}{Binalysis}(x, outPath = ".")
@@ -92,6 +105,8 @@ export(x, outPath = ".", ...)
 \S4method{export}{Analysis}(x, outPath = ".", type = "raw", idx = "name")
 
 \S4method{export}{Assignment}(x, outPath = ".")
+
+\S4method{export}{Construction}(x, outPath = ".")
 }
 \arguments{
 \item{x}{S4 object of class \code{Binalysis}, \code{MetaboProfile}, \code{Analysis} or \code{Assignment},}

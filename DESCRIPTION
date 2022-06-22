@@ -8,6 +8,7 @@ BugReports: https://github.com/jasenfinch/metaboMisc/issues
 biocViews: Metabolomics
 Depends: R (>= 3.4)
 Imports: binneR,
+    construction,
     metabolyseR,
     dplyr,
     profilePro,
