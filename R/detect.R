@@ -447,43 +447,52 @@ setMethod('detectModellingParameters',signature = 'Analysis',
 
 detectModelling <- function(sample_info,idx){
     
-    ## Detect if regression is needed
+    ## Where regression parameters are required
     if (is.numeric(sample_info)){
         message('Numeric class column detected, using regression')
-        if (length(sample_info) > 6){
-            detected_parameters <- modellingParameters('randomForest')
-        } else {
+        
+        detected_parameters <- modellingParameters('randomForest')
+        
+        if (length(sample_info) < 6){
             detected_parameters <- modellingParameters('linearRegression')
         }
         
-    } else {
-        ## Detect classification parameters
+    }
+    
+    ## Where classification parameters are required
+    if (!is.numeric(sample_info)){
+        
+        detected_parameters <- modellingParameters('randomForest')
+        
         class_frequencies <- sample_info %>%
             tibble(class = .) %>% 
             group_by(class) %>% 
             summarise(freq = n())
         
         if (nrow(class_frequencies) < 2){
-            detected_parameters <- list()
-        } else {
-            if (nrow(class_frequencies %>%
-                     filter(freq > 5)) < (floor(length(unique(sample_info)) / 2))) {
-                message('Less than 50% of classes have > 5 replicates. Using ANOVA.')
-                
-                detected_parameters <- modellingParameters('anova')
-            } else {
-                detected_parameters <- modellingParameters('randomForest')
-            }   
+            detected_parameters[[1]]$cls <- NULL
+            detected_parameters[[1]] <- c(
+                list(
+                    cls = NULL),
+                detected_parameters[[1]]
+            )
+        }
+        
+        if (nrow(class_frequencies %>%
+                 filter(freq > 5)) < (floor(length(unique(sample_info)) / 2))) {
+            message('Less than 50% of classes have > 5 replicates. Using ANOVA.')
+            
+            detected_parameters <- modellingParameters('anova')
         }
         
     }
     
-    if (length(detected_parameters) > 0){
+    if (!is.null(detected_parameters$cls)){
         detected_parameters[[1]]$cls <- idx 
-        
-        if (names(detected_parameters)[1] == 'randomForest'){
-            detected_parameters[[1]]$reps <- 10
-        }
+    }
+    
+    if (names(detected_parameters)[1] == 'randomForest'){
+        detected_parameters[[1]]$reps <- 10
     }
     
     modelling_parameters <- analysisParameters('modelling')
