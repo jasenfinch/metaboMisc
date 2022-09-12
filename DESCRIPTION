@@ -7,25 +7,25 @@ URL: https://jasenfinch.github.io/metaboMisc/
 BugReports: https://github.com/jasenfinch/metaboMisc/issues
 biocViews: Metabolomics
 Depends: R (>= 3.4)
-Imports: binneR,
+Imports: assignments,
+    binneR,
+    cli,
     construction,
-    jfmisc,
-    metabolyseR,
+    crayon,
     dplyr,
+    future,
+    ggplot2,
+    jfmisc,
+    lubridate,
+    metabolyseR,
+    methods,
+    patchwork,
     profilePro,
     purrr,
-    methods,
-    tidyr,
-    tibble,
     stringr,
-    assignments,
-    crayon,
-    cli,
-    lubridate,
-    tidyselect,
-    future,
-    patchwork,
-    ggplot2
+    tibble,
+    tidyr,
+    tidyselect
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
