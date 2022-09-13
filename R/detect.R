@@ -261,6 +261,8 @@ batchDiff <- function(TICdat,pthresh = 0.05){
 #' @param x S4 object of class `Binalysis`, `MetaboProfile` or `AnalysisData`
 #' @param cls the name of the  sample information table column containing the sample class information
 #' @param QCidx QC sample class label
+#' @param miss_injections TRUE/FALSE. Detect the presence of possible miss injections and include parameters to remove these.
+#' @param batch_correction TRUE/FALSE. Detect if a batch correction is necessary and include parameters to perform this.
 #' @return S4 object of class `AnalysisParameters`
 #' @examples
 #' ## Retreive example file paths and sample information 
@@ -284,7 +286,9 @@ batchDiff <- function(TICdat,pthresh = 0.05){
 
 setGeneric('detectPretreatmentParameters',function(x,
                                                    cls = 'class',
-                                                   QCidx = 'QC'){
+                                                   QCidx = 'QC',
+                                                   miss_injections = TRUE,
+                                                   batch_correction = TRUE){
     standardGeneric('detectPretreatmentParameters')
 })
 
@@ -292,8 +296,14 @@ setGeneric('detectPretreatmentParameters',function(x,
 #' @importFrom metabolyseR changeParameter<-
 
 setMethod('detectPretreatmentParameters',signature = 'Binalysis',
-          function(x,cls = 'class',QCidx = 'QC'){
-              pp <-  detectPretreatment(x)
+          function(x,
+                   cls = 'class',
+                   QCidx = 'QC',
+                   miss_injections = TRUE,
+                   batch_correction = TRUE){
+              pp <-  detectPretreatment(x,
+                                        miss_injections,
+                                        batch_correction)
               
               sample_info <- binneR::sampleInfo(x)
               
@@ -311,8 +321,14 @@ setMethod('detectPretreatmentParameters',signature = 'Binalysis',
 #' @rdname detectPretreatmentParameters
 
 setMethod('detectPretreatmentParameters',signature = 'MetaboProfile',
-          function(x,cls = 'class',QCidx = 'QC'){
-              pp <- detectPretreatment(x)
+          function(x,
+                   cls = 'class',
+                   QCidx = 'QC',
+                   miss_injections = TRUE,
+                   batch_correction = TRUE){
+              pp <- detectPretreatment(x,
+                                       miss_injections,
+                                       batch_correction)
               
               sample_info <- profilePro::sampleInfo(x)
               
@@ -329,10 +345,19 @@ setMethod('detectPretreatmentParameters',signature = 'MetaboProfile',
 
 #' @importFrom metabolyseR parameters<- parameters
 
-detectPretreatment <- function(x){
-    miss_injections <- detectMissInjections(x)
-    batch_correction <- detectBatchDiff(x)
+detectPretreatment <- function(x,miss_injections,batch_correction){
+    if(isTRUE(miss_injections)) {
+        miss_injections <- detectMissInjections(x)
+    } else {
+        miss_injections <- NULL
+    } 
     
+    
+    if (isTRUE(batch_correction)) {
+        batch_correction <- detectBatchDiff(x)
+    } else {
+        batch_correction <- NULL
+    } 
     
     pre_treat_params <- analysisParameters('pre-treatment')
     

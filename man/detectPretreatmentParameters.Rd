@@ -6,11 +6,29 @@
 \alias{detectPretreatmentParameters,MetaboProfile-method}
 \title{Detect pre-treatment parameters}
 \usage{
-detectPretreatmentParameters(x, cls = "class", QCidx = "QC")
+detectPretreatmentParameters(
+  x,
+  cls = "class",
+  QCidx = "QC",
+  miss_injections = TRUE,
+  batch_correction = TRUE
+)
 
-\S4method{detectPretreatmentParameters}{Binalysis}(x, cls = "class", QCidx = "QC")
+\S4method{detectPretreatmentParameters}{Binalysis}(
+  x,
+  cls = "class",
+  QCidx = "QC",
+  miss_injections = TRUE,
+  batch_correction = TRUE
+)
 
-\S4method{detectPretreatmentParameters}{MetaboProfile}(x, cls = "class", QCidx = "QC")
+\S4method{detectPretreatmentParameters}{MetaboProfile}(
+  x,
+  cls = "class",
+  QCidx = "QC",
+  miss_injections = TRUE,
+  batch_correction = TRUE
+)
 }
 \arguments{
 \item{x}{S4 object of class \code{Binalysis}, \code{MetaboProfile} or \code{AnalysisData}}
@@ -18,6 +36,10 @@ detectPretreatmentParameters(x, cls = "class", QCidx = "QC")
 \item{cls}{the name of the  sample information table column containing the sample class information}
 
 \item{QCidx}{QC sample class label}
+
+\item{miss_injections}{TRUE/FALSE. Detect the presence of possible miss injections and include parameters to remove these.}
+
+\item{batch_correction}{TRUE/FALSE. Detect if a batch correction is necessary and include parameters to perform this.}
 }
 \value{
 S4 object of class \code{AnalysisParameters}
