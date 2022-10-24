@@ -330,6 +330,16 @@ setMethod('detectPretreatmentParameters',signature = 'MetaboProfile',
                                        miss_injections,
                                        batch_correction)
               
+              chromatographic_technique <- technique(x) %>% 
+                  str_split_fixed('-',2) %>% 
+                  .[,1]
+              
+              rsd <- switch(chromatographic_technique,
+                            LCMS = 20,
+                            GCMS = 30)
+              
+              changeParameter(pp,'RSDthresh') <- rsd
+              
               sample_info <- profilePro::sampleInfo(x)
               
               if (!detectQC(sample_info,cls,QCidx)){
