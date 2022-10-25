@@ -3,6 +3,7 @@
 #' @description Detect miss injected samples.
 #' @param x object of class `Binalysis` or `MetaboProfile`
 #' @param idx sample information column to use for sample indexes
+#' @param threshold the percentage of the median TIC below which samples will be considered miss injections.
 #' @return A list containing the name of sample information column used to index the miss injections and a vector of miss injection indexes.
 #' @details 
 #' Samples with a total ion count (TIC) below 1.5 times the inter-quartile range are detected as miss injections.
@@ -24,14 +25,14 @@
 #' miss_injections$missInjections
 #' @export
 
-setGeneric('detectMissInjections',function(x,idx = 'injOrder')
+setGeneric('detectMissInjections',function(x,idx = 'injOrder',threshold = 25)
     standardGeneric('detectMissInjections'))
 
 #' @rdname detectMissInjections
 #' @importFrom tibble as_tibble
 
 setMethod('detectMissInjections',signature = 'Binalysis',
-          function(x,idx = 'injOrder'){
+          function(x,idx = 'injOrder',threshold = 25){
               
               i <- x %>%
                   binneR::sampleInfo() %>%
@@ -44,14 +45,14 @@ setMethod('detectMissInjections',signature = 'Binalysis',
                   rowSums() %>%
                   as_tibble() %>%
                   bind_cols(i) %>%
-                  missInject(idx = idx)
+                  missInject(idx = idx,threshold)
           })
 
 #' @rdname detectMissInjections
 #' @importFrom profilePro technique
 
 setMethod('detectMissInjections',signature = 'MetaboProfile',
-          function(x,idx = 'injOrder'){
+          function(x,idx = 'injOrder',threshold = 25){
               
               i <- x %>%
                   profilePro::sampleInfo() %>% 
@@ -81,16 +82,16 @@ setMethod('detectMissInjections',signature = 'MetaboProfile',
                   rowSums() %>%
                   as_tibble() %>%
                   bind_cols(i) %>%
-                  missInject(idx = idx) 
+                  missInject(idx = idx,threshold) 
           })
 
-#' @importFrom stats IQR quantile
+#' @importFrom stats median
 
-missInject <- function(TICdat,idx){
-    thresh <- quantile(TICdat$value)[2] - IQR(TICdat$value) * 1.5
+missInject <- function(TICdat,idx,threshold){
+    TIC_threshold <- median(TICdat$value) * threshold/100
     
     missinjections <- TICdat %>%
-        filter(value < thresh) %>%
+        filter(value < TIC_threshold) %>%
         select(all_of(idx)) %>%
         unlist() %>%
         unname() %>%
@@ -263,6 +264,7 @@ batchDiff <- function(TICdat,pthresh = 0.05){
 #' @param QCidx QC sample class label
 #' @param miss_injections TRUE/FALSE. Detect the presence of possible miss injections and include parameters to remove these.
 #' @param batch_correction TRUE/FALSE. Detect if a batch correction is necessary and include parameters to perform this.
+#' @param threshold the percentage of the median TIC below which samples will be considered miss injections. This will be ignored if `miss_injections = FALSE`.
 #' @return S4 object of class `AnalysisParameters`
 #' @examples
 #' ## Retreive example file paths and sample information 
@@ -288,7 +290,8 @@ setGeneric('detectPretreatmentParameters',function(x,
                                                    cls = 'class',
                                                    QCidx = 'QC',
                                                    miss_injections = TRUE,
-                                                   batch_correction = TRUE){
+                                                   batch_correction = TRUE,
+                                                   threshold = 25){
     standardGeneric('detectPretreatmentParameters')
 })
 
@@ -300,10 +303,12 @@ setMethod('detectPretreatmentParameters',signature = 'Binalysis',
                    cls = 'class',
                    QCidx = 'QC',
                    miss_injections = TRUE,
-                   batch_correction = TRUE){
+                   batch_correction = TRUE,
+                   threshold = 25){
               pp <-  detectPretreatment(x,
                                         miss_injections,
-                                        batch_correction)
+                                        batch_correction,
+                                        threshold)
               
               sample_info <- binneR::sampleInfo(x)
               
@@ -325,10 +330,12 @@ setMethod('detectPretreatmentParameters',signature = 'MetaboProfile',
                    cls = 'class',
                    QCidx = 'QC',
                    miss_injections = TRUE,
-                   batch_correction = TRUE){
+                   batch_correction = TRUE,
+                   threshold = 25){
               pp <- detectPretreatment(x,
                                        miss_injections,
-                                       batch_correction)
+                                       batch_correction,
+                                       threshold)
               
               chromatographic_technique <- technique(x) %>% 
                   str_split_fixed('-',2) %>% 
@@ -355,9 +362,9 @@ setMethod('detectPretreatmentParameters',signature = 'MetaboProfile',
 
 #' @importFrom metabolyseR parameters<- parameters
 
-detectPretreatment <- function(x,miss_injections,batch_correction){
+detectPretreatment <- function(x,miss_injections,batch_correction,threshold){
     if(isTRUE(miss_injections)) {
-        miss_injections <- detectMissInjections(x)
+        miss_injections <- detectMissInjections(x,threshold = threshold)
     } else {
         miss_injections <- NULL
     } 

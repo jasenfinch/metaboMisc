@@ -6,16 +6,18 @@
 \alias{detectMissInjections,MetaboProfile-method}
 \title{Detect miss injections}
 \usage{
-detectMissInjections(x, idx = "injOrder")
+detectMissInjections(x, idx = "injOrder", threshold = 25)
 
-\S4method{detectMissInjections}{Binalysis}(x, idx = "injOrder")
+\S4method{detectMissInjections}{Binalysis}(x, idx = "injOrder", threshold = 25)
 
-\S4method{detectMissInjections}{MetaboProfile}(x, idx = "injOrder")
+\S4method{detectMissInjections}{MetaboProfile}(x, idx = "injOrder", threshold = 25)
 }
 \arguments{
 \item{x}{object of class \code{Binalysis} or \code{MetaboProfile}}
 
 \item{idx}{sample information column to use for sample indexes}
+
+\item{threshold}{the percentage of the median TIC below which samples will be considered miss injections.}
 }
 \value{
 A list containing the name of sample information column used to index the miss injections and a vector of miss injection indexes.
