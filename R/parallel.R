@@ -18,7 +18,9 @@ suitableParallelPlan <- function(strategy = NULL,workers = NULL){
     
     if (is.null(workers)) workers <- ceiling(availableCores() * 0.75)
     
-    message(paste('Setting up',strategy,'plan with',workers,'workers'))
+    plan(strategy,workers = workers)
     
-    plan(get(strategy),workers = workers)
+    if (!is.character(strategy)) strategy <- class(strategy)[1]
+        
+    message(paste('Setting up',strategy,'plan with',workers,'workers'))
 }
