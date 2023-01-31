@@ -5,20 +5,19 @@
 #' @param isotopes TRUE/FALSE remove isotopic features.
 #' @param adducts TRUE/FALSE remove multiple adduct features.
 #' @param unknowns TRUE/FALSE remove unassigned features.
+#' @param isotopic_adducts a vector of additional isotopic adducts to remove if argument `isotopes = TRUE`
 #' @return S4 object of class `Analysis` or `AnalysisData` with features reduced
-#' @details Isotope and adduct features are filtered based on the maximum intensity peak for each molecular formulas.
+#' @details If argument `isotopes = TRUE`, all isotopic features are removed. If argument `adducts = TRUE`, the feature with the maximum intensity for each molecular formula is retained.
 #' @examples 
-#' library(assignments)
-#' 
 #' ## Assign molecular formulas
-#' p <- assignmentParameters('FIE')
+#' p <- assignments::assignmentParameters('FIE')
 #' 
-#' assignment <- assignMFs(feature_data,p)
+#' assignment <- assignments::assignMFs(assignments::feature_data,p)
 #' 
 #' ## Retrieve assigned data
 #' assigned_data <- metabolyseR::analysisData(
-#'  assignedData(assignment),
-#'  tibble::tibble(sample = seq_len(nrow(feature_data)))
+#'  assignments::assignedData(assignment),
+#'  tibble::tibble(sample = seq_len(nrow(assignments::feature_data)))
 #'  )
 #' 
 #' reduced_data <- metaboMisc::reduce(assigned_data)
@@ -30,18 +29,24 @@ setGeneric('reduce',
            function(x, 
                     isotopes = TRUE, 
                     adducts = TRUE, 
-                    unknowns = FALSE)
+                    unknowns = FALSE,
+                    isotopic_adducts = c('[M+Cl37]1-','[M+K41]1+'))
                standardGeneric('reduce'))
 
 #' @rdname reduce
 
 setMethod('reduce',signature = 'Analysis',
-          function(x,isotopes = TRUE, adducts = TRUE, unknowns = FALSE){
+          function(x,
+                   isotopes = TRUE, 
+                   adducts = TRUE, 
+                   unknowns = FALSE,
+                   isotopic_adducts = c('[M+Cl37]1-','[M+K41]1+')){
               preTreated(x) <- x %>%
                   preTreated() %>%
                   reduce(isotopes = isotopes,
                          adducts = adducts,
-                         unknowns = unknowns)
+                         unknowns = unknowns,
+                         isotopic_adducts = isotopic_adducts)
               
               return(x)
           }
@@ -49,12 +54,18 @@ setMethod('reduce',signature = 'Analysis',
 
 #' @rdname reduce
 #' @importFrom metabolyseR dat<-
-#' @importFrom dplyr group_by summarise
+#' @importFrom dplyr group_by summarise all_of
 #' @importFrom stringr str_split_fixed
 #' @importFrom metabolyseR preTreated preTreated<-
+#' @importFrom tidyr separate
 
 setMethod('reduce',signature = 'AnalysisData',
-          function(x,isotopes = TRUE, adducts = TRUE, unknowns = FALSE){
+          function(x,
+                   isotopes = TRUE, 
+                   adducts = TRUE, 
+                   unknowns = FALSE,
+                   isotopic_adducts = c('[M+Cl37]1-','[M+K41]1+')
+                   ){
               d <- x %>%
                   dat()
               
@@ -63,13 +74,15 @@ setMethod('reduce',signature = 'AnalysisData',
                   gather('Feature','Intensity',-Sample) %>%
                   group_by(Feature) %>%
                   summarise(Intensity = mean(Intensity)) %>%
-                  mutate(MF = str_split_fixed(Feature,' ',4)[,2],
-                         Isotope = str_split_fixed(Feature,' ',4)[,3],
-                         Adduct = str_split_fixed(Feature,' ',4)[,4])
+                  separate(Feature,
+                           into = c('m/z','MF','Isotope','Adduct'),
+                           sep = ' ',
+                           remove = FALSE,
+                           fill = 'right')
               
               feat[feat == ''] <- NA
               
-              uks <- feat %>%
+              unknown_features <- feat %>%
                   filter(is.na(MF))
               
               feat <- feat %>%
@@ -77,36 +90,26 @@ setMethod('reduce',signature = 'AnalysisData',
               
               if (isTRUE(isotopes)) {
                   feat <- feat %>%
-                      split(str_c(.$MF,.$Adduct)) %>%
-                      map(~{
-                          d <- .
-                          d %>%
-                              filter(Intensity == max(Intensity))
-                      }) %>%
-                      bind_rows()
+                      filter(is.na(Isotope),
+                             !(Adduct %in% isotopic_adducts))
               }
               
               if (isTRUE(adducts)) {
                   feat <- feat %>%
-                      split(.$MF) %>%
-                      map(~{
-                          d <- .
-                          d %>%
-                              filter(Intensity == max(Intensity))
-                      }) %>%
-                      bind_rows()
+                      group_by(MF) %>% 
+                      filter(Intensity == max(Intensity))
               }
               
               if (isFALSE(unknowns)) {
                   feat <- feat %>%
-                      bind_rows(uks)
+                      bind_rows(unknown_features)
               }
               
               d <- d %>%
-                  select(feat$Feature)
+                  select(all_of(feat$Feature))
               
-             dat(x) <- d
-             
-             return(x)
+              dat(x) <- d
+              
+              return(x)
           }
 )

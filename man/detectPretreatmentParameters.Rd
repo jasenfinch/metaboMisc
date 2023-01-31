@@ -11,7 +11,8 @@ detectPretreatmentParameters(
   cls = "class",
   QCidx = "QC",
   miss_injections = TRUE,
-  batch_correction = TRUE
+  batch_correction = TRUE,
+  threshold = 25
 )
 
 \S4method{detectPretreatmentParameters}{Binalysis}(
@@ -19,7 +20,8 @@ detectPretreatmentParameters(
   cls = "class",
   QCidx = "QC",
   miss_injections = TRUE,
-  batch_correction = TRUE
+  batch_correction = TRUE,
+  threshold = 25
 )
 
 \S4method{detectPretreatmentParameters}{MetaboProfile}(
@@ -27,7 +29,8 @@ detectPretreatmentParameters(
   cls = "class",
   QCidx = "QC",
   miss_injections = TRUE,
-  batch_correction = TRUE
+  batch_correction = TRUE,
+  threshold = 25
 )
 }
 \arguments{
@@ -40,6 +43,8 @@ detectPretreatmentParameters(
 \item{miss_injections}{TRUE/FALSE. Detect the presence of possible miss injections and include parameters to remove these.}
 
 \item{batch_correction}{TRUE/FALSE. Detect if a batch correction is necessary and include parameters to perform this.}
+
+\item{threshold}{the percentage of the median TIC below which samples will be considered miss injections. This will be ignored if \code{miss_injections = FALSE}.}
 }
 \value{
 S4 object of class \code{AnalysisParameters}

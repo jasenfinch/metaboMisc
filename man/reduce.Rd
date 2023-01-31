@@ -6,11 +6,29 @@
 \alias{reduce,AnalysisData-method}
 \title{Reduce an analysis by removing isotopic, adduct or unknown features}
 \usage{
-reduce(x, isotopes = TRUE, adducts = TRUE, unknowns = FALSE)
+reduce(
+  x,
+  isotopes = TRUE,
+  adducts = TRUE,
+  unknowns = FALSE,
+  isotopic_adducts = c("[M+Cl37]1-", "[M+K41]1+")
+)
 
-\S4method{reduce}{Analysis}(x, isotopes = TRUE, adducts = TRUE, unknowns = FALSE)
+\S4method{reduce}{Analysis}(
+  x,
+  isotopes = TRUE,
+  adducts = TRUE,
+  unknowns = FALSE,
+  isotopic_adducts = c("[M+Cl37]1-", "[M+K41]1+")
+)
 
-\S4method{reduce}{AnalysisData}(x, isotopes = TRUE, adducts = TRUE, unknowns = FALSE)
+\S4method{reduce}{AnalysisData}(
+  x,
+  isotopes = TRUE,
+  adducts = TRUE,
+  unknowns = FALSE,
+  isotopic_adducts = c("[M+Cl37]1-", "[M+K41]1+")
+)
 }
 \arguments{
 \item{x}{S4 class of class \code{Analysis} or \code{AnalysisData}}
@@ -20,6 +38,8 @@ reduce(x, isotopes = TRUE, adducts = TRUE, unknowns = FALSE)
 \item{adducts}{TRUE/FALSE remove multiple adduct features.}
 
 \item{unknowns}{TRUE/FALSE remove unassigned features.}
+
+\item{isotopic_adducts}{a vector of additional isotopic adducts to remove if argument \code{isotopes = TRUE}}
 }
 \value{
 S4 object of class \code{Analysis} or \code{AnalysisData} with features reduced
@@ -28,20 +48,18 @@ S4 object of class \code{Analysis} or \code{AnalysisData} with features reduced
 Reduce an analysis by removing isotopic, adduct or unknown features.
 }
 \details{
-Isotope and adduct features are filtered based on the maximum intensity peak for each molecular formulas.
+If argument \code{isotopes = TRUE}, all isotopic features are removed. If argument \code{adducts = TRUE}, the feature with the maximum intensity for each molecular formula is retained.
 }
 \examples{
-library(assignments)
-
 ## Assign molecular formulas
-p <- assignmentParameters('FIE')
+p <- assignments::assignmentParameters('FIE')
 
-assignment <- assignMFs(feature_data,p)
+assignment <- assignments::assignMFs(assignments::feature_data,p)
 
 ## Retrieve assigned data
 assigned_data <- metabolyseR::analysisData(
- assignedData(assignment),
- tibble::tibble(sample = seq_len(nrow(feature_data)))
+ assignments::assignedData(assignment),
+ tibble::tibble(sample = seq_len(nrow(assignments::feature_data)))
  )
 
 reduced_data <- metaboMisc::reduce(assigned_data)
