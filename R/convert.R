@@ -13,18 +13,18 @@ convertSampleInfo <- function(sample_info,gzip_ext = TRUE){
         select(`RAW file`,
                `Creation date`,
                `User text 0`:`User text 4`) %>%
+        rowid_to_column(var = 'fileOrder') %>% 
         rename(fileName = `RAW file`,
                batch = `User text 0`,
                block = `User text 1`,
                class = `User text 2`,
                rawFileOrder = `User text 3`,
                sampleOrder = `User text 4`) %>%
-        arrange(fileName) %>%
-        mutate(fileOrder = seq_len(nrow(.)),
-               fileName = str_replace_all(fileName,'.raw','.mzML'),
+        mutate(fileName = str_replace_all(fileName,'.raw','.mzML'),
                name = tools::file_path_sans_ext(fileName)) %>%
         arrange(`Creation date`) %>%
         mutate(injOrder = seq_len(nrow(.))) %>%
+        arrange(fileOrder) %>%
         select(fileOrder,
                injOrder,
                rawFileOrder,
