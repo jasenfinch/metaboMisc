@@ -25,7 +25,6 @@ convertSampleInfo <- function(sample_info,gzip_ext = TRUE){
                name = tools::file_path_sans_ext(fileName)) %>%
         arrange(`Creation date`) %>%
         mutate(injOrder = seq_len(nrow(.))) %>%
-        arrange(fileOrder) %>%
         select(fileOrder,
                injOrder,
                rawFileOrder,
