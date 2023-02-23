@@ -46,6 +46,6 @@ Remotes: aberHRML/binneR,
     jasenfinch/profilePro,
     aberHRML/assignments,
     jasenfinch/grover,
-    bioc::rawrr
-    bioc::xcms
+    bioc::rawrr,
+    bioc::xcms,
     bioc::faahKO
