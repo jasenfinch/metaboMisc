@@ -36,7 +36,8 @@ Suggests:
     faahKO,
     xcms,
     covr,
-    grover
+    grover,
+    rawrr
 Config/testthat/edition: 3
 Remotes: aberHRML/binneR,
     jasenfinch/construction@devel,
@@ -44,4 +45,5 @@ Remotes: aberHRML/binneR,
     jasenfinch/metabolyseR@devel,
     jasenfinch/profilePro,
     jasenfinch/MFassign@devel,
-    jasenfinch/grover
+    jasenfinch/grover,
+    bioc::rawrr
