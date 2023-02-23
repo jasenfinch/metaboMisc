@@ -1,3 +1,29 @@
+# metaboMisc 0.6.0
+
+* `injOrder` is now the default column for sample indexes returned from `detectMissInjections()`.
+
+* The returned miss injection indexes are now sorted.
+
+* Fixed the `MetaboProfile` S4 class `export()` method for GC-MS techniques.
+
+* Added the `strategy` and `workers` arguments in `suitableParallelPlan()` to allow the manual selection of parallel options.
+
+* Added an `export()` method for the [`Construction`](https://jasenfinch.github.io/construction/) S4 class.
+
+* `detectModellingParameters()` now returns parameters for unsupervised random forest when a single class response is specified.
+
+* Added `miss_injections` and `batch_correction` arguments to `detectPretreatmentParameters()` to specify if miss injection detection and/or batch correction detection is performed.
+
+* The `RSDthresh` parameter is now set by `detectPretreatmentParameters()` for the `MetaboProfile` S4 class depending on the technique used.
+
+* Miss injections are now detected below a percentage threshold of the median total ion count in `detectMissInjections()`.
+
+* Added the `isotopic_adducts` argument to `reduce()` to allow the removal of *m/z* features assigned isotopic adducts.
+
+* The row order of the output of `convertSampleInfo()` will now always match the row order of the input.
+
+* Added the `user_text` argument to `convertSampleInfo()` to denote the column names for the `User text` fields.
+
 # metaboMisc 0.5.11
 
 * `exportCSV()` now recursively creates the destination directory if it does not already exist.

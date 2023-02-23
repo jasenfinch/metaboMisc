@@ -6,11 +6,32 @@
 \alias{detectPretreatmentParameters,MetaboProfile-method}
 \title{Detect pre-treatment parameters}
 \usage{
-detectPretreatmentParameters(x, cls = "class", QCidx = "QC")
+detectPretreatmentParameters(
+  x,
+  cls = "class",
+  QCidx = "QC",
+  miss_injections = TRUE,
+  batch_correction = TRUE,
+  threshold = 25
+)
 
-\S4method{detectPretreatmentParameters}{Binalysis}(x, cls = "class", QCidx = "QC")
+\S4method{detectPretreatmentParameters}{Binalysis}(
+  x,
+  cls = "class",
+  QCidx = "QC",
+  miss_injections = TRUE,
+  batch_correction = TRUE,
+  threshold = 25
+)
 
-\S4method{detectPretreatmentParameters}{MetaboProfile}(x, cls = "class", QCidx = "QC")
+\S4method{detectPretreatmentParameters}{MetaboProfile}(
+  x,
+  cls = "class",
+  QCidx = "QC",
+  miss_injections = TRUE,
+  batch_correction = TRUE,
+  threshold = 25
+)
 }
 \arguments{
 \item{x}{S4 object of class \code{Binalysis}, \code{MetaboProfile} or \code{AnalysisData}}
@@ -18,20 +39,24 @@ detectPretreatmentParameters(x, cls = "class", QCidx = "QC")
 \item{cls}{the name of the  sample information table column containing the sample class information}
 
 \item{QCidx}{QC sample class label}
+
+\item{miss_injections}{TRUE/FALSE. Detect the presence of possible miss injections and include parameters to remove these if necessary.}
+
+\item{batch_correction}{TRUE/FALSE. Detect if a batch correction is necessary and include parameters to perform this if necessary.}
+
+\item{threshold}{the percentage of the median TIC below which samples will be considered miss injections. This will be ignored if \code{miss_injections = FALSE}.}
 }
 \value{
-S4 object of class \code{AnalysisParameters}
+An object of S4 class \code{AnalysisParameters}
 }
 \description{
-Detect pre-treatment parameters for \code{Binalysis} or \code{MetaboProfile} class objects.
+Detect suitable pre-treatment parameters for \code{Binalysis} or \code{MetaboProfile} class objects.
 }
 \examples{
 ## Retreive example file paths and sample information 
-file_paths <- metaboData::filePaths('FIE-HRMS','BdistachyonEcotypes') \%>\% 
-   .[61:63]
+file_paths <- metaboData::filePaths('FIE-HRMS','BdistachyonEcotypes') 
 
-sample_information <- metaboData::runinfo('FIE-HRMS','BdistachyonEcotypes') \%>\% 
-    dplyr::filter(name == 'QC01' | name == 'QC02' | name == 'QC03')
+sample_information <- metaboData::runinfo('FIE-HRMS','BdistachyonEcotypes') 
 
 ## Detect spectral binning parameters
 bp <- binneR::detectParameters(file_paths)

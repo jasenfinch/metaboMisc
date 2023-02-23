@@ -1,45 +1,48 @@
 Package: metaboMisc
 Title: Miscellaneous Functions for Metabolomics Analyses
-Version: 0.5.11
+Version: 0.6.0
 Authors@R: person("Jasen", "Finch", email = "jsf9@aber.ac.uk", role = c("aut", "cre"))
 Description: Miscellaneous helper functions for metabolomics analyses that do not yet have a permanent home.
 URL: https://jasenfinch.github.io/metaboMisc/
 BugReports: https://github.com/jasenfinch/metaboMisc/issues
 biocViews: Metabolomics
 Depends: R (>= 3.4)
-Imports: binneR,
-    metabolyseR,
-    dplyr,
-    profilePro,
-    magrittr,
-    purrr,
-    methods,
-    tidyr,
-    tibble,
-    stringr,
-    MFassign,
-    crayon,
+Imports: assignments,
+    binneR,
     cli,
-    lubridate,
-    tidyselect,
-    readr,
+    construction,
+    crayon,
+    dplyr,
     future,
+    ggplot2,
+    jfmisc,
+    lubridate,
+    metabolyseR,
+    methods,
     patchwork,
-    ggplot2
+    profilePro,
+    purrr,
+    stringr,
+    tibble,
+    tidyr,
+    tidyselect
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
 Suggests: 
     testthat (>= 3.0.0),
     metaboData,
     faahKO,
     xcms,
     covr,
-    grover
+    grover,
+    rawrr
 Config/testthat/edition: 3
 Remotes: aberHRML/binneR,
+    jasenfinch/construction,
+    jasenfinch/jfmisc,
     jasenfinch/metabolyseR,
     jasenfinch/profilePro,
-    jasenfinch/MFassign,
+    aberHRML/assignments,
     jasenfinch/grover

@@ -4,7 +4,12 @@
 \alias{suitableParallelPlan}
 \title{Generate a suitable parallel processing plan}
 \usage{
-suitableParallelPlan()
+suitableParallelPlan(strategy = NULL, workers = NULL)
+}
+\arguments{
+\item{strategy}{the arallel strategy to use. See \code{?future::plan} for details. If \code{NULL} (the default), an appropriate strategy will be detected.}
+
+\item{workers}{The number of workers to use. If \code{NULL}, the selected number will be three quarterss of the available system workers.}
 }
 \description{
 Generate a suitable parallel processing future plan for your session. See \code{?future::plan} for more details on future plans.

@@ -26,11 +26,16 @@
 \alias{exportAssignments,Assignment-method}
 \alias{exportSummarisedAssignments}
 \alias{exportSummarisedAssignments,Assignment-method}
+\alias{exportConstruction}
+\alias{exportConstruction,Construction-method}
+\alias{exportSummarisedConstruction}
+\alias{exportSummarisedConstruction,Construction-method}
 \alias{export}
 \alias{export,Binalysis-method}
 \alias{export,MetaboProfile-method}
 \alias{export,Analysis-method}
 \alias{export,Assignment-method}
+\alias{export,Construction-method}
 \title{Export results}
 \usage{
 exportData(x, outPath = ".", ...)
@@ -83,6 +88,14 @@ exportSummarisedAssignments(x, outPath = ".")
 
 \S4method{exportSummarisedAssignments}{Assignment}(x, outPath = ".")
 
+exportConstruction(x, outPath = ".")
+
+\S4method{exportConstruction}{Construction}(x, outPath = ".")
+
+exportSummarisedConstruction(x, outPath = ".")
+
+\S4method{exportSummarisedConstruction}{Construction}(x, outPath = ".")
+
 export(x, outPath = ".", ...)
 
 \S4method{export}{Binalysis}(x, outPath = ".")
@@ -92,6 +105,8 @@ export(x, outPath = ".", ...)
 \S4method{export}{Analysis}(x, outPath = ".", type = "raw", idx = "name")
 
 \S4method{export}{Assignment}(x, outPath = ".")
+
+\S4method{export}{Construction}(x, outPath = ".")
 }
 \arguments{
 \item{x}{S4 object of class \code{Binalysis}, \code{MetaboProfile}, \code{Analysis} or \code{Assignment},}
@@ -109,4 +124,47 @@ A character vector of exported file paths.
 }
 \description{
 Export data tables from \code{Binalysis},\code{MetaboProfile}, \code{Analysis} and \code{Assignment} classes.
+}
+\examples{
+## Retrieve file paths and sample information for example data
+files <- metaboData::filePaths('FIE-HRMS','BdistachyonEcotypes')[1:2]
+
+info <- metaboData::runinfo('FIE-HRMS','BdistachyonEcotypes')[1:2,]
+
+## Perform spectral binning
+analysis <- binneR::binneRlyse(files, 
+                               info, 
+                               parameters = binneR::detectParameters(files))
+
+## Export spectrally binned data
+export(analysis,outPath = tempdir())
+
+## Perform data pre-treatment and modelling
+p <- metabolyseR::analysisParameters(c('pre-treatment','modelling'))
+metabolyseR::parameters(p,'pre-treatment') <- metabolyseR::preTreatmentParameters(
+   list(occupancyFilter = 'maximum',
+        transform = 'TICnorm')
+)
+metabolyseR::parameters(p,'modelling') <- metabolyseR::modellingParameters('anova')
+metabolyseR::changeParameter(p,'cls') <- 'day'
+analysis <- metabolyseR::metabolyse(metaboData::abr1$neg[,1:200],
+                      metaboData::abr1$fact,
+                      p)
+                      
+## Export pre-treated data and modelling results
+export(analysis,outPath = tempdir())
+
+## Perform molecular formula assignment
+future::plan(future::sequential)
+p <- assignments::assignmentParameters('FIE-HRMS')
+assignments <- assignments::assignMFs(assignments::feature_data,p)
+
+## Export molecular formula assignment results
+export(assignments,outPath = tempdir())
+
+## Perform consensus structural classification
+structural_classifications <- construction::construction(assignments)
+
+## Export consensus structural classification results
+export(structural_classifications,outPath = tempdir())
 }

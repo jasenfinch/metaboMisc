@@ -2,18 +2,43 @@
 % Please edit documentation in R/convert.R
 \name{convertSampleInfo}
 \alias{convertSampleInfo}
-\title{Convert sample information to a workflow compatible format}
+\title{Convert .raw file header information}
 \usage{
-convertSampleInfo(sample_info, gzip_ext = TRUE)
+convertSampleInfo(
+  sample_info,
+  gzip_ext = TRUE,
+  user_text = c("batch", "block", "class", "rawFileOrder", "sampleOrder")
+)
 }
 \arguments{
-\item{sample_info}{tibble containing sample information as returned from \code{grover::runInfo}}
+\item{sample_info}{a tibble containing sample information as returned from from either \code{grover::sampleInfo()},
+\code{grover::runInfo()} or \code{rawrrr::readFileHeader()}}
 
-\item{gzip_ext}{add \code{.gz} extension to file names}
+\item{gzip_ext}{add a \code{.gz} extension to the returned mzML file names}
+
+\item{user_text}{the column names for the five \verb{User text} columns}
 }
 \value{
 A tibble containing converted sample information.
 }
 \description{
-Convert sample information from \code{grover::runInfo} to a format compatible with \code{binneR} and \code{profilePro}.
+Convert .raw file header information from either \code{grover::sampleInfo()},
+\code{grover::runInfo()} or \code{rawrrr::readFileHeader()} into a sample information format compatible
+with \href{https://github.com/aberHRML/binneR}{\code{binneR}} or \href{https://github.com/jasenfinch/profilePro}{\code{profilePro}}.
+}
+\examples{
+## Read the file header information from an example .raw file in the 
+## grover package available from <https://jasenfinch.github.io/grover/>
+sample_information <- system.file(
+    'repository/Thermo-Exactive/Experiment_1/QC01.raw',
+    package = 'grover') \%>\% 
+    rawrr::readFileHeader() \%>\% 
+    tibble::as_tibble()
+
+## Convert the header information
+converted_sample_info <- convertSampleInfo(
+    sample_information,
+    user_text = c('batch','block','name','class','rawFileOrder'))
+
+converted_sample_info
 }

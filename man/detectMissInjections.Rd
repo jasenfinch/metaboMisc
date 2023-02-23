@@ -6,25 +6,24 @@
 \alias{detectMissInjections,MetaboProfile-method}
 \title{Detect miss injections}
 \usage{
-detectMissInjections(x, idx = "fileOrder")
+detectMissInjections(x, idx = "injOrder", threshold = 25)
 
-\S4method{detectMissInjections}{Binalysis}(x, idx = "fileOrder")
+\S4method{detectMissInjections}{Binalysis}(x, idx = "injOrder", threshold = 25)
 
-\S4method{detectMissInjections}{MetaboProfile}(x, idx = "fileOrder")
+\S4method{detectMissInjections}{MetaboProfile}(x, idx = "injOrder", threshold = 25)
 }
 \arguments{
-\item{x}{object of class \code{Binalysis} or \code{MetaboProfile}}
+\item{x}{object of S4 class \code{Binalysis} or \code{MetaboProfile}}
 
-\item{idx}{sample information column to use for sample indexes}
+\item{idx}{the sample information column to use for sample indexes}
+
+\item{threshold}{the percentage of the median TIC below which samples will be considered miss injections.}
 }
 \value{
-A list containing the name of sample information column used to index the miss injections and a vector of miss injection indexes.
+A list containing the name of the sample information column used to index the miss injections and a vector of miss injection indexes.
 }
 \description{
-Detect miss injected samples.
-}
-\details{
-Samples with a total ion count (TIC) below 1.5 times the inter-quartile range are detected as miss injections.
+Detect miss injected samples or samples with a total ion count below a percentage threshold of the median.
 }
 \examples{
 ## Retrieve file paths and sample information for example data
@@ -41,5 +40,5 @@ analysis <- binneR::binneRlyse(files,
 miss_injections <- detectMissInjections(analysis)
 
 ## Display detected miss injections
-miss_injections$missInjections
+miss_injections
 }

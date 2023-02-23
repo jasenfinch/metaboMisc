@@ -43,6 +43,14 @@ test_that('pre-treatment parameter detection works for MetaboProfile class',{
   expect_s4_class(pp,'AnalysisParameters')
 })
 
+test_that('pre-treatment parameter detection works without miss injection and batch correction detection',{
+    pp <- detectPretreatmentParameters(bd,
+                                       miss_injections = FALSE,
+                                       batch_correction = FALSE)  
+    
+    expect_s4_class(pp,'AnalysisParameters')
+})
+
 test_that('modelling parameter detection works for Binalysis class',{
   mp <- detectModellingParameters(bd)
   

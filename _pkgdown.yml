@@ -2,3 +2,34 @@ url: https://jasenfinch.github.io/metaboMisc/
 template:
   bootstrap: 5
 
+reference:
+    - title: Parameter detection
+      contents:
+      - detectBatchDiff
+      - detectMissInjections
+      - detectPretreatmentParameters
+      - detectModellingParameters
+      
+    - title: Data processing
+      contents:
+      - preTreatModes
+      
+    - title: Data summary
+      contents:
+      - featureSummary
+      - sanitiseTable
+      
+    - title: Data export
+      contents:
+      - exportData
+      
+    - title: Plotting
+      contents:
+      - plotRSD,Binalysis-method
+    
+    - title: Other
+      contents:
+      - suitableParallelPlan
+      - addAssignments
+      - reduce
+      - convertSampleInfo

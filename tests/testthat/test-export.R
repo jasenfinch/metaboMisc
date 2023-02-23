@@ -1,15 +1,6 @@
 
 temp_dir <- tempdir()
 
-test_that('exportCSV works',{
-    
-    file_path <- paste0(temp_dir,'/iris.csv')
-    exported_file_path <- exportCSV(iris,file_path)
-    
-    expect_match(exported_file_path,file_path)
-    expect_snapshot_file(exported_file_path)
-})
-
 test_that("export Binalysis works", {
     fp <- export(bd,temp_dir)
     
@@ -44,4 +35,11 @@ test_that("export Assignment works", {
     expect_identical(basename(fp),c('assignments.csv',
                                     'assigned_data.csv',
                                     'summarised_assignments.csv'))
+})
+
+test_that("export Construction works", {
+    fp <- export(structural_classifications,temp_dir)
+    
+    expect_identical(basename(fp),c('consensus_structural_classifications.csv',
+                                    'summarised_consensus_structural_classifications.csv'))
 })

@@ -1,11 +1,10 @@
 #' Detect miss injections
 #' @rdname detectMissInjections
-#' @description Detect miss injected samples.
-#' @param x object of class `Binalysis` or `MetaboProfile`
-#' @param idx sample information column to use for sample indexes
-#' @return A list containing the name of sample information column used to index the miss injections and a vector of miss injection indexes.
-#' @details 
-#' Samples with a total ion count (TIC) below 1.5 times the inter-quartile range are detected as miss injections.
+#' @description Detect miss injected samples or samples with a total ion count below a percentage threshold of the median.
+#' @param x object of S4 class `Binalysis` or `MetaboProfile`
+#' @param idx the sample information column to use for sample indexes
+#' @param threshold the percentage of the median TIC below which samples will be considered miss injections.
+#' @return A list containing the name of the sample information column used to index the miss injections and a vector of miss injection indexes.
 #' @examples 
 #' ## Retrieve file paths and sample information for example data
 #' files <- metaboData::filePaths('FIE-HRMS','BdistachyonEcotypes')[1:2]
@@ -21,17 +20,17 @@
 #' miss_injections <- detectMissInjections(analysis)
 #' 
 #' ## Display detected miss injections
-#' miss_injections$missInjections
+#' miss_injections
 #' @export
 
-setGeneric('detectMissInjections',function(x,idx = 'fileOrder')
+setGeneric('detectMissInjections',function(x,idx = 'injOrder',threshold = 25)
     standardGeneric('detectMissInjections'))
 
 #' @rdname detectMissInjections
 #' @importFrom tibble as_tibble
 
 setMethod('detectMissInjections',signature = 'Binalysis',
-          function(x,idx = 'fileOrder'){
+          function(x,idx = 'injOrder',threshold = 25){
               
               i <- x %>%
                   binneR::sampleInfo() %>%
@@ -44,14 +43,14 @@ setMethod('detectMissInjections',signature = 'Binalysis',
                   rowSums() %>%
                   as_tibble() %>%
                   bind_cols(i) %>%
-                  missInject(idx = idx)
+                  missInject(idx = idx,threshold)
           })
 
 #' @rdname detectMissInjections
 #' @importFrom profilePro technique
 
 setMethod('detectMissInjections',signature = 'MetaboProfile',
-          function(x,idx = 'fileOrder'){
+          function(x,idx = 'injOrder',threshold = 25){
               
               i <- x %>%
                   profilePro::sampleInfo() %>% 
@@ -81,19 +80,20 @@ setMethod('detectMissInjections',signature = 'MetaboProfile',
                   rowSums() %>%
                   as_tibble() %>%
                   bind_cols(i) %>%
-                  missInject(idx = idx) 
+                  missInject(idx = idx,threshold) 
           })
 
-#' @importFrom stats IQR quantile
+#' @importFrom stats median
 
-missInject <- function(TICdat,idx){
-    thresh <- quantile(TICdat$value)[2] - IQR(TICdat$value) * 1.5
+missInject <- function(TICdat,idx,threshold){
+    TIC_threshold <- median(TICdat$value) * threshold/100
     
     missinjections <- TICdat %>%
-        filter(value < thresh) %>%
+        filter(value < TIC_threshold) %>%
         select(all_of(idx)) %>%
         unlist() %>%
         unname() %>%
+        sort() %>% 
         list(idx = idx,missInjections = .)
     return(missinjections)
 }
@@ -102,16 +102,16 @@ missInject <- function(TICdat,idx){
 #' Detect batch/block differences
 #' @rdname detectBatchDiff
 #' @description Detect batch/block differences within analytical runs for each ionisation mode.
-#' @param x object of class `Binalysis` or `MetaboProfile`
-#' @param by info class column to use for batch information
+#' @param x object of S4 class `Binalysis` or `MetaboProfile`
+#' @param by info class column to use for batch/block information
 #' @param pthresh p-value threshold for significance
 #' @return If no differences between batches are found then `NULL` is returned. If significant differences are found then a tibble is returned containing the ANOVA results for each ionisation mode and showing whether batch correction is needed. 
 #' @details Analysis of Variance (ANOVA) is used to detect differences in total ion count (TIC) averages between batches/blocks. 
 #' @examples 
 #' ## Retrieve file paths and sample information for example data
-#' files <- metaboData::filePaths('FIE-HRMS','BdistachyonEcotypes',ask = FALSE)[1:2]
+#' files <- metaboData::filePaths('FIE-HRMS','BdistachyonEcotypes',ask = FALSE)
 #' 
-#' info <- metaboData::runinfo('FIE-HRMS','BdistachyonEcotypes')[1:2,]
+#' info <- metaboData::runinfo('FIE-HRMS','BdistachyonEcotypes')
 #' 
 #' ## Perform spectral binning
 #' analysis <- binneR::binneRlyse(files, 
@@ -121,7 +121,7 @@ missInject <- function(TICdat,idx){
 #' ## Detect batch differences
 #' batch_diff <- detectBatchDiff(analysis)
 #' 
-#' ## Display batch diffferences
+#' ## Display batch differences
 #' batch_diff
 #' @export
 
@@ -256,18 +256,19 @@ batchDiff <- function(TICdat,pthresh = 0.05){
 
 #' Detect pre-treatment parameters
 #' @rdname detectPretreatmentParameters
-#' @description Detect pre-treatment parameters for `Binalysis` or `MetaboProfile` class objects. 
+#' @description Detect suitable pre-treatment parameters for `Binalysis` or `MetaboProfile` class objects. 
 #' @param x S4 object of class `Binalysis`, `MetaboProfile` or `AnalysisData`
 #' @param cls the name of the  sample information table column containing the sample class information
 #' @param QCidx QC sample class label
-#' @return S4 object of class `AnalysisParameters`
+#' @param miss_injections TRUE/FALSE. Detect the presence of possible miss injections and include parameters to remove these if necessary.
+#' @param batch_correction TRUE/FALSE. Detect if a batch correction is necessary and include parameters to perform this if necessary.
+#' @param threshold the percentage of the median TIC below which samples will be considered miss injections. This will be ignored if `miss_injections = FALSE`.
+#' @return An object of S4 class `AnalysisParameters`
 #' @examples
 #' ## Retreive example file paths and sample information 
-#' file_paths <- metaboData::filePaths('FIE-HRMS','BdistachyonEcotypes') %>% 
-#'    .[61:63]
+#' file_paths <- metaboData::filePaths('FIE-HRMS','BdistachyonEcotypes') 
 #' 
-#' sample_information <- metaboData::runinfo('FIE-HRMS','BdistachyonEcotypes') %>% 
-#'     dplyr::filter(name == 'QC01' | name == 'QC02' | name == 'QC03')
+#' sample_information <- metaboData::runinfo('FIE-HRMS','BdistachyonEcotypes') 
 #' 
 #' ## Detect spectral binning parameters
 #' bp <- binneR::detectParameters(file_paths)
@@ -283,7 +284,10 @@ batchDiff <- function(TICdat,pthresh = 0.05){
 
 setGeneric('detectPretreatmentParameters',function(x,
                                                    cls = 'class',
-                                                   QCidx = 'QC'){
+                                                   QCidx = 'QC',
+                                                   miss_injections = TRUE,
+                                                   batch_correction = TRUE,
+                                                   threshold = 25){
     standardGeneric('detectPretreatmentParameters')
 })
 
@@ -291,8 +295,16 @@ setGeneric('detectPretreatmentParameters',function(x,
 #' @importFrom metabolyseR changeParameter<-
 
 setMethod('detectPretreatmentParameters',signature = 'Binalysis',
-          function(x,cls = 'class',QCidx = 'QC'){
-              pp <-  detectPretreatment(x)
+          function(x,
+                   cls = 'class',
+                   QCidx = 'QC',
+                   miss_injections = TRUE,
+                   batch_correction = TRUE,
+                   threshold = 25){
+              pp <-  detectPretreatment(x,
+                                        miss_injections,
+                                        batch_correction,
+                                        threshold)
               
               sample_info <- binneR::sampleInfo(x)
               
@@ -310,8 +322,26 @@ setMethod('detectPretreatmentParameters',signature = 'Binalysis',
 #' @rdname detectPretreatmentParameters
 
 setMethod('detectPretreatmentParameters',signature = 'MetaboProfile',
-          function(x,cls = 'class',QCidx = 'QC'){
-              pp <- detectPretreatment(x)
+          function(x,
+                   cls = 'class',
+                   QCidx = 'QC',
+                   miss_injections = TRUE,
+                   batch_correction = TRUE,
+                   threshold = 25){
+              pp <- detectPretreatment(x,
+                                       miss_injections,
+                                       batch_correction,
+                                       threshold)
+              
+              chromatographic_technique <- technique(x) %>% 
+                  str_split_fixed('-',2) %>% 
+                  .[,1]
+              
+              rsd <- switch(chromatographic_technique,
+                            LCMS = 20,
+                            GCMS = 30)
+              
+              changeParameter(pp,'RSDthresh') <- rsd
               
               sample_info <- profilePro::sampleInfo(x)
               
@@ -328,10 +358,19 @@ setMethod('detectPretreatmentParameters',signature = 'MetaboProfile',
 
 #' @importFrom metabolyseR parameters<- parameters
 
-detectPretreatment <- function(x){
-    miss_injections <- detectMissInjections(x)
-    batch_correction <- detectBatchDiff(x)
+detectPretreatment <- function(x,miss_injections,batch_correction,threshold){
+    if(isTRUE(miss_injections)) {
+        miss_injections <- detectMissInjections(x,threshold = threshold)
+    } else {
+        miss_injections <- NULL
+    } 
     
+    
+    if (isTRUE(batch_correction)) {
+        batch_correction <- detectBatchDiff(x)
+    } else {
+        batch_correction <- NULL
+    } 
     
     pre_treat_params <- analysisParameters('pre-treatment')
     
@@ -365,17 +404,17 @@ detectQC <- function(sample_info,cls,QCidx = 'QC'){
 
 #' Detect modelling parameters
 #' @rdname detectModellingParameters
-#' @description Detect modelling parameters for `Binalysis`, `MetaboProfile` or `Analysis` S4 classes. 
-#' @param x S4 object of class `Binalysis`,`MetaboProfile` or `Analysis`
-#' @param type detect parameters for `raw` or `pre-treated` data for `Analysis` class
-#' @param cls sample information column to use for modelling
+#' @description Detect suitable modelling parameters for `Binalysis`, `MetaboProfile` or `Analysis` S4 classes. 
+#' @param x an object of S4 class `Binalysis`,`MetaboProfile` or `Analysis`
+#' @param type detect modelling parameters for `raw` or `pre-treated` data for the `Analysis` S4 class
+#' @param cls sample information column to use as the response for modelling
 #' @param ... arguments to pass to the appropriate method
-#' @return S4 object of class `AnalysisParameters`
+#' @return  and object of S4 class `AnalysisParameters`
 #' @examples 
 #' ## Retrieve file paths and sample information for example data
-#' files <- metaboData::filePaths('FIE-HRMS','BdistachyonEcotypes')[1:2]
+#' files <- metaboData::filePaths('FIE-HRMS','BdistachyonEcotypes')
 #' 
-#' info <- metaboData::runinfo('FIE-HRMS','BdistachyonEcotypes')[1:2,]
+#' info <- metaboData::runinfo('FIE-HRMS','BdistachyonEcotypes')
 #' 
 #' ## Perform spectral binning
 #' analysis <- binneR::binneRlyse(files, 
@@ -446,43 +485,52 @@ setMethod('detectModellingParameters',signature = 'Analysis',
 
 detectModelling <- function(sample_info,idx){
     
-    ## Detect if regression is needed
+    ## Where regression parameters are required
     if (is.numeric(sample_info)){
         message('Numeric class column detected, using regression')
-        if (length(sample_info) > 6){
-            detected_parameters <- modellingParameters('randomForest')
-        } else {
+        
+        detected_parameters <- modellingParameters('randomForest')
+        
+        if (length(sample_info) < 6){
             detected_parameters <- modellingParameters('linearRegression')
         }
         
-    } else {
-        ## Detect classification parameters
+    }
+    
+    ## Where classification parameters are required
+    if (!is.numeric(sample_info)){
+        
+        detected_parameters <- modellingParameters('randomForest')
+        
         class_frequencies <- sample_info %>%
             tibble(class = .) %>% 
             group_by(class) %>% 
             summarise(freq = n())
         
         if (nrow(class_frequencies) < 2){
-            detected_parameters <- list()
-        } else {
-            if (nrow(class_frequencies %>%
-                     filter(freq > 5)) < (floor(length(unique(sample_info)) / 2))) {
-                message('Less than 50% of classes have > 5 replicates. Using ANOVA.')
-                
-                detected_parameters <- modellingParameters('anova')
-            } else {
-                detected_parameters <- modellingParameters('randomForest')
-            }   
+            detected_parameters[[1]]$cls <- NULL
+            detected_parameters[[1]] <- c(
+                list(
+                    cls = NULL),
+                detected_parameters[[1]]
+            )
+        }
+        
+        if (nrow(class_frequencies %>%
+                 filter(freq > 5)) < (floor(length(unique(sample_info)) / 2))) {
+            message('Less than 50% of classes have > 5 replicates. Using ANOVA.')
+            
+            detected_parameters <- modellingParameters('anova')
         }
         
     }
     
-    if (length(detected_parameters) > 0){
+    if (!is.null(detected_parameters$cls)){
         detected_parameters[[1]]$cls <- idx 
-        
-        if (names(detected_parameters)[1] == 'randomForest'){
-            detected_parameters[[1]]$reps <- 10
-        }
+    }
+    
+    if (names(detected_parameters)[1] == 'randomForest'){
+        detected_parameters[[1]]$reps <- 10
     }
     
     modelling_parameters <- analysisParameters('modelling')

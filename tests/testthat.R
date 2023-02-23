@@ -1,15 +1,11 @@
 library(testthat)
 library(metaboMisc)
-library(metaboData)
-library(profilePro)
-library(metabolyseR)
-library(MFassign)
 
 ## Example Binalysis class
-file_paths <- metaboData::filePaths('FIE-HRMS','BdistachyonEcotypes') %>% 
+file_paths <- metaboData::filePaths('FIE-HRMS','BdistachyonEcotypes',ask = FALSE) %>% 
     .[stringr::str_detect(.,'QC')]
 
-sample_information <- runinfo('FIE-HRMS','BdistachyonEcotypes') %>% 
+sample_information <- metaboData::runinfo('FIE-HRMS','BdistachyonEcotypes',ask = FALSE) %>% 
     dplyr::filter(stringr::str_detect(name,'QC'))
 
 bp <- binneR::detectParameters(file_paths)
@@ -33,24 +29,29 @@ sample_info <- tibble::tibble(fileOrder = seq_along(file_paths),
                               name = sample_names,
                               class = substr(sample_names,1,2))
 
-parameters <- profileParameters('LCMS-RP')
-processingParameters(parameters)$peakDetection <- xcms::CentWaveParam(snthresh = 20,
+parameters <- profilePro::profileParameters('LCMS-RP')
+profilePro::processingParameters(parameters)$peakDetection <- xcms::CentWaveParam(snthresh = 20,
                                                                       noise = 1000)
-processingParameters(parameters)$retentionTimeCorrection <- xcms::ObiwarpParam()
-processingParameters(parameters)$grouping <- xcms::PeakDensityParam(sampleGroups = sample_info$class,
+profilePro::processingParameters(parameters)$retentionTimeCorrection <- xcms::ObiwarpParam()
+profilePro::processingParameters(parameters)$grouping <- xcms::PeakDensityParam(sampleGroups = sample_info$class,
                                                                     maxFeatures = 300,
                                                                     minFraction = 2/3)
-lcd <- profileProcess(file_paths,sample_info,parameters)
+lcd <- profilePro::profileProcess(file_paths,sample_info,parameters)
 
 ## Example Analysis class
 a <- new('Analysis')
-preTreated(a) <- analysisData(abr1$neg[,200:300],abr1$fact)
-mp <- analysisParameters(c('modelling','correlations'))
-a <- reAnalyse(a,mp)
+metabolyseR::preTreated(a) <- metabolyseR::analysisData(metaboData::abr1$neg[,200:300],
+                                           metaboData::abr1$fact)
+mp <- metabolyseR::analysisParameters(c('modelling','correlations'))
+a <- metabolyseR::reAnalyse(a,mp)
 
 ## Example Assingment class
-p <- assignmentParameters('FIE')
+p <- assignments::assignmentParameters('FIE-HRMS')
+ 
+assignment <- assignments::assignMFs(assignments::feature_data,p)
 
-assignment <- assignMFs(peakData,p)
+## Example Construction class
+
+structural_classifications <- construction::construction(assignment)
 
 test_check("metaboMisc")

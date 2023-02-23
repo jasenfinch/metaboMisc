@@ -10,16 +10,13 @@ addAssignments(analysis, assignment)
 \S4method{addAssignments}{Analysis,Assignment}(analysis, assignment)
 }
 \arguments{
-\item{analysis}{S4 object of class \code{Analysis}}
+\item{analysis}{an object of S4 class \code{Analysis}}
 
-\item{assignment}{S4 object of class \code{Assignment}}
+\item{assignment}{an object of S4 class \code{Assignment} that includes assignemnts for the \emph{m/z} features specified for argument \code{analysis}}
 }
 \value{
-An S4 object of class \code{Analysis}
+An object of S4 class \code{Analysis} that includes the molecular formulas in the feature names for the pre-treated data.
 }
 \description{
-Add molecular formaul assignments to an \code{Analysis} class object.
-}
-\details{
-Molecular formula assignments are added to the \code{Analysis} pre-treated data
+Add molecular formula assignments to an \code{Analysis} S4 class object.
 }

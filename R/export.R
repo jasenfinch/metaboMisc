@@ -1,27 +1,3 @@
-#' Export a csv
-#' @description Export a csv and return the file path of the exported csv.
-#' @param x a data frame or tibble to export
-#' @param file file or connection to write to
-#' @param ... arguments to pass to `readr::write_csv()`
-#' @return The file path of the exported csv.
-#' @details If the file path directory does not exist, the directory is created prior to export.
-#' @examples
-#' exportCSV(iris, "iris.csv")
-#' @importFrom readr write_csv
-#' @export
-
-exportCSV <- function(x,file,...){
-    
-    if (!dir.exists(dirname(file))){
-        dir.create(dirname(file),
-                   recursive = TRUE)
-    }
-    
-    write_csv(x = x,file = file,...)
-    
-    return(file)
-}
-
 #' Export results
 #' @rdname export
 #' @description Export data tables from `Binalysis`,`MetaboProfile`, `Analysis` and `Assignment` classes.
@@ -31,6 +7,48 @@ exportCSV <- function(x,file,...){
 #' @param idx sample information column name to use as sample IDs
 #' @param ... arguments to pass to relevant method
 #' @return A character vector of exported file paths.
+#' @examples 
+#' ## Retrieve file paths and sample information for example data
+#' files <- metaboData::filePaths('FIE-HRMS','BdistachyonEcotypes')[1:2]
+#' 
+#' info <- metaboData::runinfo('FIE-HRMS','BdistachyonEcotypes')[1:2,]
+#' 
+#' ## Perform spectral binning
+#' analysis <- binneR::binneRlyse(files, 
+#'                                info, 
+#'                                parameters = binneR::detectParameters(files))
+#' 
+#' ## Export spectrally binned data
+#' export(analysis,outPath = tempdir())
+#' 
+#' ## Perform data pre-treatment and modelling
+#' p <- metabolyseR::analysisParameters(c('pre-treatment','modelling'))
+#' metabolyseR::parameters(p,'pre-treatment') <- metabolyseR::preTreatmentParameters(
+#'    list(occupancyFilter = 'maximum',
+#'         transform = 'TICnorm')
+#' )
+#' metabolyseR::parameters(p,'modelling') <- metabolyseR::modellingParameters('anova')
+#' metabolyseR::changeParameter(p,'cls') <- 'day'
+#' analysis <- metabolyseR::metabolyse(metaboData::abr1$neg[,1:200],
+#'                       metaboData::abr1$fact,
+#'                       p)
+#'                       
+#' ## Export pre-treated data and modelling results
+#' export(analysis,outPath = tempdir())
+#' 
+#' ## Perform molecular formula assignment
+#' future::plan(future::sequential)
+#' p <- assignments::assignmentParameters('FIE-HRMS')
+#' assignments <- assignments::assignMFs(assignments::feature_data,p)
+#' 
+#' ## Export molecular formula assignment results
+#' export(assignments,outPath = tempdir())
+#' 
+#' ## Perform consensus structural classification
+#' structural_classifications <- construction::construction(assignments)
+#' 
+#' ## Export consensus structural classification results
+#' export(structural_classifications,outPath = tempdir())
 #' @export
 
 setGeneric('exportData',function(x,outPath = '.',...)
@@ -40,6 +58,7 @@ setGeneric('exportData',function(x,outPath = '.',...)
 #' @importFrom binneR binnedData
 #' @importFrom stringr str_remove_all
 #' @importFrom purrr map_chr
+#' @importFrom jfmisc exportCSV
 
 setMethod('exportData',signature = 'Binalysis',
           function(x,outPath = '.'){
@@ -59,7 +78,8 @@ setMethod('exportData',signature = 'Binalysis',
               file_paths <- bd %>%
                   names() %>%
                   map_chr(~{
-                      bind_cols(bd[[.x]],i %>% select(name)) %>%
+                      bind_cols(bd[[.x]],i %>% 
+                                    select(name)) %>%
                           gather('m/z','Intensity',-name) %>%
                           spread(name,Intensity) %>%
                           mutate(`m/z` = str_remove_all(`m/z`, '[:alpha:]') %>% as.numeric()) %>%
@@ -84,26 +104,34 @@ setMethod('exportData',signature = 'MetaboProfile',
               pd <- x %>%
                   processedData() 
               
-              names(pd)[is.na(names(pd))] <- '1'
-              
-              file_paths <- pd %>%
-                  names() %>%
-                  map_chr(~{
-                      prefix <- .x
-                      
-                      if (prefix != 'n' | prefix != 'p'){
-                          prefix <- ''
-                      } else {
-                       prefix <- switch(prefix,
-                                        n = 'negative_mode_',
-                                        p = 'positive_mode_')   
-                      }
-                      
-                      bind_cols(pd[[.x]],i %>% select(name)) %>%
-                          gather('Feature','Intensity',-name) %>%
-                          spread(name,Intensity) %>%
-                          exportCSV(str_c(outPath,'/',prefix,'processed_data.csv'))
-                  })
+              if (is.data.frame(pd)){
+                  file_paths <- pd %>% 
+                      bind_cols(i %>% select(name)) %>% 
+                      gather('Feature','Intensity',-name) %>%
+                      spread(name,Intensity) %>%
+                      exportCSV(str_c(outPath,'/','processed_data.csv'))
+              } else {
+                  names(pd)[is.na(names(pd))] <- '1'
+                  
+                  file_paths <- pd %>%
+                      names() %>%
+                      map_chr(~{
+                          prefix <- .x
+                          
+                          if (prefix != 'n' | prefix != 'p'){
+                              prefix <- ''
+                          } else {
+                              prefix <- switch(prefix,
+                                               n = 'negative_mode_',
+                                               p = 'positive_mode_')   
+                          }
+                          
+                          bind_cols(pd[[.x]],i %>% select(name)) %>%
+                              gather('Feature','Intensity',-name) %>%
+                              spread(name,Intensity) %>%
+                              exportCSV(str_c(outPath,'/',prefix,'processed_data.csv'))
+                      })
+              }
               
               return(file_paths)
           })
@@ -122,7 +150,7 @@ setMethod('exportData',signature = 'Analysis',
               x %>%
                   dat(type = type) %>%
                   bind_cols(i %>% select(all_of(idx))) %>%
-                  gather('m/z','Intensity',-idx) %>%
+                  gather('m/z','Intensity',-all_of(idx)) %>%
                   spread(idx,Intensity) %>%
                   mutate(Mode = str_sub(`m/z`,1,1)) %>%
                   mutate(`m/z` = str_split_fixed(`m/z`,' ',2)[,1] %>%
@@ -268,7 +296,7 @@ setMethod('exportModelling',signature = 'Analysis',
               m_fp <- exportModellingMetrics(x,outPath)
               i_fp <- exportModellingImportance(x,outPath)
               
-             return(c(m_fp,i_fp))
+              return(c(m_fp,i_fp))
           })
 
 #' @rdname export
@@ -297,13 +325,13 @@ setGeneric('exportAssignments',function(x,outPath = '.')
     standardGeneric('exportAssignments'))
 
 #' @rdname export
-#' @importFrom MFassign assignments
+#' @importFrom assignments assignments
 
 setMethod('exportAssignments',signature = 'Assignment',
           function(x,outPath = '.'){
               x %>% 
                   assignments() %>% 
-                  select(-Iteration,-Score,-Name) %>%
+                  select(-Iteration,-`MF Plausibility (%)`,-Name) %>%
                   exportCSV(str_c(outPath,'/assignments.csv'))
           })
 
@@ -314,13 +342,45 @@ setGeneric('exportSummarisedAssignments',function(x,outPath = '.')
     standardGeneric('exportSummarisedAssignments'))
 
 #' @rdname export
-#' @importFrom MFassign summariseAssignment
+#' @importFrom assignments summariseAssignments
 
 setMethod('exportSummarisedAssignments',signature = 'Assignment',
           function(x,outPath = '.'){
               x %>% 
-                  summariseAssignment() %>% 
+                  summariseAssignments() %>% 
                   exportCSV(str_c(outPath,'/summarised_assignments.csv'))
+          })
+
+#' @rdname export
+#' @importFrom construction classifications
+#' @export
+
+setGeneric('exportConstruction',function(x,outPath = '.')
+    standardGeneric('exportConstruction'))
+
+#' @rdname export
+
+setMethod('exportConstruction',signature = 'Construction',
+          function(x,outPath = '.'){
+              x %>% 
+                  classifications() %>% 
+                  exportCSV(str_c(outPath,'/consensus_structural_classifications.csv'))
+          })
+
+#' @rdname export
+#' @export
+
+setGeneric('exportSummarisedConstruction',function(x,outPath = '.')
+    standardGeneric('exportSummarisedConstruction'))
+
+#' @rdname export
+#' @importFrom construction summariseClassifications
+
+setMethod('exportSummarisedConstruction',signature = 'Construction',
+          function(x,outPath = '.'){
+              x %>% 
+                  summariseClassifications() %>% 
+                  exportCSV(str_c(outPath,'/summarised_consensus_structural_classifications.csv'))
           })
 
 #' @rdname export
@@ -382,6 +442,15 @@ setMethod('export',signature = 'Assignment',function(x,outPath = '.'){
     sa_fp <- exportSummarisedAssignments(x,outPath)
     
     return(c(as_fp,ad_fp,sa_fp))
+})
+
+#' @rdname export
+
+setMethod('export',signature = 'Construction',function(x,outPath = '.'){
+    cl_fp <- exportConstruction(x,outPath)
+    scl_fp <- exportSummarisedConstruction(x,outPath)
+    
+    return(c(cl_fp,scl_fp))
 })
 
 #' @importFrom dplyr bind_rows
