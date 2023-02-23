@@ -30,6 +30,12 @@ jobs:
         with:
           extra-packages: any::covr
           needs: coverage
+      
+      - name: Set up rawrr
+        run: |
+          rawrr::installRawFileReaderDLLs()
+          rawrr::buildRawrrExe()
+        shell: Rscript {0}
 
       - name: Test coverage
         run: |
