@@ -22,7 +22,7 @@
 #' export(analysis,outPath = tempdir())
 #' 
 #' ## Perform data pre-treatment and modelling
-#' p <- analysisParameters(c('pre-treatment','modelling'))
+#' p <- metabolyseR::analysisParameters(c('pre-treatment','modelling'))
 #' metabolyseR::parameters(p,'pre-treatment') <- preTreatmentParameters(
 #'    list(occupancyFilter = 'maximum',
 #'         transform = 'TICnorm')
