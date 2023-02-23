@@ -62,7 +62,7 @@ assigned_data <- metabolyseR::analysisData(
  tibble::tibble(sample = seq_len(nrow(assignments::feature_data)))
  )
 
-reduced_data <- reduce(assigned_data)
+reduced_data <- metaboMisc::reduce(assigned_data)
 
 reduced_data
 }
