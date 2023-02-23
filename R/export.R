@@ -108,7 +108,7 @@ setMethod('exportData',signature = 'Analysis',
               x %>%
                   dat(type = type) %>%
                   bind_cols(i %>% select(all_of(idx))) %>%
-                  gather('m/z','Intensity',-idx) %>%
+                  gather('m/z','Intensity',-all_of(idx)) %>%
                   spread(idx,Intensity) %>%
                   mutate(Mode = str_sub(`m/z`,1,1)) %>%
                   mutate(`m/z` = str_split_fixed(`m/z`,' ',2)[,1] %>%
