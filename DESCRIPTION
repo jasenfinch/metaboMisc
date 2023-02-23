@@ -45,7 +45,4 @@ Remotes: aberHRML/binneR,
     jasenfinch/metabolyseR,
     jasenfinch/profilePro,
     aberHRML/assignments,
-    jasenfinch/grover,
-    bioc::rawrr,
-    bioc::xcms,
-    bioc::faahKO
+    jasenfinch/grover
