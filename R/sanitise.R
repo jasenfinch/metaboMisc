@@ -1,9 +1,10 @@
 #' Sanitise a data table
 #' @description  Sanitise a data table by restricting the number of rows or characters and rounding numeric columns.
-#' @param x A tibble or data.frame containing the data to be sanitised
-#' @param maxRows Maximum number of rows with which to restrict the table
-#' @param sigFig Significant figures with which to round numeric columns
-#' @param maxCharacters Maximum number of characters allowed in a string before it is truncated
+#' @param x a tibble or data.frame containing the data to be sanitised
+#' @param maxRows the maximum number of rows with which to restrict the table size
+#' @param sigFig the significant figures with which to round numeric columns
+#' @param maxCharacters the maximum number of characters allowed in a string before it is truncated
+#' @return A sanitised tibble or data.frame.
 #' @examples
 #' sanitiseTable(iris,maxRows = 10,sigFig = 1)
 #' @importFrom dplyr mutate_if

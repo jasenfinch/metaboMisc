@@ -1,12 +1,12 @@
-#' Reduce an analysis by removing isotopic, adduct or unknown features
+#' Reduce an *m/z* features by removing isotopic, adduct or unknown features
 #' @rdname reduce
-#' @description Reduce an analysis by removing isotopic, adduct or unknown features.
-#' @param x S4 class of class `Analysis` or `AnalysisData`
+#' @description Reduce *m/z* features in an analysis that includes putative molecular formula assignments by removing isotopic, adduct or unknown features.
+#' @param x an object of S4 class `Analysis` or `AnalysisData`
 #' @param isotopes TRUE/FALSE remove isotopic features.
-#' @param adducts TRUE/FALSE remove multiple adduct features.
-#' @param unknowns TRUE/FALSE remove unassigned features.
+#' @param adducts TRUE/FALSE remove features that are multiple adducts of the same molecular formula. The adduct with the highest intensity is retained for each assigned molecular formula.
+#' @param unknowns TRUE/FALSE remove unaOssigned *m/z* features.
 #' @param isotopic_adducts a vector of additional isotopic adducts to remove if argument `isotopes = TRUE`
-#' @return S4 object of class `Analysis` or `AnalysisData` with features reduced
+#' @return An object of S4 class `Analysis` or `AnalysisData` with reduced *m/z* features.
 #' @details If argument `isotopes = TRUE`, all isotopic features are removed. If argument `adducts = TRUE`, the feature with the maximum intensity for each molecular formula is retained.
 #' @examples 
 #' ## Assign molecular formulas
@@ -20,7 +20,7 @@
 #'  tibble::tibble(sample = seq_len(nrow(assignments::feature_data)))
 #'  )
 #' 
-#' reduced_data <- metaboMisc::reduce(assigned_data)
+#' reduced_data <- reduce(assigned_data)
 #' 
 #' reduced_data
 #' @export

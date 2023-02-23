@@ -3,22 +3,22 @@
 \name{plotRSD,Binalysis-method}
 \alias{plotRSD,Binalysis-method}
 \alias{plotRSD,MetaboProfile-method}
-\title{Plot relative standard deviation (RSD) distributions}
+\title{Plot RSD distributions}
 \usage{
 \S4method{plotRSD}{Binalysis}(analysis, cls = "class")
 
 \S4method{plotRSD}{MetaboProfile}(analysis, cls = "class")
 }
 \arguments{
-\item{analysis}{S4 object of class \code{Binalysis} or \code{MetaboProfile}}
+\item{analysis}{an object of S4 class \code{Binalysis} or \code{MetaboProfile}}
 
-\item{cls}{info column to use for class labels.}
+\item{cls}{the info column to use for class labels}
 }
 \value{
-A list of plots of RSD distributions
+A list of RSD distribution plots for each ionisation mode..
 }
 \description{
-Plot RSD distributions of processed data.
+Plot relative standard deviation (RSD) distributions of spectrally processed data.
 }
 \examples{
 ## Retrieve file paths and sample information for example data

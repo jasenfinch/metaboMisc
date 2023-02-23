@@ -1,8 +1,8 @@
-#' Summarise features
+#' Summarise `m/z` features
 #' @rdname featureSummary
-#' @description Summarise spectrally binned features.
-#' @param x S4 object of class `Binalysis`
-#' @return A tibble containing feature summaries
+#' @description Summarise spectrally processed *m/z* features.
+#' @param x an object of S4 class `Binalysis` or `MetaboProfile`
+#' @return A tibble containing feature summaries.
 #' @examples 
 #' ## Retrieve file paths and sample information for example data
 #' files <- metaboData::filePaths('FIE-HRMS','BdistachyonEcotypes')[1:2]

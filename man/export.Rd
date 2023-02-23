@@ -125,3 +125,46 @@ A character vector of exported file paths.
 \description{
 Export data tables from \code{Binalysis},\code{MetaboProfile}, \code{Analysis} and \code{Assignment} classes.
 }
+\examples{
+## Retrieve file paths and sample information for example data
+files <- metaboData::filePaths('FIE-HRMS','BdistachyonEcotypes')[1:2]
+
+info <- metaboData::runinfo('FIE-HRMS','BdistachyonEcotypes')[1:2,]
+
+## Perform spectral binning
+analysis <- binneR::binneRlyse(files, 
+                               info, 
+                               parameters = binneR::detectParameters(files))
+
+## Export spectrally binned data
+export(analysis,outPath = tempdir())
+
+## Perform data pre-treatment and modelling
+p <- analysisParameters(c('pre-treatment','modelling'))
+metabolyseR::parameters(p,'pre-treatment') <- preTreatmentParameters(
+   list(occupancyFilter = 'maximum',
+        transform = 'TICnorm')
+)
+metabolyseR::parameters(p,'modelling') <- metabolyseR::modellingParameters('anova')
+metabolyseR::changeParameter(p,'cls') <- 'day'
+analysis <- metabolyseR::metabolyse(metaboData::abr1$neg[,1:200],
+                      metaboData::abr1$fact,
+                      p)
+                      
+## Export pre-treated data and modelling results
+export(analysis,outPath = tempdir())
+
+## Perform molecular formula assignment
+future::plan(future::sequential)
+p <- assignments::assignmentParameters('FIE-HRMS')
+assignments <- assignments::assignMFs(assignments::feature_data,p)
+
+## Export molecular formula assignment results
+export(assignments,outPath = tempdir())
+
+## Perform consensus structural classification
+structural_classifications <- construction::construction(assignments)
+
+## Export consensus structural classification results
+export(structural_classifications,outPath = tempdir())
+}

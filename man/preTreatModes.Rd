@@ -13,21 +13,19 @@ preTreatModes(processed_data, parameters, verbose = TRUE)
 \S4method{preTreatModes}{MetaboProfile}(processed_data, parameters, verbose = TRUE)
 }
 \arguments{
-\item{processed_data}{S4 object of class \code{Binalysis} or \code{MetaboProfile}}
+\item{processed_data}{an object of S4 class \code{Binalysis} or \code{MetaboProfile}}
 
-\item{parameters}{object of class \code{AnalysisParameters} containing pre-treatment parameters}
+\item{parameters}{an object of S4 class \code{AnalysisParameters} containing pre-treatment parameters}
 
-\item{verbose}{console output}
+\item{verbose}{print console output}
 }
 \value{
-S4 object of class \code{Analysis}
+An object of S4 class \code{Analysis}.
 }
 \description{
 Pre-treat both positive and negative ionisation modes for \code{Binalysis} and \code{MetaboProfile} classes.
 }
 \examples{
-library(metabolyseR)
-
 ## Retrieve file paths and sample information for example data
 files <- metaboData::filePaths('FIE-HRMS','BdistachyonEcotypes')[1:2]
 
@@ -41,17 +39,9 @@ analysis <- binneR::binneRlyse(files,
                                info, 
                                parameters = bp)
 
-## Declare pre-treatment parameters
-pre_treatment_parameters <- analysisParameters('pre-treatment')
-parameters(pre_treatment_parameters,
-                        'pre-treatment') <- preTreatmentParameters(
- list(
-   occupancyFilter = 'maximum',
-   impute = 'all',
-   transform = 'TICnorm'
- )
-)
-changeParameter(pre_treatment_parameters,'parallel') <- 'no'
+## Dectect the pre-treatment parameters
+pre_treatment_parameters <- detectPretreatmentParameters(analysis)
+metabolyseR::changeParameter(pre_treatment_parameters,'parallel') <- 'no'
 
 ## Perform pre-treatment
 pre_treated_data <- preTreatModes(analysis,

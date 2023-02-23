@@ -4,7 +4,7 @@
 \alias{featureSummary}
 \alias{featureSummary,Binalysis-method}
 \alias{featureSummary,MetaboProfile-method}
-\title{Summarise features}
+\title{Summarise \code{m/z} features}
 \usage{
 featureSummary(x)
 
@@ -13,13 +13,13 @@ featureSummary(x)
 \S4method{featureSummary}{MetaboProfile}(x)
 }
 \arguments{
-\item{x}{S4 object of class \code{Binalysis}}
+\item{x}{an object of S4 class \code{Binalysis} or \code{MetaboProfile}}
 }
 \value{
-A tibble containing feature summaries
+A tibble containing feature summaries.
 }
 \description{
-Summarise spectrally binned features.
+Summarise spectrally processed \emph{m/z} features.
 }
 \examples{
 ## Retrieve file paths and sample information for example data

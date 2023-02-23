@@ -1,9 +1,9 @@
-#' Plot relative standard deviation (RSD) distributions
+#' Plot RSD distributions
 #' @rdname plotRSD
-#' @description Plot RSD distributions of processed data.
-#' @param analysis S4 object of class `Binalysis` or `MetaboProfile`
-#' @param cls info column to use for class labels.
-#' @return A list of plots of RSD distributions
+#' @description Plot relative standard deviation (RSD) distributions of spectrally processed data.
+#' @param analysis an object of S4 class `Binalysis` or `MetaboProfile`
+#' @param cls the info column to use for class labels
+#' @return A list of RSD distribution plots for each ionisation mode..
 #' @examples 
 #' ## Retrieve file paths and sample information for example data
 #' files <- metaboData::filePaths('FIE-HRMS','BdistachyonEcotypes')[1:2]

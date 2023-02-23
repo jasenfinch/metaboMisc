@@ -4,7 +4,7 @@
 \alias{reduce}
 \alias{reduce,Analysis-method}
 \alias{reduce,AnalysisData-method}
-\title{Reduce an analysis by removing isotopic, adduct or unknown features}
+\title{Reduce an \emph{m/z} features by removing isotopic, adduct or unknown features}
 \usage{
 reduce(
   x,
@@ -31,21 +31,21 @@ reduce(
 )
 }
 \arguments{
-\item{x}{S4 class of class \code{Analysis} or \code{AnalysisData}}
+\item{x}{an object of S4 class \code{Analysis} or \code{AnalysisData}}
 
 \item{isotopes}{TRUE/FALSE remove isotopic features.}
 
-\item{adducts}{TRUE/FALSE remove multiple adduct features.}
+\item{adducts}{TRUE/FALSE remove features that are multiple adducts of the same molecular formula. The adduct with the highest intensity is retained for each assigned molecular formula.}
 
-\item{unknowns}{TRUE/FALSE remove unassigned features.}
+\item{unknowns}{TRUE/FALSE remove unaOssigned \emph{m/z} features.}
 
 \item{isotopic_adducts}{a vector of additional isotopic adducts to remove if argument \code{isotopes = TRUE}}
 }
 \value{
-S4 object of class \code{Analysis} or \code{AnalysisData} with features reduced
+An object of S4 class \code{Analysis} or \code{AnalysisData} with reduced \emph{m/z} features.
 }
 \description{
-Reduce an analysis by removing isotopic, adduct or unknown features.
+Reduce \emph{m/z} features in an analysis that includes putative molecular formula assignments by removing isotopic, adduct or unknown features.
 }
 \details{
 If argument \code{isotopes = TRUE}, all isotopic features are removed. If argument \code{adducts = TRUE}, the feature with the maximum intensity for each molecular formula is retained.
@@ -62,7 +62,7 @@ assigned_data <- metabolyseR::analysisData(
  tibble::tibble(sample = seq_len(nrow(assignments::feature_data)))
  )
 
-reduced_data <- metaboMisc::reduce(assigned_data)
+reduced_data <- reduce(assigned_data)
 
 reduced_data
 }

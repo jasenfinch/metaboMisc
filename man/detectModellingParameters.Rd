@@ -16,25 +16,25 @@ detectModellingParameters(x, ...)
 \S4method{detectModellingParameters}{Analysis}(x, type = "pre-treated", cls = "class")
 }
 \arguments{
-\item{x}{S4 object of class \code{Binalysis},\code{MetaboProfile} or \code{Analysis}}
+\item{x}{an object of S4 class \code{Binalysis},\code{MetaboProfile} or \code{Analysis}}
 
 \item{...}{arguments to pass to the appropriate method}
 
-\item{type}{detect parameters for \code{raw} or \code{pre-treated} data for \code{Analysis} class}
+\item{type}{detect modelling parameters for \code{raw} or \code{pre-treated} data for the \code{Analysis} S4 class}
 
-\item{cls}{sample information column to use for modelling}
+\item{cls}{sample information column to use as the response for modelling}
 }
 \value{
-S4 object of class \code{AnalysisParameters}
+and object of S4 class \code{AnalysisParameters}
 }
 \description{
-Detect modelling parameters for \code{Binalysis}, \code{MetaboProfile} or \code{Analysis} S4 classes.
+Detect suitable modelling parameters for \code{Binalysis}, \code{MetaboProfile} or \code{Analysis} S4 classes.
 }
 \examples{
 ## Retrieve file paths and sample information for example data
-files <- metaboData::filePaths('FIE-HRMS','BdistachyonEcotypes')[1:2]
+files <- metaboData::filePaths('FIE-HRMS','BdistachyonEcotypes')
 
-info <- metaboData::runinfo('FIE-HRMS','BdistachyonEcotypes')[1:2,]
+info <- metaboData::runinfo('FIE-HRMS','BdistachyonEcotypes')
 
 ## Perform spectral binning
 analysis <- binneR::binneRlyse(files, 

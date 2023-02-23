@@ -13,9 +13,9 @@ detectBatchDiff(x, by = "block", pthresh = 0.05)
 \S4method{detectBatchDiff}{MetaboProfile}(x, by = "block", pthresh = 0.05)
 }
 \arguments{
-\item{x}{object of class \code{Binalysis} or \code{MetaboProfile}}
+\item{x}{object of S4 class \code{Binalysis} or \code{MetaboProfile}}
 
-\item{by}{info class column to use for batch information}
+\item{by}{info class column to use for batch/block information}
 
 \item{pthresh}{p-value threshold for significance}
 }
@@ -30,9 +30,9 @@ Analysis of Variance (ANOVA) is used to detect differences in total ion count (T
 }
 \examples{
 ## Retrieve file paths and sample information for example data
-files <- metaboData::filePaths('FIE-HRMS','BdistachyonEcotypes',ask = FALSE)[1:2]
+files <- metaboData::filePaths('FIE-HRMS','BdistachyonEcotypes',ask = FALSE)
 
-info <- metaboData::runinfo('FIE-HRMS','BdistachyonEcotypes')[1:2,]
+info <- metaboData::runinfo('FIE-HRMS','BdistachyonEcotypes')
 
 ## Perform spectral binning
 analysis <- binneR::binneRlyse(files, 
@@ -42,6 +42,6 @@ analysis <- binneR::binneRlyse(files,
 ## Detect batch differences
 batch_diff <- detectBatchDiff(analysis)
 
-## Display batch diffferences
+## Display batch differences
 batch_diff
 }
