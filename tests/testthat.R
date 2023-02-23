@@ -2,10 +2,10 @@ library(testthat)
 library(metaboMisc)
 
 ## Example Binalysis class
-file_paths <- metaboData::filePaths('FIE-HRMS','BdistachyonEcotypes') %>% 
+file_paths <- metaboData::filePaths('FIE-HRMS','BdistachyonEcotypes',ask = FALSE) %>% 
     .[stringr::str_detect(.,'QC')]
 
-sample_information <- metaboData::runinfo('FIE-HRMS','BdistachyonEcotypes') %>% 
+sample_information <- metaboData::runinfo('FIE-HRMS','BdistachyonEcotypes',ask = FALSE) %>% 
     dplyr::filter(stringr::str_detect(name,'QC'))
 
 bp <- binneR::detectParameters(file_paths)
