@@ -40,10 +40,12 @@ Suggests:
     rawrr
 Config/testthat/edition: 3
 Remotes: aberHRML/binneR,
-    jasenfinch/construction@devel,
+    jasenfinch/construction,
     jasenfinch/jfmisc,
-    jasenfinch/metabolyseR@devel,
+    jasenfinch/metabolyseR,
     jasenfinch/profilePro,
-    jasenfinch/MFassign@devel,
+    aberHRML/assignments,
     jasenfinch/grover,
     bioc::rawrr
+    bioc::xcms
+    bioc::faahKO
