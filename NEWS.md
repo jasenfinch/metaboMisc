@@ -1,3 +1,7 @@
+# metaboMisc 0.6.1
+
+* Fix the missing `name` column in tables returned from `convertSampleInfo()`.
+
 # metaboMisc 0.6.0
 
 * `injOrder` is now the default column for sample indexes returned from `detectMissInjections()`.
