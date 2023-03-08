@@ -55,6 +55,7 @@ convertSampleInfo <- function(sample_info,
         select(fileOrder,
                injOrder,
                fileName,
+               name,
                all_of(user_text))
     
     if (isTRUE(gzip_ext)) {
