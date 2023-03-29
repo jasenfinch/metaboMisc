@@ -42,7 +42,7 @@ setMethod('featureSummary',signature = 'MetaboProfile',
 
 featSummary <- function(x){
     
-    if (!is.list(x)){
+    if (is.data.frame(x)){
         x <- list(x)
     }
     

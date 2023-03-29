@@ -59,7 +59,7 @@ setMethod('detectMissInjections',signature = 'MetaboProfile',
               mi <- x %>% 
                   processedData()
               
-              if (!is.list(mi)){
+              if (is.data.frame(mi)){
                   mi <- list(mi)   
               }
               
@@ -68,10 +68,10 @@ setMethod('detectMissInjections',signature = 'MetaboProfile',
               
               if (mi %>% 
                   names() %>% 
-                  is.na() %>% 
+                  {is.null(.) | is.na(.)} %>% 
                   any()) {
                   names(mi) <- replace(names(mi),
-                                       is.na(names(mi)),
+                                       is.null(names(mi)) | is.na(names(mi)),
                                        'NA')
               }
               
@@ -166,7 +166,7 @@ setMethod('detectBatchDiff',signature =  "MetaboProfile",
               TICdat <- x %>%
                   processedData()
               
-              if (!is.list(TICdat)){
+              if (is.data.frame(TICdat)){
                   TICdat <- list(TICdat)
               }
               
@@ -175,10 +175,10 @@ setMethod('detectBatchDiff',signature =  "MetaboProfile",
               
               if (TICdat %>% 
                   names() %>% 
-                  is.na() %>% 
+                  {is.null(.) | is.na(.)} %>% 
                   any()) {
                   names(TICdat) <- replace(names(TICdat),
-                                           is.na(names(TICdat)),
+                                           is.null(names(TICdat)) | is.na(names(TICdat)),
                                            'NA')
               }
               

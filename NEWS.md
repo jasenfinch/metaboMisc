@@ -1,3 +1,9 @@
+# metaboMisc 0.6.2
+
+* Fixed miss injection and batch correction detection for GC-MS data sets processed using xcms.
+
+* Fixed the feature summary for GC-MS data sets processed using xcms.
+
 # metaboMisc 0.6.1
 
 * Fix the missing `name` column in tables returned from `convertSampleInfo()`.
