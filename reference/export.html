@@ -184,7 +184,7 @@
 <span class="r-in"><span><span class="va">analysis</span> <span class="op">&lt;-</span> <span class="fu">binneR</span><span class="fu">::</span><span class="fu"><a href="http://aberhrml.github.io/binneR/reference/binneRlyse.html" class="external-link">binneRlyse</a></span><span class="op">(</span><span class="va">files</span>, </span></span>
 <span class="r-in"><span>                               <span class="va">info</span>, </span></span>
 <span class="r-in"><span>                               parameters <span class="op">=</span> <span class="fu">binneR</span><span class="fu">::</span><span class="fu"><a href="http://aberhrml.github.io/binneR/reference/detectParameters.html" class="external-link">detectParameters</a></span><span class="op">(</span><span class="va">files</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">binneR</span> <span style="color: #BB0000;">v2.6.3</span> Wed Apr 26 09:42:09 2023</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">binneR</span> <span style="color: #BB0000;">v2.6.3</span> Wed Apr 26 10:51:19 2023</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ________________________________________________________________________________</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Scans: 5:14 </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ________________________________________________________________________________</span>
@@ -197,14 +197,14 @@
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Building intensity matrix</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Gathering file headers</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">Completed! </span>[3S]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">Completed! </span>[1.5S]</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Export spectrally binned data</span></span></span>
 <span class="r-in"><span><span class="fu">export</span><span class="op">(</span><span class="va">analysis</span>,outPath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpUGGm7D/sample_information.csv"          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/tmp/RtmpUGGm7D/accurate_data.csv"               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3] "/tmp/RtmpUGGm7D/negative_mode_processed_data.csv"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "/tmp/RtmpUGGm7D/positive_mode_processed_data.csv"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpPM97Iy/sample_information.csv"          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/tmp/RtmpPM97Iy/accurate_data.csv"               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3] "/tmp/RtmpPM97Iy/negative_mode_processed_data.csv"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "/tmp/RtmpPM97Iy/positive_mode_processed_data.csv"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Perform data pre-treatment and modelling</span></span></span>
 <span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">metabolyseR</span><span class="fu">::</span><span class="fu"><a href="https://jasenfinch.github.io/metabolyseR/reference/analysisParameters.html" class="external-link">analysisParameters</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'pre-treatment'</span>,<span class="st">'modelling'</span><span class="op">)</span><span class="op">)</span></span></span>
@@ -218,7 +218,7 @@
 <span class="r-in"><span>                      <span class="fu">metaboData</span><span class="fu">::</span><span class="va"><a href="https://aberhrml.github.io/metaboData/reference/abr1.html" class="external-link">abr1</a></span><span class="op">$</span><span class="va">fact</span>,</span></span>
 <span class="r-in"><span>                      <span class="va">p</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">metabolyseR </span> <span style="color: #BB0000;">v0.15.0</span> Wed Apr 26 09:42:12 2023</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">metabolyseR </span> <span style="color: #BB0000;">v0.15.0</span> Wed Apr 26 10:51:21 2023</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ________________________________________________________________________________</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">Parameters:</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> pre-treatment</span>
@@ -237,26 +237,26 @@
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 		returnModels = FALSE</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ________________________________________________________________________________</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Pre-treatment </span>…</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Pre-treatment </span>	<span style="color: #00BB00;">✔</span> [0.7S]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Pre-treatment </span>	<span style="color: #00BB00;">✔</span> [0.6S]</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Modelling </span>…</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Modelling </span>	<span style="color: #00BB00;">✔</span> [0.6S]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Modelling </span>	<span style="color: #00BB00;">✔</span> [0.4S]</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ________________________________________________________________________________</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">Complete! </span>[1.3S]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">Complete! </span>[1S]</span>
 <span class="r-in"><span>                      </span></span>
 <span class="r-in"><span><span class="co">## Export pre-treated data and modelling results</span></span></span>
 <span class="r-in"><span><span class="fu">export</span><span class="op">(</span><span class="va">analysis</span>,outPath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> All objects contained within supplied list that are not of class RandomForest will be ignored.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpUGGm7D/raw_sample_information.csv"      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/tmp/RtmpUGGm7D/raw_data.csv"                    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3] "/tmp/RtmpUGGm7D/modelling_importance_metrics.csv"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpPM97Iy/raw_sample_information.csv"      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/tmp/RtmpPM97Iy/raw_data.csv"                    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3] "/tmp/RtmpPM97Iy/modelling_importance_metrics.csv"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Perform molecular formula assignment</span></span></span>
 <span class="r-in"><span><span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future</span><span class="fu">::</span><span class="va"><a href="https://future.futureverse.org/reference/sequential.html" class="external-link">sequential</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">assignments</span><span class="fu">::</span><span class="fu"><a href="https://aberhrml.github.io/assignments/reference/assignmentParameters.html" class="external-link">assignmentParameters</a></span><span class="op">(</span><span class="st">'FIE-HRMS'</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">assignments</span> <span class="op">&lt;-</span> <span class="fu">assignments</span><span class="fu">::</span><span class="fu"><a href="https://aberhrml.github.io/assignments/reference/assign.html" class="external-link">assignMFs</a></span><span class="op">(</span><span class="fu">assignments</span><span class="fu">::</span><span class="va"><a href="https://aberhrml.github.io/assignments/reference/feature_data.html" class="external-link">feature_data</a></span>,<span class="va">p</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">assignments </span><span style="color: #BB0000;">v1.0.0</span> Wed Apr 26 09:42:14 2023</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">assignments </span><span style="color: #BB0000;">v1.0.0</span> Wed Apr 26 10:51:22 2023</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ________________________________________________________________________________</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">Assignment Parameters: </span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
@@ -281,34 +281,34 @@
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ________________________________________________________________________________</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> No. m/z:	10</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Calculating correlations </span>…</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Calculating correlations </span>	<span style="color: #00BB00;">✔</span> [10 correlations] [1S]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Calculating correlations </span>	<span style="color: #00BB00;">✔</span> [10 correlations] [1.1S]</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Calculating relationships </span>…</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Calculating relationships </span>	<span style="color: #00BB00;">✔</span> [2.6S]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Calculating relationships </span>	<span style="color: #00BB00;">✔</span> [2S]</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Adduct &amp; isotopic assignment </span>…</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> generating molecular formulas…</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> generating molecular formulas	<span style="color: #00BB00;">✔</span> [30.4S]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> generating molecular formulas	<span style="color: #00BB00;">✔</span> [23.4S]</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> iteration 1…</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> iteration 1			<span style="color: #00BB00;">✔</span> [0.7S]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> iteration 1			<span style="color: #00BB00;">✔</span> [0.5S]</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> iteration 2…</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Adduct &amp; isotopic assignment </span>	<span style="color: #00BB00;">✔</span> [32.1S]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Adduct &amp; isotopic assignment </span>	<span style="color: #00BB00;">✔</span> [24.8S]</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Transformation assignment</span>…</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> iteration 1 …</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> iteration 1 			<span style="color: #00BB00;">✔</span> [1.9S]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> iteration 1 			<span style="color: #00BB00;">✔</span> [1.4S]</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> iteration 2 …</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Transformation assignment </span>	<span style="color: #00BB00;">✔</span> [1.9S]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">Transformation assignment </span>	<span style="color: #00BB00;">✔</span> [1.4S]</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ________________________________________________________________________________</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">Complete! </span>[40.5S]</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">Complete! </span>[32.2S]</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Export molecular formula assignment results</span></span></span>
 <span class="r-in"><span><span class="fu">export</span><span class="op">(</span><span class="va">assignments</span>,outPath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpUGGm7D/assignments.csv"           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/tmp/RtmpUGGm7D/assigned_data.csv"         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3] "/tmp/RtmpUGGm7D/summarised_assignments.csv"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpPM97Iy/assignments.csv"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/tmp/RtmpPM97Iy/assigned_data.csv"         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3] "/tmp/RtmpPM97Iy/summarised_assignments.csv"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Perform consensus structural classification</span></span></span>
 <span class="r-in"><span><span class="va">structural_classifications</span> <span class="op">&lt;-</span> <span class="fu">construction</span><span class="fu">::</span><span class="fu"><a href="https://jasenfinch.github.io/construction/reference/construction.html" class="external-link">construction</a></span><span class="op">(</span><span class="va">assignments</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Created construction library at /tmp/RtmpUGGm7D/construction_library</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Created construction library at /tmp/RtmpPM97Iy/construction_library</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 2 MFs to retrieve out of 2</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 1. (50%) </span>
@@ -331,20 +331,20 @@
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔ QUURPCHWPQNNGL-FONMRSAGSA-N</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔ XECPAIJNBXCOBO-MMPJQOAZSA-N</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 14 classifications returned</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Exporting to /tmp/RtmpUGGm7D/construction_library</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Exporting to /tmp/RtmpPM97Iy/construction_library</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 2. (100%) </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> C6H9NO7</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Searching KEGG...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 0 hits returned</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Exporting to /tmp/RtmpUGGm7D/construction_library</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Exporting to /tmp/RtmpPM97Iy/construction_library</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Complete!</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Export consensus structural classification results</span></span></span>
 <span class="r-in"><span><span class="fu">export</span><span class="op">(</span><span class="va">structural_classifications</span>,outPath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpUGGm7D/consensus_structural_classifications.csv"           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/tmp/RtmpUGGm7D/summarised_consensus_structural_classifications.csv"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpPM97Iy/consensus_structural_classifications.csv"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/tmp/RtmpPM97Iy/summarised_consensus_structural_classifications.csv"</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
