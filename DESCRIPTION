@@ -36,7 +36,8 @@ Suggests:
     xcms,
     covr,
     grover,
-    rawrr
+    rawrr,
+    future
 Config/testthat/edition: 3
 Remotes: aberHRML/binneR,
     jasenfinch/construction,
