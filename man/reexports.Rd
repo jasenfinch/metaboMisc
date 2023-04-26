@@ -4,6 +4,7 @@
 \name{reexports}
 \alias{reexports}
 \alias{\%>\%}
+\alias{suitableParallelPlan}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -11,6 +12,6 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{jfmisc}{\code{\link[jfmisc:reexports]{\%>\%}}}
+  \item{jfmisc}{\code{\link[jfmisc:reexports]{\%>\%}}, \code{\link[jfmisc]{suitableParallelPlan}}}
 }}
 
