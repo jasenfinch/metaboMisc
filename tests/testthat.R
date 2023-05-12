@@ -55,3 +55,4 @@ assignment <- assignments::assignMFs(assignments::feature_data,p)
 structural_classifications <- construction::construction(assignment)
 
 test_check("metaboMisc")
+

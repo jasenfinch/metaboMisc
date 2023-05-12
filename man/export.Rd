@@ -4,11 +4,13 @@
 \alias{exportData}
 \alias{exportData,Binalysis-method}
 \alias{exportData,MetaboProfile-method}
+\alias{exportData,AnalysisData-method}
 \alias{exportData,Analysis-method}
 \alias{exportData,Assignment-method}
 \alias{exportSampleInfo}
 \alias{exportSampleInfo,Binalysis-method}
 \alias{exportSampleInfo,MetaboProfile-method}
+\alias{exportSampleInfo,AnalysisData-method}
 \alias{exportSampleInfo,Analysis-method}
 \alias{exportAccurateData}
 \alias{exportAccurateData,Binalysis-method}
@@ -44,6 +46,8 @@ exportData(x, outPath = ".", ...)
 
 \S4method{exportData}{MetaboProfile}(x, outPath = ".")
 
+\S4method{exportData}{AnalysisData}(x, outPath = ".", idx = "name", prefix = "analysis")
+
 \S4method{exportData}{Analysis}(x, outPath = ".", type = "raw", idx = "name")
 
 \S4method{exportData}{Assignment}(x, outPath = ".")
@@ -53,6 +57,8 @@ exportSampleInfo(x, outPath = ".", ...)
 \S4method{exportSampleInfo}{Binalysis}(x, outPath = ".")
 
 \S4method{exportSampleInfo}{MetaboProfile}(x, outPath = ".")
+
+\S4method{exportSampleInfo}{AnalysisData}(x, outPath = ".", prefix = "analysis")
 
 \S4method{exportSampleInfo}{Analysis}(x, outPath = ".", type = "raw")
 
@@ -115,9 +121,11 @@ export(x, outPath = ".", ...)
 
 \item{...}{arguments to pass to relevant method}
 
-\item{type}{data type to extract. \code{raw} or \code{pre-treated}}
-
 \item{idx}{sample information column name to use as sample IDs}
+
+\item{prefix}{file name prefix description}
+
+\item{type}{data type to extract. \code{raw} or \code{pre-treated}}
 }
 \value{
 A character vector of exported file paths.

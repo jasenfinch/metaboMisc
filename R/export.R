@@ -5,6 +5,7 @@
 #' @param outPath directory path to export to.
 #' @param type data type to extract. `raw` or `pre-treated`
 #' @param idx sample information column name to use as sample IDs
+#' @param prefix file name prefix description
 #' @param ... arguments to pass to relevant method
 #' @return A character vector of exported file paths.
 #' @examples 
@@ -138,26 +139,43 @@ setMethod('exportData',signature = 'MetaboProfile',
 
 #' @rdname export
 
-setMethod('exportData',signature = 'Analysis',
-          function(x,outPath = '.',type = 'raw',idx = 'name'){
+setMethod('exportData',signature = 'AnalysisData',
+          function(x,outPath = '.',idx = 'name',prefix = 'analysis'){
               i <- x %>%
-                  sinfo(type = type)
+                  sinfo()
               
               if (TRUE %in% duplicated(i[[idx]])) {
                   i <- fixNames(i)
               }
               
               x %>%
-                  dat(type = type) %>%
+                  dat() %>%
                   bind_cols(i %>% select(all_of(idx))) %>%
-                  gather('m/z','Intensity',-all_of(idx)) %>%
-                  spread(idx,Intensity) %>%
-                  mutate(Mode = str_sub(`m/z`,1,1)) %>%
-                  mutate(`m/z` = str_split_fixed(`m/z`,' ',2)[,1] %>%
-                             str_remove_all('[:alpha:]') %>%
-                             as.numeric()) %>%
-                  select(Mode,everything()) %>%
-                  exportCSV(str_c(outPath,'/',type,'_data.csv'))
+                  gather('feature','intensity',-all_of(idx)) %>%
+                  spread(idx,intensity) %>%
+                  exportCSV(str_c(outPath,'/',prefix,'_data.csv')) 
+          })
+
+#' @rdname export
+
+setMethod('exportData',signature = 'Analysis',
+          function(x,outPath = '.',type = 'raw',idx = 'name'){
+              
+              if (type == 'raw'){
+                  method <- metabolyseR::raw
+              }
+              
+              if (type == 'pre-treated'){
+                  method <- metabolyseR::preTreated
+              }
+              
+              x %>%
+                  method() %>%
+                  exportData(
+                      outPath = outPath,
+                      idx = idx,
+                      prefix = type
+                  )
           })
 
 #' @rdname export
@@ -206,12 +224,33 @@ setMethod('exportSampleInfo',signature = 'MetaboProfile',
 
 #' @rdname export
 
+setMethod('exportSampleInfo',signature = 'AnalysisData',
+          function(x,outPath = '.',prefix = 'analysis'){
+              si <- x %>% 
+                  sinfo()
+              
+              exportCSV(si,str_c(outPath,'/',prefix,'_sample_information.csv'))
+          })
+
+#' @rdname export
+
 setMethod('exportSampleInfo',signature = 'Analysis',
           function(x,outPath = '.',type = 'raw'){
-              si <- x %>% 
-                  sinfo(type = type)
               
-              exportCSV(si,str_c(outPath,'/',type,'_sample_information.csv'))
+              if (type == 'raw'){
+                  method <- metabolyseR::raw
+              }
+              
+              if (type == 'pre-treated'){
+                  method <- metabolyseR::preTreated
+              }
+              
+              x %>% 
+                  method() %>% 
+                  exportSampleInfo(
+                      outPath = outPath,
+                      prefix = type
+                  )
           })
 
 #' @rdname export
