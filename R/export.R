@@ -455,6 +455,23 @@ setMethod('export',signature = 'MetaboProfile',
           })
 
 #' @rdname export
+
+setMethod('export',signature = 'AnalysisData',
+          function(x,outPath = '.',idx = 'name',prefix = 'analysis'){
+              x %>% 
+                  exportData(
+                      outPath = outPath,
+                      idx = idx,
+                      prefix = prefix
+                  )
+              
+              x %>% 
+                  exportSampleInfo(
+                      outPath = outPath
+                  )
+          })
+
+#' @rdname export
 #' @importFrom dplyr bind_cols everything mutate select
 #' @importFrom tidyr gather spread
 #' @importFrom stringr str_sub str_split_fixed
