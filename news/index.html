@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">metaboMisc</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.4</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,6 +45,11 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.6.4" id="metabomisc-064">metaboMisc 0.6.4<a class="anchor" aria-label="anchor" href="#metabomisc-064"></a></h2>
+<ul><li><p>Added an <code><a href="../reference/export.html">export()</a></code> method for the <code>AnalysisData</code> class.</p></li>
+<li><p>Fixed a bug where file names were incorrectly converted from .raw to .mzML if “raw” was included in the file name alongside the extension.</p></li>
+</ul></div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.6.3" id="metabomisc-063">metaboMisc 0.6.3<a class="anchor" aria-label="anchor" href="#metabomisc-063"></a></h2>
 <ul><li>
 <a href="https://jasenfinch.github.io/jfmisc/reference/suitableParallelPlan.html" class="external-link"><code>suitableParallelPlan()</code></a> is now re-exported from the <a href="https://jasenfinch.github.io/jfmisc/index.html" class="external-link"><code>jfmisc</code></a> package. This now includes the <code>RAM_per_worker</code> and <code>proportion_max_workers</code> arguments to improve usability.</li>
@@ -63,7 +68,7 @@
 <ul><li><p><code>injOrder</code> is now the default column for sample indexes returned from <code><a href="../reference/detectMissInjections.html">detectMissInjections()</a></code>.</p></li>
 <li><p>The returned miss injection indexes are now sorted.</p></li>
 <li><p>Fixed the <code>MetaboProfile</code> S4 class <code><a href="../reference/export.html">export()</a></code> method for GC-MS techniques.</p></li>
-<li><p>Added the <code>strategy</code> and <code>workers</code> arguments in <code><a href="https://jasenfinch.github.io/jfmisc/reference/suitableParallelPlan.html" class="external-link">suitableParallelPlan()</a></code> to allow the manual selection of parallel options.</p></li>
+<li><p>Added the <code>strategy</code> and <code>workers</code> arguments in <code><a href="https://jasenfinch.github.io/jfmisc/reference/parallel.html" class="external-link">suitableParallelPlan()</a></code> to allow the manual selection of parallel options.</p></li>
 <li><p>Added an <code><a href="../reference/export.html">export()</a></code> method for the <a href="https://jasenfinch.github.io/construction/" class="external-link"><code>Construction</code></a> S4 class.</p></li>
 <li><p><code><a href="../reference/detectModellingParameters.html">detectModellingParameters()</a></code> now returns parameters for unsupervised random forest when a single class response is specified.</p></li>
 <li><p>Added <code>miss_injections</code> and <code>batch_correction</code> arguments to <code><a href="../reference/detectPretreatmentParameters.html">detectPretreatmentParameters()</a></code> to specify if miss injection detection and/or batch correction detection is performed.</p></li>
@@ -159,7 +164,7 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.4.1" id="metabomisc-041">metaboMisc 0.4.1<a class="anchor" aria-label="anchor" href="#metabomisc-041"></a></h2>
 <ul><li><p>Added a <code>NEWS.md</code> file to track changes to the package.</p></li>
-<li><p>Added <code><a href="https://jasenfinch.github.io/jfmisc/reference/suitableParallelPlan.html" class="external-link">metaboMisc::suitableParallelPlan()</a></code> to generate a suitable parallel processing <a href="https://cran.r-project.org/packages=future" class="external-link"><code>future</code></a> plan.</p></li>
+<li><p>Added <code><a href="https://jasenfinch.github.io/jfmisc/reference/parallel.html" class="external-link">metaboMisc::suitableParallelPlan()</a></code> to generate a suitable parallel processing <a href="https://cran.r-project.org/packages=future" class="external-link"><code>future</code></a> plan.</p></li>
 </ul></div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
