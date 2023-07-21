@@ -12,6 +12,6 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{jfmisc}{\code{\link[jfmisc:reexports]{\%>\%}}, \code{\link[jfmisc]{suitableParallelPlan}}}
+  \item{jfmisc}{\code{\link[jfmisc:reexports]{\%>\%}}, \code{\link[jfmisc:parallel]{suitableParallelPlan}}}
 }}
 

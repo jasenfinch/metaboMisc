@@ -1,3 +1,9 @@
+# metaboMisc 0.6.4
+
+* Added an `export()` method for the `AnalysisData` class.
+
+* Fixed a bug where file names were incorrectly converted from .raw to .mzML if "raw" was included in the file name alongside the extension.
+
 # metaboMisc 0.6.3
 
 * [`suitableParallelPlan()`](https://jasenfinch.github.io/jfmisc/reference/suitableParallelPlan.html) is now re-exported from the [`jfmisc`](https://jasenfinch.github.io/jfmisc/index.html) package. This now includes the `RAM_per_worker` and `proportion_max_workers` arguments to improve usability.

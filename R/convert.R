@@ -47,7 +47,7 @@ convertSampleInfo <- function(sample_info,
                                column_name == .x) %>% 
                 pull(new_name),
             .cols = contains('User')) %>% 
-        mutate(fileName = str_replace_all(fileName,'.raw','.mzML'),
+        mutate(fileName = str_replace_all(fileName,'[.]raw','.mzML'),
                name = tools::file_path_sans_ext(fileName)) %>%
         arrange(`Creation date`) %>%
         mutate(injOrder = seq_len(nrow(.))) %>%
